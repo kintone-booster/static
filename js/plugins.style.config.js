@@ -5,25 +5,478 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(PLUGIN_ID){var vars={};kb.field.load(kintone.app.getId()).then(function(fieldInfos){kb.config[PLUGIN_ID].build({submit:function(container,config){var error=false;config.tab=[];config.flat={};(function(app){kb.config[PLUGIN_ID].tabbed.tabs.some(function(item){var res=kb.record.get(item.panel,app);if(!res.error){res.record.color.value=res.record.color.value.filter(function(item){return item.value.field.value});res.record.editable.value=res.record.editable.value.filter(function(item){return item.value.field.value});
-res.record.display.value=res.record.display.value.filter(function(item){return item.value.field.value});res.record.toggle.value=res.record.toggle.value.filter(function(item){return item.value.field.value});config.tab.push({label:item.label.html(),setting:res.record})}else{kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);kb.config[PLUGIN_ID].tabbed.activate(item);error=true}return error})})({id:vars.app.id,fields:vars.app.fields.tab});(function(app){var res=kb.record.get(container.main.elm(".kb-flat"),
-app);if(!res.error)config.flat=res.record;else{kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);error=true}})({id:vars.app.id,fields:vars.app.fields.flat});config.tab=JSON.stringify(config.tab);config.flat=JSON.stringify(config.flat);return!error?config:false}},function(container,config){vars.app={id:PLUGIN_ID,fields:{tab:{page:{code:"page",type:"CHECK_BOX",label:"",required:true,noLabel:true,options:[{index:0,label:"create"},{index:1,label:"edit"},{index:2,label:"detail"},
-{index:3,label:"print"}]},color:{code:"color",type:"SUBTABLE",label:"",noLabel:true,fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:false,noLabel:true,options:[]},backcolor:{code:"backcolor",type:"COLOR",label:"",required:false,noLabel:true,placeholder:kb.constants.config.prompt.color.backcolor[kb.operator.language]},forecolor:{code:"forecolor",type:"COLOR",label:"",required:false,noLabel:true,placeholder:kb.constants.config.prompt.color.forecolor[kb.operator.language]}}},editable:{code:"editable",
-type:"SUBTABLE",label:"",noLabel:true,fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:false,noLabel:true,options:[]},state:{code:"state",type:"DROP_DOWN",label:"",required:false,noLabel:true,options:[{index:0,label:"disable"},{index:1,label:"enable"}]}}},display:{code:"display",type:"SUBTABLE",label:"",noLabel:true,fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:false,noLabel:true,options:[]},state:{code:"state",type:"DROP_DOWN",label:"",required:false,noLabel:true,options:[{index:0,
-label:"hide"},{index:1,label:"show"}]}}},toggle:{code:"toggle",type:"SUBTABLE",label:"",noLabel:true,fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:false,noLabel:true,options:[]},state:{code:"state",type:"DROP_DOWN",label:"",required:false,noLabel:true,options:[{index:0,label:"open"},{index:1,label:"close"}]}}}},flat:{reusecolor:{code:"reusecolor",type:"COLOR",label:"",required:false,noLabel:true,placeholder:kb.constants.config.prompt.color.reusecolor[kb.operator.language]}}}};(function(fieldInfos){var key;
-for(key in fieldInfos)vars.app.fields.tab[key]=fieldInfos[key]})(kb.config[PLUGIN_ID].ui.fields.conditions.get(fieldInfos));(function(fieldInfos){var key;for(key in fieldInfos)vars.app.fields.tab[key]=fieldInfos[key]})(kb.config[PLUGIN_ID].ui.fields.users.get(fieldInfos));kb.config[PLUGIN_ID].tabbed=new KintoneBoosterConfigTabbed(container,{add:function(tab){(function(app){tab.tables={color:kb.table.activate(kb.table.create(app.fields.color),app),display:kb.table.activate(kb.table.create(app.fields.display),
-app),editable:kb.table.activate(kb.table.create(app.fields.editable),app),toggle:kb.table.activate(kb.table.create(app.fields.toggle),app)};tab.panel.addClass("kb-scope").attr("form-id","form_"+app.id).append(kb.config[PLUGIN_ID].ui.fields.users.set(kb.config[PLUGIN_ID].ui.fields.conditions.set(kb.create("div").addClass("kb-config-tabbed-panel-block"),app),app).append(kb.create("h1").html(kb.constants.config.caption.page[kb.operator.language])).append(kb.create("section").append(kb.field.activate(function(res){res.elms("[type=checkbox]").each(function(element,
-index){element.closest("label").elm("span").html(kb.constants.config.caption.page[element.val()][kb.operator.language])});return res}(kb.field.create(app.fields.page)),app)))).append(kb.create("div").append(kb.create("h1").html(kb.constants.config.caption.color[kb.operator.language])).append(kb.create("section").append(function(table){table.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,function(result,current){result.push({code:current.code,
-label:current.label});return result}),"label","code");table.elm("thead").hide();return table}(tab.tables.color)))).append(kb.create("div").append(kb.create("h1").html(kb.constants.config.caption.editable[kb.operator.language])).append(kb.create("section").append(function(table){table.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,function(result,current){if(!fieldInfos.disables.includes(current.code))result.push({code:current.code,
-label:current.label});return result}),"label","code");table.template.elm("[field-id=state]").elms("option").each(function(element,index){element.html(kb.constants.config.caption.editable[element.val()][kb.operator.language])});table.elm("thead").hide();return table}(tab.tables.editable)))).append(kb.create("div").append(kb.create("h1").html(kb.constants.config.caption.display[kb.operator.language])).append(kb.create("section").append(function(table){table.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,
-function(result,current){result.push({code:current.code,label:current.label});return result},true,true),"label","code");table.template.elm("[field-id=state]").elms("option").each(function(element,index){element.html(kb.constants.config.caption.display[element.val()][kb.operator.language])});table.elm("thead").hide();return table}(tab.tables.display)))).append(kb.create("div").append(kb.create("h1").html(kb.constants.config.caption.toggle[kb.operator.language])).append(kb.create("section").append(function(table){table.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,
-false,false,true),"label","code");table.template.elm("[field-id=state]").elms("option").each(function(element,index){element.html(kb.constants.config.caption.toggle[element.val()][kb.operator.language])});table.elm("thead").hide();return table}(tab.tables.toggle))));tab.tables.color.addRow();tab.tables.editable.addRow();tab.tables.display.addRow();tab.tables.toggle.addRow();tab.panel.elms("input,select,textarea").each(function(element,index){return element.initialize()})})({id:vars.app.id,fields:vars.app.fields.tab})},
-copy:function(source,destination){(function(app){kb.record.set(destination.panel,app,kb.record.get(source.panel,app,true).record)})({id:vars.app.id,fields:vars.app.fields.tab})},del:function(index){}});(function(app){container.main.append(kb.create("div").addClass("kb-flat kb-scope").attr("form-id","form_"+app.id).append(kb.create("h1").html(kb.constants.config.caption.reuse[kb.operator.language])).append(kb.create("section").append(kb.create("p").html(kb.constants.config.description.reuse[kb.operator.language])).append(kb.field.activate(kb.field.create(app.fields.reusecolor),
-app))));container.main.elms("input,select,textarea").each(function(element,index){return element.initialize()})})({id:vars.app.id,fields:vars.app.fields.flat});if(Object.keys(config).length!=0){(function(settings){settings.each(function(setting){(function(app,tab){kb.record.set(tab.panel,app,setting.setting);tab.label.html(setting.label)})({id:vars.app.id,fields:vars.app.fields.tab},kb.config[PLUGIN_ID].tabbed.add())})})(JSON.parse(config.tab));(function(setting){(function(app){kb.record.set(container.main.elm(".kb-flat"),
-app,setting)})({id:vars.app.id,fields:vars.app.fields.flat})})(JSON.parse(config.flat))}else kb.config[PLUGIN_ID].tabbed.add()})})})(kintone.$PLUGIN_ID);
-kb.constants=kb.extend({config:{caption:{color:{en:"Field Coloring",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9\u914d\u8272",zh:"\u5b57\u6bb5\u914d\u8272"},display:{en:"Field Display Switching",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9\u8868\u793a\u5207\u66ff",zh:"\u5b57\u6bb5\u663e\u793a\u5207\u6362",show:{en:"Display",ja:"\u8868\u793a\u3059\u308b",zh:"\u663e\u793a"},hide:{en:"Hide",ja:"\u8868\u793a\u3057\u306a\u3044",zh:"\u9690\u85cf"}},editable:{en:"Field Edit Restriction",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9\u7de8\u96c6\u5236\u9650",
-zh:"\u5b57\u6bb5\u7f16\u8f91\u9650\u5236",enable:{en:"Enabled",ja:"\u6709\u52b9",zh:"\u6709\u6548"},disable:{en:"Disabled",ja:"\u7121\u52b9",zh:"\u65e0\u6548"}},toggle:{en:"Group Toggle",ja:"\u30b0\u30eb\u30fc\u30d7\u958b\u9589",zh:"\u7ec4\u522b\u5f00\u95ed",open:{en:"Open",ja:"\u958b\u3051\u308b",zh:"\u6253\u5f00"},close:{en:"Close",ja:"\u9589\u3058\u308b",zh:"\u5173\u95ed"}},page:{en:"Allow action page",ja:"\u52d5\u4f5c\u30da\u30fc\u30b8",zh:"\u5141\u8bb8\u52a8\u4f5c",create:{en:"Record Create Page",
-ja:"\u30ec\u30b3\u30fc\u30c9\u8ffd\u52a0\u753b\u9762",zh:"\u8bb0\u5f55\u521b\u5efa\u9875\u9762"},detail:{en:"Record Detail Page",ja:"\u30ec\u30b3\u30fc\u30c9\u8a73\u7d30\u753b\u9762",zh:"\u8bb0\u5f55\u8be6\u60c5\u9875"},edit:{en:"Record Edit Page",ja:"\u30ec\u30b3\u30fc\u30c9\u7de8\u96c6\u753b\u9762",zh:"\u8bb0\u5f55\u7f16\u8f91\u9875"},print:{en:"Record Print Page",ja:"\u30ec\u30b3\u30fc\u30c9\u5370\u5237\u753b\u9762",zh:"\u8bb0\u5f55\u6253\u5370\u9875"}},reuse:{en:"Highlighting during record reuse",
-ja:"\u30ec\u30b3\u30fc\u30c9\u518d\u5229\u7528\u6642\u306e\u5f37\u8abf\u8868\u793a",zh:"\u8bb0\u5f55\u518d\u5229\u7528\u65f6\u7684\u9ad8\u4eae\u663e\u793a"}},description:{reuse:{en:"When reusing a record, please specify the color you want to change the background color of the button area to.",ja:"\u30ec\u30b3\u30fc\u30c9\u3092\u518d\u5229\u7528\u3057\u305f\u6642\u306b\u30dc\u30bf\u30f3\u30a8\u30ea\u30a2\u306e\u80cc\u666f\u8272\u3092\u5909\u66f4\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u305d\u306e\u8272\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5f53\u91cd\u590d\u4f7f\u7528\u8bb0\u5f55\u65f6\uff0c\u8bf7\u6307\u5b9a\u60a8\u5e0c\u671b\u66f4\u6539\u6309\u94ae\u533a\u57df\u7684\u80cc\u666f\u989c\u8272\u3002"}},prompt:{color:{backcolor:{en:"BackColor",ja:"\u80cc\u666f\u8272",zh:"\u80cc\u666f\u989c\u8272"},forecolor:{en:"ForeColor",ja:"\u524d\u666f\u8272",zh:"\u524d\u666f\u989c\u8272"},reusecolor:{en:"Background color when reused",ja:"\u518d\u5229\u7528\u6642\u306e\u80cc\u666f\u8272",zh:"\u91cd\u65b0\u4f7f\u7528\u65f6\u7684\u80cc\u666f\u8272"}}}}},
-kb.constants);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	kb.field.load(kintone.app.getId()).then((fieldInfos) => {
+		kb.config[PLUGIN_ID].build(
+			{
+				submit:(container,config) => {
+					var error=false;
+					config.tab=[];
+					config.flat={};
+					((app) => {
+						kb.config[PLUGIN_ID].tabbed.tabs.some((item) => {
+							var res=kb.record.get(item.panel,app);
+							if (!res.error)
+							{
+								res.record.color.value=res.record.color.value.filter((item) => item.value.field.value);
+								res.record.editable.value=res.record.editable.value.filter((item) => item.value.field.value);
+								res.record.display.value=res.record.display.value.filter((item) => item.value.field.value);
+								res.record.toggle.value=res.record.toggle.value.filter((item) => item.value.field.value);
+								config.tab.push({label:item.label.html(),setting:res.record});
+							}
+							else
+							{
+								kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);
+								kb.config[PLUGIN_ID].tabbed.activate(item);
+								error=true;
+							}
+							return error;
+						});
+					})({
+						id:vars.app.id,
+						fields:vars.app.fields.tab
+					});
+					((app) => {
+						var res=kb.record.get(container.main.elm('.kb-flat'),app);
+						if (!res.error) config.flat=res.record;
+						else
+						{
+							kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);
+							error=true;
+						}
+					})({
+						id:vars.app.id,
+						fields:vars.app.fields.flat
+					});
+					config.tab=JSON.stringify(config.tab);
+					config.flat=JSON.stringify(config.flat);
+					return !(error)?config:false;
+				}
+			},
+			(container,config) => {
+				vars.app={
+					id:PLUGIN_ID,
+					fields:{
+						tab:{
+							page:{
+								code:'page',
+								type:'CHECK_BOX',
+								label:'',
+								required:true,
+								noLabel:true,
+								options:[
+									{index:0,label:'create'},
+									{index:1,label:'edit'},
+									{index:2,label:'detail'},
+									{index:3,label:'print'}
+								]
+							},
+							color:{
+								code:'color',
+								type:'SUBTABLE',
+								label:'',
+								noLabel:true,
+								fields:{
+									field:{
+										code:'field',
+										type:'DROP_DOWN',
+										label:'',
+										required:false,
+										noLabel:true,
+										options:[]
+									},
+									backcolor:{
+										code:'backcolor',
+										type:'COLOR',
+										label:'',
+										required:false,
+										noLabel:true,
+										placeholder:kb.constants.config.prompt.color.backcolor[kb.operator.language]
+									},
+									forecolor:{
+										code:'forecolor',
+										type:'COLOR',
+										label:'',
+										required:false,
+										noLabel:true,
+										placeholder:kb.constants.config.prompt.color.forecolor[kb.operator.language]
+									}
+								}
+							},
+							editable:{
+								code:'editable',
+								type:'SUBTABLE',
+								label:'',
+								noLabel:true,
+								fields:{
+									field:{
+										code:'field',
+										type:'DROP_DOWN',
+										label:'',
+										required:false,
+										noLabel:true,
+										options:[]
+									},
+									state:{
+										code:'state',
+										type:'DROP_DOWN',
+										label:'',
+										required:false,
+										noLabel:true,
+										options:[
+											{index:0,label:'disable'},
+											{index:1,label:'enable'}
+										]
+									}
+								}
+							},
+							display:{
+								code:'display',
+								type:'SUBTABLE',
+								label:'',
+								noLabel:true,
+								fields:{
+									field:{
+										code:'field',
+										type:'DROP_DOWN',
+										label:'',
+										required:false,
+										noLabel:true,
+										options:[]
+									},
+									state:{
+										code:'state',
+										type:'DROP_DOWN',
+										label:'',
+										required:false,
+										noLabel:true,
+										options:[
+											{index:0,label:'hide'},
+											{index:1,label:'show'}
+										]
+									}
+								}
+							},
+							toggle:{
+								code:'toggle',
+								type:'SUBTABLE',
+								label:'',
+								noLabel:true,
+								fields:{
+									field:{
+										code:'field',
+										type:'DROP_DOWN',
+										label:'',
+										required:false,
+										noLabel:true,
+										options:[]
+									},
+									state:{
+										code:'state',
+										type:'DROP_DOWN',
+										label:'',
+										required:false,
+										noLabel:true,
+										options:[
+											{index:0,label:'open'},
+											{index:1,label:'close'}
+										]
+									}
+								}
+							}
+						},
+						flat:{
+							reusecolor:{
+								code:'reusecolor',
+								type:'COLOR',
+								label:'',
+								required:false,
+								noLabel:true,
+								placeholder:kb.constants.config.prompt.color.reusecolor[kb.operator.language]
+							}
+						}
+					}
+				};
+				((fieldInfos) => {
+					for (var key in fieldInfos) vars.app.fields.tab[key]=fieldInfos[key];
+				})(kb.config[PLUGIN_ID].ui.fields.conditions.get(fieldInfos));
+				((fieldInfos) => {
+					for (var key in fieldInfos) vars.app.fields.tab[key]=fieldInfos[key];
+				})(kb.config[PLUGIN_ID].ui.fields.users.get(fieldInfos));
+				/* tabbed */
+				kb.config[PLUGIN_ID].tabbed=new KintoneBoosterConfigTabbed(
+					container,
+					{
+						add:(tab) => {
+							((app) => {
+								tab.tables={
+									color:kb.table.activate(kb.table.create(app.fields.color),app),
+									display:kb.table.activate(kb.table.create(app.fields.display),app),
+									editable:kb.table.activate(kb.table.create(app.fields.editable),app),
+									toggle:kb.table.activate(kb.table.create(app.fields.toggle),app),
+								};
+								tab.panel.addClass('kb-scope').attr('form-id','form_'+app.id)
+								.append(
+									kb.config[PLUGIN_ID].ui.fields.users.set(kb.config[PLUGIN_ID].ui.fields.conditions.set(kb.create('div').addClass('kb-config-tabbed-panel-block'),app),app)
+									.append(kb.create('h1').html(kb.constants.config.caption.page[kb.operator.language]))
+									.append(
+										kb.create('section')
+										.append(kb.field.activate(((res) => {
+											res.elms('[type=checkbox]').each((element,index) => {
+												element.closest('label').elm('span').html(kb.constants.config.caption.page[element.val()][kb.operator.language]);
+											});
+											return res;
+										})(kb.field.create(app.fields.page)),app))
+									)
+								)
+								.append(
+									kb.create('div')
+									.append(kb.create('h1').html(kb.constants.config.caption.color[kb.operator.language]))
+									.append(
+										kb.create('section')
+										.append(((table) => {
+											table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+												result.push({code:current.code,label:current.label});
+												return result;
+											}),'label','code');
+											table.elm('thead').hide();
+											return table;
+										})(tab.tables.color))
+									)
+								)
+								.append(
+									kb.create('div')
+									.append(kb.create('h1').html(kb.constants.config.caption.editable[kb.operator.language]))
+									.append(
+										kb.create('section')
+										.append(((table) => {
+											table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+												if (!fieldInfos.disables.includes(current.code)) result.push({code:current.code,label:current.label});
+												return result;
+											}),'label','code');
+											table.template.elm('[field-id=state]').elms('option').each((element,index) => {
+												element.html(kb.constants.config.caption.editable[element.val()][kb.operator.language]);
+											});
+											table.elm('thead').hide();
+											return table;
+										})(tab.tables.editable))
+									)
+								)
+								.append(
+									kb.create('div')
+									.append(kb.create('h1').html(kb.constants.config.caption.display[kb.operator.language]))
+									.append(
+										kb.create('section')
+										.append(((table) => {
+											table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+												result.push({code:current.code,label:current.label});
+												return result;
+											},true,true),'label','code');
+											table.template.elm('[field-id=state]').elms('option').each((element,index) => {
+												element.html(kb.constants.config.caption.display[element.val()][kb.operator.language]);
+											});
+											table.elm('thead').hide();
+											return table;
+										})(tab.tables.display))
+									)
+								)
+								.append(
+									kb.create('div')
+									.append(kb.create('h1').html(kb.constants.config.caption.toggle[kb.operator.language]))
+									.append(
+										kb.create('section')
+										.append(((table) => {
+											table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,false,false,true),'label','code');
+											table.template.elm('[field-id=state]').elms('option').each((element,index) => {
+												element.html(kb.constants.config.caption.toggle[element.val()][kb.operator.language]);
+											});
+											table.elm('thead').hide();
+											return table;
+										})(tab.tables.toggle))
+									)
+								);
+								tab.tables.color.addRow();
+								tab.tables.editable.addRow();
+								tab.tables.display.addRow();
+								tab.tables.toggle.addRow();
+								tab.panel.elms('input,select,textarea').each((element,index) => element.initialize());
+							})({
+								id:vars.app.id,
+								fields:vars.app.fields.tab
+							});
+						},
+						copy:(source,destination) => {
+							((app) => {
+								kb.record.set(destination.panel,app,kb.record.get(source.panel,app,true).record);
+							})({
+								id:vars.app.id,
+								fields:vars.app.fields.tab
+							});
+						},
+						del:(index) => {}
+					}
+				);
+				/* flat */
+				((app) => {
+					container.main.append(
+						kb.create('div').addClass('kb-flat kb-scope').attr('form-id','form_'+app.id)
+						.append(kb.create('h1').html(kb.constants.config.caption.reuse[kb.operator.language]))
+						.append(
+							kb.create('section')
+							.append(kb.create('p').html(kb.constants.config.description.reuse[kb.operator.language]))
+							.append(kb.field.activate(kb.field.create(app.fields.reusecolor),app))
+						)
+					);
+					container.main.elms('input,select,textarea').each((element,index) => element.initialize());
+				})({
+					id:vars.app.id,
+					fields:vars.app.fields.flat
+				});
+				/* setup */
+				if (Object.keys(config).length!=0)
+				{
+					((settings) => {
+						settings.each((setting) => {
+							((app,tab) => {
+								kb.record.set(tab.panel,app,setting.setting);
+								tab.label.html(setting.label);
+							})(
+								{
+									id:vars.app.id,
+									fields:vars.app.fields.tab
+								},
+								kb.config[PLUGIN_ID].tabbed.add()
+							);
+						});
+					})(JSON.parse(config.tab));
+					((setting) => {
+						((app) => {
+							kb.record.set(container.main.elm('.kb-flat'),app,setting);
+						})({
+							id:vars.app.id,
+							fields:vars.app.fields.flat
+						});
+					})(JSON.parse(config.flat));
+				}
+				else kb.config[PLUGIN_ID].tabbed.add();
+			}
+		);
+	});
+})(kintone.$PLUGIN_ID);
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	config:{
+		caption:{
+			color:{
+				en:'Field Coloring',
+				ja:'フィールド配色',
+				zh:'字段配色'
+			},
+			display:{
+				en:'Field Display Switching',
+				ja:'フィールド表示切替',
+				zh:'字段显示切换',
+				show:{
+					en:'Display',
+					ja:'表示する',
+					zh:'显示'
+				},
+				hide:{
+					en:'Hide',
+					ja:'表示しない',
+					zh:'隐藏'
+				}
+			},
+			editable:{
+				en:'Field Edit Restriction',
+				ja:'フィールド編集制限',
+				zh:'字段编辑限制',
+				enable:{
+					en:'Enabled',
+					ja:'有効',
+					zh:'有效'
+				},
+				disable:{
+					en:'Disabled',
+					ja:'無効',
+					zh:'无效'
+				}
+			},
+			toggle:{
+				en:'Group Toggle',
+				ja:'グループ開閉',
+				zh:'组别开闭',
+				open:{
+					en:'Open',
+					ja:'開ける',
+					zh:'打开'
+				},
+				close:{
+					en:'Close',
+					ja:'閉じる',
+					zh:'关闭'
+				}
+			},
+			page:{
+				en:'Allow action page',
+				ja:'動作ページ',
+				zh:'允许动作',
+				create:{
+					en:'Record Create Page',
+					ja:'レコード追加画面',
+					zh:'记录创建页面'
+				},
+				detail:{
+					en:'Record Detail Page',
+					ja:'レコード詳細画面',
+					zh:'记录详情页'
+				},
+				edit:{
+					en:'Record Edit Page',
+					ja:'レコード編集画面',
+					zh:'记录编辑页'
+				},
+				print:{
+					en:'Record Print Page',
+					ja:'レコード印刷画面',
+					zh:'记录打印页'
+				}
+			},
+			reuse:{
+				en:'Highlighting during record reuse',
+				ja:'レコード再利用時の強調表示',
+				zh:'记录再利用时的高亮显示'
+			}
+		},
+		description:{
+			reuse:{
+				en:'When reusing a record, please specify the color you want to change the background color of the button area to.',
+				ja:'レコードを再利用した時にボタンエリアの背景色を変更したい場合は、その色を指定して下さい。',
+				zh:'当重复使用记录时，请指定您希望更改按钮区域的背景颜色。'
+			}
+		},
+		prompt:{
+			color:{
+				backcolor:{
+					en:'BackColor',
+					ja:'背景色',
+					zh:'背景颜色'
+				},
+				forecolor:{
+					en:'ForeColor',
+					ja:'前景色',
+					zh:'前景颜色'
+				},
+				reusecolor:{
+					en:'Background color when reused',
+					ja:'再利用時の背景色',
+					zh:'重新使用时的背景色'
+				}
+			}
+		}
+	}
+},kb.constants);
