@@ -5,7 +5,304 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(n){var q,g,h,k=function(a,c){return new Promise(function(r,e){r()})};kintone.events.on("app.record.create.submit.success app.record.detail.process.proceed app.record.detail.show app.record.edit.submit.success app.record.index.show mobile.app.record.create.submit.success mobile.app.record.detail.process.proceed mobile.app.record.detail.show mobile.app.record.edit.submit.success mobile.app.record.index.show".split(" "),function(a){return new Promise(function(c,r){(function(e,v){g=e;h=v;kb.config[n].config.get().then(function(p){0!=
-Object.keys(p).length?kb.field.load(kb.config[n].app,!0).then(function(w){q=kb.config[n].app;try{(function(d){if(0!=d.length)switch(h){case "create":case "edit":k(d,a.record).then(function(b){return c(a)});break;case "process":(function(b){0!=b.length?k(b,a.record).then(function(l){return c(a)}):c(a)})(d.filter(function(b){return b.action.value==a.action.value+":"+a.status.value+":"+a.nextStatus.value}));break;case "detail":d.each(function(b,l){kb.button.create(g,h,"kb-upsert-button"+l.toString(),
-b.label.value,b.message.value,function(){return k([b],a.record).then(function(f){return kb.alert("Done!")})})});c(a);break;case "index":d.each(function(b,l){b.view.value&&b.view.value!=a.viewId.toString()||kb.button.create(g,h,"kb-upsert-button"+l.toString(),b.label.value,b.message.value,function(){kb.view.records.get(q,(g?kintone.mobile.app:kintone.app).getQueryCondition()).then(function(f){var u=function(m,t){k([b],f[m]).then(function(x){m++;m<f.length?u(m,t):t()})};0!=f.length?u(0,function(){return kb.alert("Done!")}):
-kb.alert("There are no records.")})["catch"](function(f){return kb.alert(kb.error.parse(f))})})}),c(a)}else c(a)})(JSON.parse(p.tab).reduce(function(d,b){(g?["both","mobile"]:["both","pc"]).includes(b.setting.device.value)&&b.setting.event.value.includes(h)&&d.push(b.setting);return d},[]))}catch(d){kb.alert(kb.error.parse(d)),c(a)}})["catch"](function(w){return c(a)}):c(a)})["catch"](function(p){return c(a)})})("mobile"==a.type.split(".").first(),function(e){switch(e){case "submit":e=a.type.split(".").slice(-3).first()}return e}(a.type.split(".").slice(-2).first()))})})})(kintone.$PLUGIN_ID);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	var apply=(settings,record,silent=false) => {
+		return new Promise((resolve,reject) => {
+			var passphrase='';
+			var recurse=(index,callback) => {
+				var finish=() => {
+					index++;
+					if (!silent) kb.progressUpdate();
+					if (index<settings.length) recurse(index,callback);
+					else callback();
+				};
+				((setting) => {
+					var result=kb.filter.scan(vars.app,record,setting.condition.value);
+					if (result)
+					{
+						kb.filter.auth(setting.user.value,setting.organization.value,setting.group.value)
+						.then((auth) => {
+							if (auth)
+							{
+								var assign=(target,record,row) => {
+									if (setting.format.value=='HTML') target=target.replace(/\r/g,'').replace(/\n/g,'<br>');
+									for (var key in record)
+										target=target.replace(new RegExp('%'+key+'%','g'),kb.field.stringify(vars.fieldInfos.parallelize[key],record[key].value,' / '));
+									for (var key in row)
+										target=target.replace(new RegExp('%'+key+'%','g'),kb.field.stringify(vars.fieldInfos.parallelize[key],row[key].value,' / '));
+									return target;
+								};
+								((bodies) => {
+									var send=(index) => {
+										((body) => {
+											var download=(index,callback) => {
+												if (body.attachment.length!=0)
+												{
+													kb.file.download(body.attachment[index],true)
+													.then((resp) => {
+														kb.field.blobToBase64(resp,(base64) => {
+															body.attachment[index].data=base64;
+															index++;
+															if (index<body.attachment.length) download(index,callback);
+															else callback();
+														})
+													})
+													.catch((error) => {
+														kb.alert(kb.error.parse(error));
+														reject();
+													});
+												}
+												else callback();
+											};
+											download(0,() => {
+												kb.encrypt(JSON.stringify(body.data),passphrase).then((encrypted) => {
+													fetch(
+														'https://api.kintone-booster.com/mail/'+kb.operator.language,
+														{
+															method:'POST',
+															headers:{
+																'X-Requested-With':'XMLHttpRequest'
+															},
+															body:JSON.stringify((() => {
+																body.data=encrypted.data;
+																body.iv=encrypted.iv;
+																body.tag=encrypted.tag;
+																return body;
+															})())
+														}
+													)
+													.then((response) => {
+														response.json().then((json) => {
+															switch (response.status)
+															{
+																case 200:
+																	index++;
+																	if (index<bodies.length) send(index);
+																	else finish();
+																	break;
+																default:
+																	kb.alert(kb.error.parse(json));
+																	reject();
+																	break;
+															}
+														});
+													})
+													.catch((error) => {
+														kb.alert(kb.error.parse(error));
+														reject();
+													});
+												})
+												.catch((error) => {
+													reject();
+												});
+											});
+										})(bodies[index]);
+									};
+									if (bodies.length!=0) send(0);
+								})((() => {
+									var res=[];
+									((vars.fieldInfos.parallelize[setting.to.value].tableCode)?result[vars.fieldInfos.parallelize[setting.to.value].tableCode].value:[result]).each((record,index) => {
+										if (record[setting.to.value].value)
+											res.push({
+												data:{
+													mail:setting.mail.value,
+													sender:setting.sender.value,
+													host:setting.host.value,
+													port:setting.port.value,
+													author:setting.author.value,
+													pwd:setting.pwd.value,
+													secure:setting.secure.value,
+													to:record[setting.to.value].value,
+													cc:setting.cc.value,
+													bcc:setting.bcc.value,
+													html:(setting.format.value=='HTML')
+												},
+												subject:assign(setting.subject.value,result,(vars.fieldInfos.parallelize[setting.to.value].tableCode)?record:{}),
+												body:assign(setting.body.value,result,(vars.fieldInfos.parallelize[setting.to.value].tableCode)?record:{}),
+												attachment:(() => {
+													var res=[];
+													if (setting.attachment.value)
+														if (setting.attachment.value in vars.fieldInfos.parallelize)
+															res=((record) => {
+																return record[setting.attachment.value].value;
+															})(((vars.fieldInfos.parallelize[setting.attachment.value].tableCode)?record:result));
+													return res;
+												})()
+											});
+									});
+									return res;
+								})());
+							}
+							else finish();
+						})
+						.catch((error) => {
+							kb.alert(kb.error.parse(error));
+							reject();
+						});
+					}
+					else finish();
+				})(settings[index]);
+			};
+			fetch(
+				'https://api.kintone-booster.com/mail/'+kb.operator.language,
+				{
+					method:'GET',
+					headers:{
+						'X-Requested-With':'XMLHttpRequest'
+					}
+				}
+			)
+			.then((response) => {
+				response.json().then((json) => {
+					switch (response.status)
+					{
+						case 200:
+							passphrase=json.passphrase;
+							if (!silent) kb.progressStart(settings.length);
+							recurse(0,() => {
+								if (!silent) kb.progressEnd();
+								resolve();
+							});
+							break;
+						default:
+							kb.alert(kb.error.parse(json));
+							reject();
+							break;
+					}
+				});
+			})
+			.catch((error) => {
+				kb.alert(kb.error.parse(error));
+				reject();
+			});
+		});
+	};
+	kintone.events.on([
+		'app.record.create.submit.success',
+		'app.record.detail.process.proceed',
+		'app.record.detail.show',
+		'app.record.edit.submit.success',
+		'app.record.index.show',
+		'mobile.app.record.create.submit.success',
+		'mobile.app.record.detail.process.proceed',
+		'mobile.app.record.detail.show',
+		'mobile.app.record.edit.submit.success',
+		'mobile.app.record.index.show'
+	],(e) => {
+		return new Promise((resolve,reject) => {
+			((mobile,type) => {
+				vars.mobile=mobile;
+				vars.type=type;
+				/* get config */
+				kb.config[PLUGIN_ID].config.get()
+				.then((config) => {
+					if (Object.keys(config).length!=0)
+					{
+						kb.field.load(kb.config[PLUGIN_ID].app,true).then((fieldInfos) => {
+							vars.app={
+								id:kb.config[PLUGIN_ID].app,
+								fields:fieldInfos.origin
+							}
+							vars.fieldInfos=fieldInfos;
+							try
+							{
+								((settings) => {
+									if (settings.length!=0)
+									{
+										switch (vars.type)
+										{
+											case 'create':
+											case 'edit':
+												apply(settings,e.record).then((resp) => resolve(e)).catch(() => {});
+												break;
+											case 'process':
+												((settings) => {
+													if (settings.length!=0) apply(settings,e.record).then((resp) => resolve(e)).catch(() => {});
+													else resolve(e);
+												})(settings.filter((item) => item.action.value==e.action.value+':'+e.status.value+':'+e.nextStatus.value));
+												break;
+											case 'detail':
+												settings.each((setting,index) => {
+													kb.button.create(
+														vars.mobile,
+														vars.type,
+														'kb-upsert-button'+index.toString(),
+														setting.label.value,
+														setting.message.value,
+														() => apply([setting],e.record).then((resp) => kb.alert('Done!')).catch(() => {}));
+												})
+												resolve(e);
+												break;
+											case 'index':
+												settings.each((setting,index) => {
+													if (!setting.view.value || setting.view.value==e.viewId.toString())
+														kb.button.create(
+															vars.mobile,
+															vars.type,
+															'kb-upsert-button'+index.toString(),
+															setting.label.value,
+															setting.message.value,
+															() => {
+																kb.view.records.get(
+																	vars.app.id,
+																	((vars.mobile)?kintone.mobile.app:kintone.app).getQueryCondition()
+																)
+																.then((records) => {
+																	var recurse=(index,callback) => {
+																		apply([setting],records[index],true)
+																		.then((resp) => {
+																			kb.progressUpdate();
+																			index++;
+																			if (index<records.length) recurse(index,callback);
+																			else callback();
+																		})
+																		.catch(() => {});
+																	};
+																	if (records.length!=0)
+																	{
+																		kb.progressStart(records.length);
+																		recurse(0,() => kb.alert('Done!'));
+																	}
+																	else kb.alert('There are no records.');
+																})
+																.catch((error) => kb.alert(kb.error.parse(error)))
+															});
+												})
+												resolve(e);
+												break;
+										}
+									}
+									else resolve(e);
+								})(JSON.parse(config.tab).reduce((result,current) => {
+									if (((vars.mobile)?['both','mobile']:['both','pc']).includes(current.setting.device.value) && current.setting.event.value.includes(vars.type)) result.push(current.setting);
+									return result;
+								},[]));
+							}
+							catch(error)
+							{
+								kb.alert(kb.error.parse(error));
+								resolve(e);
+							}
+						})
+						.catch((error) => resolve(e));
+					}
+					else resolve(e);
+				})
+				.catch((error) => resolve(e));
+			})(
+				e.type.split('.').first()=='mobile',
+				((type) => {
+					switch (type)
+					{
+						case 'submit':
+							type=e.type.split('.').slice(-3).first();
+							break;
+					}
+					return type;
+				})(e.type.split('.').slice(-2).first())
+			);
+		});
+	});
+})(kintone.$PLUGIN_ID);

@@ -5,123 +5,2376 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-var $jscomp=$jscomp||{};$jscomp.scope={};$jscomp.arrayIteratorImpl=function(b){var a=0;return function(){return a<b.length?{done:!1,value:b[a++]}:{done:!0}}};$jscomp.arrayIterator=function(b){return{next:$jscomp.arrayIteratorImpl(b)}};$jscomp.makeIterator=function(b){var a="undefined"!=typeof Symbol&&Symbol.iterator&&b[Symbol.iterator];if(a)return a.call(b);if("number"==typeof b.length)return $jscomp.arrayIterator(b);throw Error(String(b)+" is not an iterable or ArrayLike");};
-$jscomp.arrayFromIterator=function(b){for(var a,f=[];!(a=b.next()).done;)f.push(a.value);return f};$jscomp.arrayFromIterable=function(b){return b instanceof Array?b:$jscomp.arrayFromIterator($jscomp.makeIterator(b))};$jscomp.ASSUME_ES5=!1;$jscomp.ASSUME_NO_NATIVE_MAP=!1;$jscomp.ASSUME_NO_NATIVE_SET=!1;$jscomp.SIMPLE_FROUND_POLYFILL=!1;$jscomp.ISOLATE_POLYFILLS=!1;$jscomp.FORCE_POLYFILL_PROMISE=!1;$jscomp.FORCE_POLYFILL_PROMISE_WHEN_NO_UNHANDLED_REJECTION=!1;
-$jscomp.objectCreate=$jscomp.ASSUME_ES5||"function"==typeof Object.create?Object.create:function(b){var a=function(){};a.prototype=b;return new a};$jscomp.defineProperty=$jscomp.ASSUME_ES5||"function"==typeof Object.defineProperties?Object.defineProperty:function(b,a,f){if(b==Array.prototype||b==Object.prototype)return b;b[a]=f.value;return b};
-$jscomp.getGlobal=function(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var a=0;a<b.length;++a){var f=b[a];if(f&&f.Math==Math)return f}throw Error("Cannot find global object");};$jscomp.global=$jscomp.getGlobal(this);$jscomp.IS_SYMBOL_NATIVE="function"===typeof Symbol&&"symbol"===typeof Symbol("x");$jscomp.TRUST_ES6_POLYFILLS=!$jscomp.ISOLATE_POLYFILLS||$jscomp.IS_SYMBOL_NATIVE;$jscomp.polyfills={};
-$jscomp.propertyToPolyfillSymbol={};$jscomp.POLYFILL_PREFIX="$jscp$";var $jscomp$lookupPolyfilledValue=function(b,a,f){if(!f||null!=b){f=$jscomp.propertyToPolyfillSymbol[a];if(null==f)return b[a];f=b[f];return void 0!==f?f:b[a]}};$jscomp.polyfill=function(b,a,f,c){a&&($jscomp.ISOLATE_POLYFILLS?$jscomp.polyfillIsolated(b,a,f,c):$jscomp.polyfillUnisolated(b,a,f,c))};
-$jscomp.polyfillUnisolated=function(b,a,f,c){f=$jscomp.global;b=b.split(".");for(c=0;c<b.length-1;c++){var e=b[c];if(!(e in f))return;f=f[e]}b=b[b.length-1];c=f[b];a=a(c);a!=c&&null!=a&&$jscomp.defineProperty(f,b,{configurable:!0,writable:!0,value:a})};
-$jscomp.polyfillIsolated=function(b,a,f,c){var e=b.split(".");b=1===e.length;c=e[0];c=!b&&c in $jscomp.polyfills?$jscomp.polyfills:$jscomp.global;for(var p=0;p<e.length-1;p++){var d=e[p];if(!(d in c))return;c=c[d]}e=e[e.length-1];f=$jscomp.IS_SYMBOL_NATIVE&&"es6"===f?c[e]:null;a=a(f);null!=a&&(b?$jscomp.defineProperty($jscomp.polyfills,e,{configurable:!0,writable:!0,value:a}):a!==f&&(void 0===$jscomp.propertyToPolyfillSymbol[e]&&(f=1E9*Math.random()>>>0,$jscomp.propertyToPolyfillSymbol[e]=$jscomp.IS_SYMBOL_NATIVE?
-$jscomp.global.Symbol(e):$jscomp.POLYFILL_PREFIX+f+"$"+e),$jscomp.defineProperty(c,$jscomp.propertyToPolyfillSymbol[e],{configurable:!0,writable:!0,value:a})))};
-$jscomp.getConstructImplementation=function(){function b(){function f(){}new f;Reflect.construct(f,[],function(){});return new f instanceof f}if($jscomp.TRUST_ES6_POLYFILLS&&"undefined"!=typeof Reflect&&Reflect.construct){if(b())return Reflect.construct;var a=Reflect.construct;return function(f,c,e){f=a(f,c);e&&Reflect.setPrototypeOf(f,e.prototype);return f}}return function(f,c,e){void 0===e&&(e=f);e=$jscomp.objectCreate(e.prototype||Object.prototype);return Function.prototype.apply.call(f,e,c)||
-e}};$jscomp.construct={valueOf:$jscomp.getConstructImplementation}.valueOf();$jscomp.underscoreProtoCanBeSet=function(){var b={a:!0},a={};try{return a.__proto__=b,a.a}catch(f){}return!1};$jscomp.setPrototypeOf=$jscomp.TRUST_ES6_POLYFILLS&&"function"==typeof Object.setPrototypeOf?Object.setPrototypeOf:$jscomp.underscoreProtoCanBeSet()?function(b,a){b.__proto__=a;if(b.__proto__!==a)throw new TypeError(b+" is not extensible");return b}:null;
-$jscomp.inherits=function(b,a){b.prototype=$jscomp.objectCreate(a.prototype);b.prototype.constructor=b;if($jscomp.setPrototypeOf){var f=$jscomp.setPrototypeOf;f(b,a)}else for(f in a)if("prototype"!=f)if(Object.defineProperties){var c=Object.getOwnPropertyDescriptor(a,f);c&&Object.defineProperty(b,f,c)}else b[f]=a[f];b.superClass_=a.prototype};
-window.KintoneBoosterRecord=function(){this.page={add:function(b,a){return kintone.api.url("/k/",!0).replace(/\.json/g,"")+(b?"m/"+a:a)+"/edit"},detail:function(b,a,f){return kintone.api.url("/k/",!0).replace(/\.json/g,"")+(b?"m/"+a:a)+"/show"+(b?"?":"#")+"record="+f},edit:function(b,a,f){return kintone.api.url("/k/",!0).replace(/\.json/g,"")+(b?"m/"+a:a)+"/show"+(b?"?":"#")+"record="+f+(b?"#":"&")+"mode=edit"}}};
-window.KintoneBoosterRecord.prototype.create=function(b,a){var f=this;a=void 0===a?!0:a;var c={},e;for(e in b.fields)(function(p){switch(p.type){case "CHECK_BOX":case "CONDITION":case "FILE":case "GROUP_SELECT":case "MULTI_SELECT":case "ORGANIZATION_SELECT":case "USER_SELECT":c[e]={value:[]};break;case "RADIO_BUTTON":(function(d){c[e]={value:0!=d.length?d.reduce(function(g,k){g[k.index]=k;return g},Array(d.length).fill("")).first().label:""}})(Object.values(p.options));break;case "SUBTABLE":c[e]=
-{value:[{value:f.create(p,!1)}]};break;default:kb.field.reserved.includes(p.type)||(c[e]={value:""})}})(b.fields[e]);a&&(c.$id={value:""});return c};
-window.KintoneBoosterRecord.prototype.get=function(b,a,f){var c=this,e={error:!1,record:{}};if(!f)for(var p in a.fields)if(function(d,g){if(d)switch("SUBTABLE"!=g.type&&(d=d.elm(".kb-field-value")),g.type){case "CHECK_BOX":case "MULTI_SELECT":g.required&&!d.elms("input").some(function(k){return k.checked})&&(d.alert(kb.constants.common.message.invalid.required[kb.operator.language]),e.error=!0);break;case "FILE":case "GROUP_SELECT":case "ORGANIZATION_SELECT":case "USER_SELECT":g.required&&function(k){0==
-k.length&&(d.alert(kb.constants.common.message.invalid.required[kb.operator.language]),e.error=!0)}(d.elm("input").val()?JSON.parse(d.elm("input").val()):[]);break;case "SUBTABLE":break;default:d.elms("input,select,textarea").each(function(k,l){k.checkValidity()||(e.error=!0)})}}(b.elm('[field-id="'+CSS.escape(p)+'"]'),a.fields[p]),e.error)break;if(e.error)kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);else{for(p in a.fields)(function(d,g){if(d)switch("SUBTABLE"!=g.type&&
-(d=d.elm(".kb-field-value")),g.type){case "CALC":e.record[g.code]={value:null};break;case "CHECK_BOX":case "MULTI_SELECT":e.record[g.code]={value:function(){var k=[];d.elms("input").each(function(l,r){l.checked&&!l.parentNode.hasClass("kb-hidden")&&k.push(l.val())});return k}()};break;case "DATETIME":e.record[g.code]={value:function(){var k="";d.elm("input").val()&&(d.elm(".kb-hour").elm("select").val()||d.elm(".kb-hour").elm("select").val("00"),d.elm(".kb-minute").elm("select").val()||d.elm(".kb-minute").elm("select").val("00"));
-d.elm("input").val()&&d.elm(".kb-hour").elm("select").val()&&d.elm(".kb-minute").elm("select").val()&&(k=(d.elm("input").val()+" "+d.elm(".kb-hour").elm("select").val()+":"+d.elm(".kb-minute").elm("select").val()+":00").parseDateTime().format("ISO"));return k}()};break;case "DROP_DOWN":e.record[g.code]={value:d.elm("select").val()};break;case "FILE":case "GROUP_SELECT":case "ORGANIZATION_SELECT":case "USER_SELECT":e.record[g.code]={value:d.elm("input").val()?JSON.parse(d.elm("input").val()):[]};break;
-case "NUMBER":e.record[g.code]={value:kb.isNumeric(d.elm("input").val())?parseFloat(d.elm("input").val()):d.elm("input").val()};break;case "RADIO_BUTTON":e.record[g.code]={value:function(){var k="";d.elms("[data-name="+g.code+"]").each(function(l,r){l.checked&&!l.parentNode.hasClass("kb-hidden")&&(k=l.val())});return k}()};break;case "MULTI_LINE_TEXT":case "RICH_TEXT":e.record[g.code]={value:d.elm("textarea").val()};break;case "SUBTABLE":e.record[g.code]={value:function(){var k=[];d.tr.each(function(l,
-r){var n=c.get(l,g,f);if(n.error)return e.error=n.error,PD_BREAK;k.push({value:n.record})});return k}()};break;case "TIME":e.record[g.code]={value:function(){var k="";d.elm(".kb-hour").elm("select").val()&&(d.elm(".kb-minute").elm("select").val()||d.elm(".kb-minute").elm("select").val("00"));d.elm(".kb-minute").elm("select").val()&&(d.elm(".kb-hour").elm("select").val()||d.elm(".kb-hour").elm("select").val("00"));d.elm(".kb-hour").elm("select").val()&&d.elm(".kb-minute").elm("select").val()&&(k=d.elm(".kb-hour").elm("select").val()+
-":"+d.elm(".kb-minute").elm("select").val());return k}()};break;default:kb.field.reserved.includes(g.type)||(e.record[g.code]={value:d.elm("input").val()})}})(b.elm('[field-id="'+CSS.escape(p)+'"]'),a.fields[p]);b.elm("[data-type=id]")&&(e.record.$id={value:b.elm("[data-type=id]").val()?parseInt(b.elm("[data-type=id]").val()):b.elm("[data-type=id]").val()})}return e};
-window.KintoneBoosterRecord.prototype.set=function(b,a,f){var c=this;return new Promise(function(e,p){var d=function(g,k,l,r){var n=[],t;for(t in l)(function(h,q,m){if(h){"disabled"in m&&(m.disabled?h.addClass("kb-disabled"):h.removeClass("kb-disabled"));"hidden"in m&&(m.hidden?h.addClass("kb-hidden"):h.removeClass("kb-hidden"));if("SUBTABLE"!=q.type)switch(h=h.elm(".kb-field-value"),"backcolor"in m&&(m.backcolor?h.addClass("kb-force-backcolor").elm(".kb-guide").css({backgroundColor:m.backcolor}):
-h.removeClass("kb-force-backcolor").elm(".kb-guide").css({backgroundColor:""})),"forecolor"in m&&(m.forecolor?h.addClass("kb-force-forecolor").elm(".kb-guide").css({color:m.forecolor}):h.removeClass("kb-force-forecolor").elm(".kb-guide").css({color:""})),q.type){case "CALC":case "CATEGORY":case "CHECK_BOX":case "CONDITION":case "CREATED_TIME":case "CREATOR":case "FILE":case "GROUP_SELECT":case "MODIFIER":case "MULTI_SELECT":case "ORGANIZATION_SELECT":case "RADIO_BUTTON":case "RECORD_NUMBER":case "REFERENCE_TABLE":case "SPACER":case "STATUS":case "STATUS_ASSIGNEE":case "UPDATED_TIME":case "USER_SELECT":"backcolor"in
-m&&h.css({backgroundColor:m.backcolor?m.backcolor:""});"forecolor"in m&&h.css({color:m.forecolor?m.forecolor:""});break;default:h.elms("input,select,textarea").each(function(u,w){"backcolor"in m&&u.css({backgroundColor:m.backcolor?m.backcolor:""});"forecolor"in m&&u.css({color:m.forecolor?m.forecolor:""})})}switch(q.type){case "CALC":case "RECORD_NUMBER":case "STATUS":h.elm(".kb-guide").html(m.value);break;case "CATEGORY":h.elm(".kb-guide").html(m.value.join("<br>"));break;case "CHECK_BOX":case "MULTI_SELECT":h.elms("input").each(function(u,
-w){u.checked=m.value.includes(u.val())});h.elm(".kb-guide").html(m.value.join("<br>"));break;case "COLOR":h.css({backgroundColor:m.value?m.value:"transparent"}).elm("input").val(m.value);h.elm(".kb-guide").html(m.value);break;case "CONDITION":h.elm(".kb-guide").empty();m.value?(h.elm("input").val(m.value),m.value.split(" and ").each(function(u,w){return h.guide(u)})):h.elm("input").val("");break;case "CREATOR":case "MODIFIER":h.elm(".kb-guide").html(m.name);break;case "CREATED_TIME":case "UPDATED_TIME":m.value?
-h.elm(".kb-guide").html((new Date(m.value)).format("Y-m-d H:i")):h.elm(".kb-guide").html("");break;case "DATETIME":if(m.value){var v=m.value.parseDateTime();h.elm("input").val(v.format("Y-m-d"));h.elm(".kb-hour").elm("select").val(v.format("H"));h.elm(".kb-minute").elm("select").val(v.format("i"));h.elm(".kb-guide").html(v.format("Y-m-d H:i"))}else h.elm("input").val(""),h.elm(".kb-hour").elm("select").val(""),h.elm(".kb-minute").elm("select").val(""),h.elm(".kb-guide").html("");break;case "DROP_DOWN":h.elm("select").val(m.value);
-h.elm(".kb-guide").html(h.elm("select").selectedText());break;case "FILE":case "GROUP_SELECT":case "ORGANIZATION_SELECT":case "USER_SELECT":h.elm(".kb-guide").empty();m.value?(h.elm("input").val(JSON.stringify(m.value)),m.value.each(function(u,w){return h.guide(u)})):h.elm("input").val("[]");break;case "LINK":h.elm("input").val(m.value);switch(q.protocol){case "MAIL":h.elm(".kb-guide").empty().append(kb.create("a").attr("href","mailto:"+m.value).html(m.value));break;case "CALL":h.elm(".kb-guide").empty().append(kb.create("a").attr("href",
-"tel:"+m.value).html(m.value));break;case "WEB":h.elm(".kb-guide").empty().append(kb.create("a").attr("href",m.value).attr("target","_blank").html(m.value))}break;case "MULTI_LINE_TEXT":case "RICH_TEXT":h.elm("textarea").val(m.value);h.elm(".kb-guide").html(m.value.replace(/\n/g,"<br>"));break;case "NUMBER":q.digit?kb.isNumeric(m.value)?(h.elm("input").val(Number(m.value).comma(q.displayScale)),h.elm(".kb-guide").html(Number(m.value).comma(q.displayScale))):(h.elm("input").val(m.value),h.elm(".kb-guide").html(m.value)):
-q.displayScale?kb.isNumeric(m.value)?(h.elm("input").val(Number(m.value).toFloor(parseInt(q.displayScale))),h.elm(".kb-guide").html(Number(m.value).toFloor(parseInt(q.displayScale)))):(h.elm("input").val(m.value),h.elm(".kb-guide").html(m.value)):(h.elm("input").val(m.value),h.elm(".kb-guide").html(m.value));q.unit&&("prefix"==q.unitPosition?h.elm(".kb-guide").html(q.unit+" "+h.elm(".kb-guide").text()):h.elm(".kb-guide").html(h.elm(".kb-guide").text()+" "+q.unit));break;case "RADIO_BUTTON":h.elms("[data-name="+
-t+"]").each(function(u,w){u.checked=m.value==u.val()});h.elm(".kb-guide").html(m.value);break;case "SPACER":break;case "STATUS_ASSIGNEE":h.elm(".kb-guide").empty();m.value&&m.value.each(function(u,w){h.elm(".kb-guide").append(kb.create("span").addClass("kb-guide-item").append(kb.create("span").addClass("kb-guide-item-label").html(u.name)))});break;case "SUBTABLE":if(0==m.value.length)h.clearRows();else{h.tr.each(function(u,w){m.value.length>w&&d(u,q,function(x){if(m.disabled)for(var y in x)x[y].disabled=
-!0;return x}(m.value.map(function(x){return x.value})[w]),function(x){return n=n.concat(x)})});for(v=h.tr.length;v<m.value.length;v++)d(h.addRow(),q,function(u){if(m.disabled)for(var w in u)u[w].disabled=!0;return u}(m.value.map(function(u){return u.value})[v]),function(u){return n=n.concat(u)});h.tr.slice(m.value.length).each(function(u,w){return h.delRow(u)})}0==h.tr.length&&function(u){m.disabled&&d(u,q,function(w){for(var x in w)w[x].disabled=!0;return w}(c.get(u,q,!0).record),function(w){return n=
-n.concat(w)})}(h.addRow());break;case "TIME":m.value?(h.elm(".kb-hour").elm("select").val(m.value.split(":")[0]),h.elm(".kb-minute").elm("select").val(m.value.split(":")[1]),h.elm(".kb-guide").html(m.value)):(h.elm(".kb-hour").elm("select").val(""),h.elm(".kb-minute").elm("select").val(""),h.elm(".kb-guide").html(""));break;default:h.elm("input").val(m.value),h.elm(".kb-guide").html(m.value)}}})(g.elm('[field-id="'+CSS.escape(t)+'"]'),k.fields[t],l[t]);"$id"in l&&g.elm("[data-type=id]")&&g.elm("[data-type=id]").val(l.$id.value);
-r(n)};d(b,a,f,function(g){b.hasOwnProperty("cleanup")&&b.cleanup();e()})})};
-window.KintoneBoosterRecordPicker=function(b,a,f){var c=KintoneBoosterDialog.call(this,999997,!1,!a)||this;c.multiSelect=a;c.prepend=f;c.type=b;c.limit=50;c.offset=0;c.table=null;c.fieldInfo={};c.records=[];c.selection=[];c.img=c.parts.icon.clone().css({top:"0px"});c.prev=c.img.clone().css({right:"4em"}).attr("src","data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAjZJREFUeNpiYKAJ6J8y8T+MzYIm0QCk6pHFmNA016ObhqKgMCefkfoOBggg6vr9Psz/LLgCBcVb6BI4gxSvQqJMAQggugYDinNYSNVAUDOxHmbCJghNRo2ENDMSG+VASoGq6RMggIY7Agbae6Limdh4ZyGgaT2QCiAphRGbyliwaALZtJ7s5EksYCTF2ehJE6fNUIUbqFIIUFQuYUskAwcAAmgUUTP3F5CUpSi0DD07TqCZxUDLQBXBfVL1sZBpmQCQoiiPsJCRIQWoES3ENAn2AykHaic+Rlr6GF8DgJGWcUx1i4lN1TS1GF8+HpC2FqGSa+QBgAAaRaNgFBBVcJDVm6BCL4uo2ouFShYaAKnzNG/6oFkKstCALm0uarS7mMi0tJ+ujT1i+79UtRhav/ZTKwewUDubULN5S5MRO4KJC9pu+kB3i6GWC4KoAWvQkxL0hFqYJOdjqIET6BLUWCwHBbsg3S2GWv4B6vsLdLUYyQGGQMqQ5omL2IKG6omL3tluFIwCkgFAgPbN6AZAGASi1XQQR3BD3aSrGhLilzZqoQK9iwu8RLnrUfFAEORKbla63NNSRbq21KPZOCQFqJIqC133wAxJt2FU+uZsCHRPF9d+QgFzq7FJlwymgHk/U3pCdgfmgpMm7PL3p5MVIU8bsTQUpbtxcRsxB6xtI9Ka02CaPL7SLdFSLUtrDi2TwJq2ZB5YOni4ApaIlm6Bvx4eQgC/8fVQwE9sLizwnc3hbwMIgobRAdIK28oCHbudAAAAAElFTkSuQmCC").on("click",function(e){c.offset-=
-c.limit;c.search()});c.next=c.img.clone().css({right:"2em"}).attr("src","data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAi1JREFUeNpiYKAa6J8y8T8Q30cXZ0LjK4AU4lMANw3GZkGXLMzJZ2QgpIskABBAVPI/Xr9DA6gBn7/rcUri9DNJACCAaO9lXICRkGZ8HmQkxWZ0g5iIdGEjNhew4NHwAKhBkWaBCxBAwwUBo+o9sWqxRZUAsamMiUDJtJ4szVAQgM8VTMRmFiAOIEszLsBCjCJcOYuQzRvwZUkWUm2jWiIZOAAQQKMIW8QV0MJcRmKyExI3EJjsNgyExchAEeiIBwNhMTIQBDriw0BYDAMfgA4QHAiLkcEBoCMcKSo1aeFjallMchxTYjFFqZpUi6mWjwes5Bp5ACCARtEoGJlNn/+0KESI7RD0U7vRTEpPRADqewN6WwwD54GWnx/Ixh5Z9TBVOn1A8B7osP6BsBgECshplzENVLZjona2JzbbUdtiogdDaGHxB2K69dS2uJDe7WqSBy+o4eMJ5IyYUOpjsksuci2+ALTQkBIXk2OxIdDSC5TGDwuJ2USQWomRidrZZBSMggEHAAHaNaMbAEEYiBLDgo7AJo7gaI7gCI5giMSAn0LLNb0XBuAlhF4LXIQQU3Q/vZfcnsPI2jNPtSZck+e66W/utCjcpPzw/DC4vAjXZPHNk/DbDxT53YvwVz6pvecACNec5aY/vAg3zb5UmUMVFitzFoSHlrklOCMa2OPQI40qLHZpIQmrlKXZwurBI06SnBYtNYUhmgdpYbj2UEIYegAwStjMiIcQQkxxA49895hLUEtfAAAAAElFTkSuQmCC").on("click",
-function(e){c.offset+=c.limit;c.search()});c.submit=c.img.clone().css({left:"0"}).attr("src","data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA7BJREFUeNpiYKAa6J8yMQFK/yfbhP9Qej7RigkpOk+U1QABRLnf92MTZ4LSDkgKHbDpNiDoHZACvIqIChCAAKIIMeLwNtxHhTn5jCTFNHoo4FLPRISZ58mJNQdCwctIauIlKRzwAYAAGqKIkUBcNwIDp4GsRAIqFoC4gBiNAaTmEOQUZkBpWfCeXJtB4AFSMRgAYoNSE9Zyg5R0TVbaRteEnK4JZkn0TAA0rIGcwPxP+4KNWAAQQKO5mVCeg2WdA8DYP0Azi6FZTACILwAtMkQSB4ndxyZHjfbNf2LaE1RNsqBMQ4phUMsdSLEDV04+gBSkRJW3pMY5E45iA2RIIxC/x9cQhEbFeiB2pHqqhlYz/TikHUGOhLZXzpNS6TNSIT2A4nY/MQUuVS0mpibD5gCqt4NwOCARaPkCuhSJ0CyZMFo5wABAAI2iUTCwLRBoLVWAVBI10NRioIUK0JYG0UUhxRaj1TiBQEs2oLWu66FcQaDcB1ItZiHUu8bmK2hQw1op78kp85lw+HY9kUGpiFRnU24xEICaMwSDD+iwBzC3UstiEJhIpBlkta+ZqJAlBahtcT2RZhhQ0+IFxDRvkdrSgVSxGJhoEqHM9wRKs/1Q9RuoGdSCSL2E+WiW7oc5Cpbl8A3Jkduufo8jAT0AWqqIRQ1RDTtSuqmw+PwANPgCWm/CgNRWJTUa9Lja03gtp0Y+xpWi5+Nr3lJsMTRFJ5JqOTV8zAANUpyW08xiIiynncV4LBekW0MO1GQiawxwFAwrABCgXau9QRCIoYQJWMENdAJlBCZQJjCOwAZugE4AG+AGygSs4AjapJra8HF3HEcx96J/jCR91uu1r8+/PDw8/k+FUGw+jzhg9gGGT+iSMjJkLoMwzgxVS5v/xKG1Jp9tA+IfIIDOPDYRMZwRRgnozogq77dxysvZvwE2Z7E4wi17h2yMyMacI5Dl1dTZDjWCixjZZKyiiFm9EAmlmjrDOvMDlc5KE9FhQOwArHU3k1MSpqgtx3FzVbRMCW8tDnURq+AyzjCe108wO4uTZ8GOykNSlYYrqWEBJiMy25Dr7SvRiWs8WuQ7OIOpSveERalg9/j5/exJeqcVYeC7gUIUBd3i+Q9R7N5y8v0n/pDl7IRbyB/e733QvxmAwK+cQE+bSmHFVjC7F5RbVRQwirgI82vPrsE6cTFuXxTPc4NHtYiLszcbEofitlG5JUJphCFbuKdLNR77FM3lZdgw48om0MU49juIO1dMPDw8PJziBXvFttyY+HdhAAAAAElFTkSuQmCC").on("click",
-function(e){c.offset=0;c.search()});c.input=c.parts.input.clone().css({paddingLeft:"2em",paddingRight:"4em"}).attr("placeholder",kb.constants.common.prompt.keyword[kb.operator.language]).attr("type","text").on("keydown",function(e){if(13==(e.keyCode||e.which))return c.offset=0,c.search(),e.stopPropagation(),e.preventDefault(),!1});c.container.css({height:"calc(34em + 16px)",minWidth:"16em"});c.contents.css({padding:"0px"});c.header.css({boxShadow:"none"}).append(c.input).append(c.next).append(c.prev).append(c.submit);
-return c};$jscomp.inherits(window.KintoneBoosterRecordPicker,KintoneBoosterDialog);
-window.KintoneBoosterRecordPicker.prototype.search=function(b){var a=this;switch(this.type){case "record":kintone.api(kintone.api.url("/k/v1/records",!0),"GET",{app:this.fieldInfo.app,query:function(){var c=[];a.fieldInfo.query&&c.push(a.fieldInfo.query);a.input.val()&&c.push(function(e){var p=[];e.each(function(d,g){for(var k in a.fieldInfo.picker){var l=a.fieldInfo.picker[k];switch(l.type){case "LINK":case "MULTI_LINE_TEXT":case "RICH_TEXT":case "SINGLE_LINE_TEXT":p.push(l.code+' like "'+d+'"')}}});
-return"("+p.join(" or ")+")"}(a.input.val().replace(/[\u3000 ]+/g," ").split(" ").filter(function(e){return e})));return c.join(" and ")+" order by "+(a.fieldInfo.sort?a.fieldInfo.sort:"$id asc")+" limit "+a.limit+" offset "+a.offset}()}).then(function(c){a.records=c.records;a.table.clearRows();a.records.each(function(e,p){(function(d){kb.record.set(d,{fields:a.fieldInfo.picker},e);a.multiSelect&&a.selection.some(function(g){return g.$id.value==e.$id.value})&&d.css({backgroundColor:"rgba(66,165,245,0.5)",
-color:""})})(a.table.addRow())});0<a.offset?a.prev.show():a.prev.hide();a.offset+(a.limit==a.records.length?a.limit:a.records.length)<c.total?a.next.show():a.next.hide();b&&b()})["catch"](function(c){return kb.alert(kb.error.parse(c))});break;default:var f=function(){var c=function(){var e=a.prepend?a.prepend.concat(kb.roleSet[a.type]):kb.extend({},kb.roleSet[a.type]);a.input.val()&&function(p){e=e.filter(function(d){var g=!1;d.name.value&&(g=p.some(function(k){return d.name.value.match(new RegExp(k,
-"ig"))}));return g})}(a.input.val().replace(/[\u3000 ]+/g," ").split(" ").filter(function(p){return p}));return e}();a.records=c.slice(a.offset,a.offset+a.limit);a.table.clearRows();a.records.each(function(e,p){(function(d){kb.record.set(d,{fields:a.fieldInfo.picker},e);a.multiSelect&&a.selection.some(function(g){return g.code.value==e.code.value})&&d.css({backgroundColor:"rgba(66,165,245,0.5)",color:""})})(a.table.addRow())});0<a.offset?a.prev.show():a.prev.hide();a.offset+(a.limit==a.records.length?
-a.limit:a.records.length)<c.length?a.next.show():a.next.hide();b&&b()};0==kb.roleSet.user.length?kb.roleSet.load().then(function(){return f()}):f()}};
-window.KintoneBoosterRecordPicker.prototype.show=function(b,a){var f=this,c=this.parts.div.clone().css({borderTop:"1px solid #42a5f5",borderBottom:"1px solid #42a5f5",lineHeight:"2em",padding:"0px 0.5em"}),e=this.parts.td.clone().css({cursor:"pointer",padding:"0",userSelect:"none"}),p=this.parts.th.clone().css({backgroundColor:kb.themeColor().backcolor});this.offset=0;this.fieldInfo=b;this.records=[];this.selection=[];this.input.val("");this.table=this.parts.table.clone().css({marginBottom:"0.5em"}).append(kb.create("thead").append(kb.create("tr"))).append(kb.create("tbody").append(kb.create("tr")));
-for(var d in this.fieldInfo.picker)(function(g){f.table.elm("thead tr").append(p.clone().append(c.clone().html("label"in g?g.label:"")));var k=f.table.elm("tbody tr"),l=k.append,r=e.clone(),n=r.append,t=kb.field,h=t.create;g=kb.extend({},g);g.noLabel=!0;l.call(k,n.call(r,h.call(t,g).css({width:"100%"}).addClass("kb-picker kb-readonly")))})(this.fieldInfo.picker[d]);this.contents.empty().append(this.table.spread(function(g,k){g.on("click",function(l){(function(r){f.multiSelect?function(n){n.length==
-f.selection.length?(f.selection.push(kb.extend({},r)),g.css({backgroundColor:"rgba(66,165,245,0.5)",color:""})):(f.selection=n,g.css({backgroundColor:"transparent",color:kb.themeColor().forecolor}))}(f.selection.filter(function(n){return"record"==f.type?n.$id.value!=r.$id.value:n.code.value!=r.code.value})):(a&&a(r),f.hide())})(f.records[k])});(function(l){g.addClass("kb-scope").elms(".kb-field").each(function(r,n){return kb.field.activate(r,l)})})({id:"recordPicker",fields:kb.extend({},f.fieldInfo.picker)})}));
-this.multiSelect&&(this.handler&&this.ok.off("click",this.handler),this.handler=function(g){a&&a(f.selection);f.hide()},this.ok.on("click",this.handler),this.cancel.on("click",function(g){return f.hide()}));this.search(function(){return KintoneBoosterDialog.prototype.show.call(f)})};window.KintoneBoosterButton=function(){};
-window.KintoneBoosterButton.prototype.create=function(b,a,f,c,e,p){(function(d){d&&d.parentNode.removeChild(d)})(kb.elm("#"+f));switch(a){case "detail":(b?kintone.mobile.app.getHeaderSpaceElement():kintone.app.record.getHeaderMenuSpaceElement().css({padding:"0 0.75em 0 1em"})).append(kb.create("button").addClass("kb-action-button "+(b?"kb-action-button-mobile-detail":"kb-action-button-detail")).attr("id",f).html(c).on("click",function(d){kb.confirm(e,function(){return p()})}));break;case "index":(b?
-kintone.mobile.app.getHeaderSpaceElement():kintone.app.getHeaderMenuSpaceElement()).append(kb.create("button").addClass("kb-action-button "+(b?"kb-action-button-mobile-index":"kb-action-button-index")).attr("id",f).html(c).on("click",function(d){kb.confirm(e,function(){return p()})}))}};window.KintoneBoosterField=function(){this.cache={};this.reserved="CATEGORY CREATED_TIME CREATOR GROUP HR LABEL MODIFIER RECORD_NUMBER REFERENCE_TABLE SPACER STATUS STATUS_ASSIGNEE UPDATED_TIME __ID__ __REVISION__".split(" ")};
-window.KintoneBoosterField.prototype.activate=function(b,a){var f=this,c=kb.field.parallelize(a.fields),e=function(){return kb.create("div").css({zIndex:kb.popups.alert.cover.style.zIndex-4}).append(kb.create("img").attr("src","data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkVGNzA3QTE1RTc4MTFFOEI5MDA5RUE2NDFCQTUzNDciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkVGNzA3QTI1RTc4MTFFOEI5MDA5RUE2NDFCQTUzNDciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpCRUY3MDc5RjVFNzgxMUU4QjkwMDlFQTY0MUJBNTM0NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCRUY3MDdBMDVFNzgxMUU4QjkwMDlFQTY0MUJBNTM0NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkBlNTAAAADNSURBVHja7NHBCcJAFATQZNBcYwmSmycPlpI2bCVgAVqAVmAFHmxqncAKQVyz+/N/grADc0iyy0Be6ZwrlgiKhZKH83Ae/v/h1X23l9499vfZk2hYOHpgO7ZkH+xzjl9dsze2Ytfsld3MMXxhm8Hzlj1bD/eu7Zf3rf9mMvx2DaXzZ1SHh66hVP5MrTn86RpK48+qDIdcQ4nyxkRXsTcmuoq9oeAq8oaSa7I3FF2TvKHomuQNZddobxi4RnnDyHXUG0auo94wdP3p/RJgAMw4In5GE/6/AAAAAElFTkSuQmCC")).append(kb.create("span"))},
-p=function(d){(function(g,k){b.elm(".kb-field-alert")?b.elm(".kb-field-alert").hide():b.elms("input,select,textarea").each(function(l,r){l.alert&&l.alert.hide()});kb.event.call(d,{container:k,record:kb.record.get(g,a,!0).record}).then(function(l){l.error||kb.event.call("kb.action.call",{record:l.record,workplace:g.closest(".kb-view")?"view":"record"}).then(function(r){kb.record.set(g,a,r.record);r=new Event("change");g.attr("unsaved","unsaved").dispatchEvent(r)})})})(b.closest("[form-id=form_"+a.id+
-"]"),b.closest(".kb-scope"))};b.attr("field-id")&&function(d,g){if(g.lookup)(function(k){d.elm(".kb-search").on("click",function(l){k(d.elm(".kb-lookup-search").val(),kb.extend({},g))});d.elm(".kb-clear").on("click",function(l){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],function(){d.lookup("").then(function(){return p("kb.change."+g.code)})})});d.elm("input").on("change",function(l){k(l.currentTarget.val(),kb.extend({},g))})})(function(k,l){f.get(l.lookup.relatedApp.app).then(function(r){(function(n){var t=
-function(){l.picker=function(h){var q={};h.each(function(m,v){m in n.external&&(q[m]=kb.extend({},n.external[m]))});0==Object.keys(q).length&&(q.$id={code:"$id",type:"RECORD_NUMBER",label:kb.constants.picker.caption.recordnumber[kb.operator.language],required:!1,noLabel:!1});return q}(l.lookup.lookupPickerFields);d.recordPicker.show({app:l.lookup.relatedApp.app,query:l.query,sort:l.lookup.sort||"$id asc",picker:l.picker},function(h){return d.lookup(h.$id.value).then(function(){return p("kb.change."+
-l.code)})})};k?(l.query=[l.lookup.filterCond,l.lookup.relatedKeyField+("NUMBER"==l.type?"=":" like ")+'"'+k+'"'].filter(function(h){return h}).join(" and "),kintone.api(kintone.api.url("/k/v1/records",!0),"GET",{app:l.lookup.relatedApp.app,query:l.query}).then(function(h){1==h.records.length?d.lookup(h.records.first().$id.value).then(function(){return p("kb.change."+l.code)}):t()})["catch"](function(h){return kb.alert(kb.error.parse(h))})):(l.query=l.lookup.filterCond,t())})({external:r.parallelize,
-internal:c})})}),d.recordPicker=new KintoneBoosterRecordPicker("record"),d.lookup=function(k){return new Promise(function(l,r){(function(n){var t=function(){kb.record.set(n,g.tableCode?a.fields[g.tableCode]:a,function(){return g.lookup.fieldMappings.reduce(function(h,q){if(q.field in c)switch(c[q.field].type){case "CHECK_BOX":case "FILE":case "GROUP_SELECT":case "MULTI_SELECT":case "ORGANIZATION_SELECT":case "USER_SELECT":h[q.field]={value:[]};break;default:h[q.field]={value:""}}return h},function(h){h[g.code]=
-{value:""};return h}({}))}(),!1).then(function(){return l()})};k?kintone.api(kintone.api.url("/k/v1/record",!0),"GET",{app:g.lookup.relatedApp.app,id:k}).then(function(h){h.record?kb.record.set(n,g.tableCode?a.fields[g.tableCode]:a,function(){return g.lookup.fieldMappings.reduce(function(q,m){m.relatedField in h.record&&m.field in c&&(q[m.field]={value:h.record[m.relatedField].value});return q},function(q){q[g.code]={value:h.record[g.lookup.relatedKeyField].value};return q}({}))}(),!1).then(function(){return l()}):
-t()})["catch"](function(h){return kb.alert(kb.error.parse(h))}):t()})(d.closest(".kb-scope"))})};else switch(g.type){case "CHECK_BOX":case "MULTI_SELECT":g.required&&(d.alert=function(k){d.elm(".kb-field-alert")||d.append(e().addClass("kb-field-alert"));d.elm(".kb-field-alert").elm("span").html(k).parentNode.show()});break;case "COLOR":d.elm(".kb-search").on("click",function(k){kb.pickupColor(function(l){d.css({backgroundColor:l}).elm("input").val(l);p("kb.change."+g.code)})});d.elm("input").on("change",
-function(k){k.currentTarget.val()?(k=k.currentTarget.val().replace(/#/g,""),k.match(/([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/g)&&(d.css({backgroundColor:"#"+k}).elm("input").val("#"+k),p("kb.change."+g.code))):(d.css({backgroundColor:"transparent"}),p("kb.change."+g.code))});break;case "CONDITION":d.elm(".kb-search").on("click",function(k){kb.filter.build(g.app,d.elm("input").val(),function(l){d.elm("input").val(l);p("kb.change."+g.code)})});d.reset=function(k){g.app=k;d.elm("input").val("");d.elm(".kb-guide").empty()};
-d.guide=function(k){d.elm(".kb-guide").append(function(l){l.append(kb.create("button").addClass("kb-icon kb-icon-del kb-guide-item-icon").on("click",function(r){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],function(){d.elm("input").val(d.elm("input").val().split(" and ").filter(function(n){return n!=k}).join(" and "));p("kb.change."+g.code)})})).append(kb.create("span").addClass("kb-guide-item-label").html(k));return l}(kb.create("span").addClass("kb-guide-item")))};
-g.required&&(d.alert=function(k){d.elm(".kb-field-alert")||d.append(e().addClass("kb-field-alert"));d.elm(".kb-field-alert").elm("span").html(k).parentNode.show()});break;case "DATE":d.elm(".kb-search").on("click",function(k){kb.pickupDate(d.elm("input").val(),function(l){d.elm("input").val(l);p("kb.change."+g.code)})});break;case "DATETIME":d.elm(".kb-search").on("click",function(k){kb.pickupDate(d.elm("input").val(),function(l){d.elm("input").val(l);p("kb.change."+g.code)})});break;case "FILE":d.elm(".kb-search").on("click",
-function(k){(function(l){kb.elm("body").append(l.on("change",function(r){r.currentTarget.files?function(n){kb.file.upload(Array.from(r.currentTarget.files).first()).then(function(t){d.elm("input").val(JSON.stringify((d.elm("input").val()?JSON.parse(d.elm("input").val()):[]).concat(t)));p("kb.change."+g.code)})["catch"](function(t){return kb.alert(kb.error.parse(t))})["finally"](function(){return document.body.removeChild(l)})}(Array.from(r.currentTarget.files).first()):document.body.removeChild(l)}));
-l.click()})(kb.create("input").attr("type","file").css({display:"none"}))});d.guide=function(k){d.elm(".kb-guide").append(function(l){l.append(kb.create("button").addClass("kb-icon kb-icon-del kb-guide-item-icon").on("click",function(r){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],function(){d.elm("input").val(JSON.stringify(JSON.parse(d.elm("input").val()).filter(function(n){return n.fileKey!=k.fileKey})));p("kb.change."+g.code)})})).append(kb.create("span").addClass("kb-guide-item-label").html(k.name).on("click",
-function(r){return d.open(k)}));return l}(kb.create("span").addClass("kb-guide-item")))};d.open=function(k){kb.file.download(k).then(function(l){try{var r=function(){var n=kb.create("a").css({display:"none"}).attr("href",f.objectUrl(l,k.contentType)).attr("target","_blank").attr("download",k.name);kb.elm("body").append(n);n.click();document.body.removeChild(n)};switch(k.contentType){case "application/javascript":fetch(new Request(f.objectUrl(l,k.contentType))).then(function(n){return n.text()}).then(function(n){var t=
-n.split("\n");kb.create("div").append(function(h){t.each(function(q,m){return h.append(kb.create("code").css({display:"block"}).text(q))});return h}(kb.create("pre"))).popup("full","full",[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show()});break;case "application/json":fetch(new Request(f.objectUrl(l,k.contentType))).then(function(n){return n.text()}).then(function(n){kb.create("div").html(n.replace(/\n/g,"<br>")).popup("full","full",[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show()});break;case "application/pdf":kb.create("iframe").css({border:"none",height:"100%",outline:"none",width:"100%"}).attr("src",f.objectUrl(l,k.contentType)).popup("full","full",[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show();break;case "audio/mpeg":case "audio/x-m4a":kb.create("audio").css({outline:"none"}).attr("controls","controls").attr("src",f.objectUrl(l,k.contentType)).popup(null,null,[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show();break;case "image/bmp":case "image/gif":case "image/jpeg":case "image/png":kb.create("img").css({maxHeight:"calc(100vh - 4em)",maxWidth:"calc(100vw - 2em)"}).attr("src",f.objectUrl(l,k.contentType)).popup(null,null,[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show();break;case "text/plain":case "text/css":fetch(new Request(f.objectUrl(l,k.contentType))).then(function(n){return n.text()}).then(function(n){kb.create("div").html(n.replace(/\n/g,"<br>")).popup("full","full",[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show()});break;case "text/csv":fetch(new Request(f.objectUrl(l,k.contentType))).then(function(n){return n.text()}).then(function(n){var t=n.parseCSV();0!=t.length&&function(h){t.each(function(q,m){h.append(function(v){q.each(function(u,w){return v.append(kb.create("td").css({padding:"0.25em"}).html(u.replace(/\n/g,"<br>")))});return v}(kb.create("tr")))});return h}(kb.create("table")).popup(null,"full",[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show()});break;case "video/mp4":case "video/mpeg":kb.create("video").css({maxHeight:"calc(100vh - 4em)",maxWidth:"calc(100vw - 2em)",outline:"none"}).attr("controls","controls").attr("src",f.objectUrl(l,k.contentType)).popup(null,null,[{src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==",
-handler:r}]).show();break;default:r()}}catch(n){kb.alert(kb.error.parse(n))}})["catch"](function(l){return kb.alert(kb.error.parse(l))})};g.required&&(d.alert=function(k){d.elm(".kb-field-alert")||d.append(e().addClass("kb-field-alert"));d.elm(".kb-field-alert").elm("span").html(k).parentNode.show()});break;case "GROUP_SELECT":case "ORGANIZATION_SELECT":case "USER_SELECT":(function(k){d.elm(".kb-search").on("click",function(l){d.recordPicker.show({picker:{name:{code:"name",type:"SINGLE_LINE_TEXT",
-label:kb.constants.picker.caption.name[kb.operator.language],required:!1,noLabel:!0}}},function(r){(function(n){(function(t){r.each(function(h,q){t.includes(h.code.value)||n.push({code:h.code.value,name:h.name.value})})})(n.map(function(t){return t.code}));d.elm("input").val(JSON.stringify(n));p("kb.change."+g.code)})(d.elm("input").val()?JSON.parse(d.elm("input").val()):[])})});d.recordPicker=new KintoneBoosterRecordPicker(k,!0,function(){var l=[];g.loginuser&&l.push({code:{value:"LOGINUSER()"},
-name:{value:"Login user"}});g.guestuser&&l.push({code:{value:"GUESTUSER()"},name:{value:"Guest user"}});return l}());d.guide=function(l){d.elm(".kb-guide").append(function(r){r.append(kb.create("button").addClass("kb-icon kb-icon-del kb-guide-item-icon").on("click",function(n){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],function(){d.elm("input").val(JSON.stringify(JSON.parse(d.elm("input").val()).filter(function(t){return t.code!=l.code})));p("kb.change."+g.code)})})).append(kb.create("span").addClass("kb-guide-item-label").html(l.name));
-return r}(kb.create("span").addClass("kb-guide-item")))};g.required&&(d.alert=function(l){d.elm(".kb-field-alert")||d.append(e().addClass("kb-field-alert"));d.elm(".kb-field-alert").elm("span").html(l).parentNode.show()})})(function(){var k="";switch(g.type){case "GROUP_SELECT":k="group";break;case "ORGANIZATION_SELECT":k="organization";break;case "USER_SELECT":k="user"}return k}());case "NUMBER":(function(k){d.on("show",function(l){return k()});k()})(function(){d.elm(".kb-unit")?d.elm("input").css({width:"calc(100% - "+
-d.elm(".kb-unit").outerWidth(!0)+"px)"}):d.elm("input").css({width:null})});break;case "RADIO_BUTTON":d.elms("[data-name="+g.code+"]").each(function(k,l){k.closest("label").on("click",function(r){(function(n){d.elms("[data-name="+g.code+"]").each(function(t,h){return t.checked=n==t.val()});p("kb.change."+g.code)})(k.val());r.stopPropagation();r.preventDefault()})})}d.elms("input,select,textarea").each(function(k,l){switch(g.type){case "COLOR":case "CONDITION":case "FILE":case "GROUP_SELECT":case "ORGANIZATION_SELECT":case "RADIO_BUTTON":case "USER_SELECT":break;
-default:k.on("change",function(r){return p("kb.change."+g.code)})}})}(b.elm(".kb-field-value"),c[b.attr("field-id")]);return b};
-window.KintoneBoosterField.prototype.create=function(b){var a=function(f){f.append(kb.create("div").addClass("kb-dropdown kb-hour").append(kb.create("select").assignOption(function(){var c=[{value:""}];(24).each(function(e){return c.push({value:e.toString().lpad("0",2)})});return c}(),"value","value"))).append(kb.create("div").addClass("kb-dropdown kb-minute").append(kb.create("select").assignOption(function(){var c=[{value:""}];(60).each(function(e){return c.push({value:e.toString().lpad("0",2)})});
-return c}(),"value","value")))};if(!("type"in b))throw Error("You shoud setup [type] in field information");return function(f){f.append(kb.create("span").addClass("kb-field-caption").html(b.label));b.noLabel&&f.elm(".kb-field-caption").addClass("kb-hidden");f.append(function(c){switch(b.type){case "CHECK_BOX":case "MULTI_SELECT":(function(e){e.reduce(function(p,d){p[d.index]=d;return p},Array(e.length).fill("")).each(function(p,d){c.addClass("kb-checkbox").append(kb.create("label").append(kb.create("input").attr("type",
-"checkbox").val(p.label)).append(kb.create("span").html(p.label)))})})(Object.values(b.options));break;case "COLOR":c.addClass("kb-color").append(kb.create("input").attr("type","text").attr("data-type","color")).append(kb.create("button").addClass("kb-icon kb-icon-color kb-search"));break;case "CONDITION":c.addClass("kb-condition").append(kb.create("input").attr("type","hidden")).append(kb.create("button").addClass("kb-icon kb-icon-filter kb-search"));break;case "DATE":c.addClass("kb-date").append(kb.create("input").attr("type",
-"text").attr("data-type","date")).append(kb.create("button").addClass("kb-icon kb-icon-date kb-search"));break;case "DATETIME":a(c.addClass("kb-datetime").append(kb.create("input").attr("type","text").attr("data-type","date")).append(kb.create("button").addClass("kb-icon kb-icon-date kb-search")));break;case "DROP_DOWN":(function(e){c.addClass("kb-dropdown").append(kb.create("select").assignOption(e.reduce(function(p,d){p[d.index]=d;return p},Array(e.length).fill("")),"label","label"))})(Object.values(b.options));
-break;case "FILE":c.addClass("kb-file").append(kb.create("input").attr("type","hidden")).append(kb.create("button").addClass("kb-icon kb-icon-file kb-search"));break;case "GROUP_SELECT":c.addClass("kb-group").append(kb.create("input").attr("type","hidden")).append(kb.create("button").addClass("kb-icon kb-icon-group kb-search"));break;case "LINK":switch(b.protocol){case "WEB":c.addClass("kb-text").append(kb.create("input").attr("type","text").attr("data-type","url"));break;case "CALL":c.addClass("kb-text").append(kb.create("input").attr("type",
-"text").attr("data-type","tel"));break;case "MAIL":c.addClass("kb-text").append(kb.create("input").attr("type","text").attr("data-type","mail"))}break;case "MULTI_LINE_TEXT":case "RICH_TEXT":c.addClass("kb-textarea").append(function(e){b.lines&&e.css({height:"calc("+(1.5*parseFloat(b.lines)).toString()+"em + 2px)"});return e}(kb.create("textarea")));break;case "NUMBER":b.lookup?c.addClass("kb-lookup").append(kb.create("input").addClass("kb-lookup-search").attr("type","text").attr("data-type","nondemiliternumber")).append(kb.create("button").addClass("kb-icon kb-icon-lookup kb-search")).append(kb.create("button").addClass("kb-icon kb-icon-del kb-clear")):
-(c.addClass("kb-number").append(function(e){"displayScale"in b&&e.attr("data-decimals",b.displayScale);return e.attr("data-type",b.digit?"number":"nondemiliternumber")}(kb.create("input").attr("type","text"))),b.unit&&function(e){"prefix"==b.unitPosition?c.insertBefore(e,c.elm("input")):c.insertBefore(e,c.elm("input").nextElementSibling)}(kb.create("span").addClass("kb-unit").html(b.unit)));break;case "ORGANIZATION_SELECT":c.addClass("kb-organization").append(kb.create("input").attr("type","hidden")).append(kb.create("button").addClass("kb-icon kb-icon-organization kb-search"));
-break;case "RADIO_BUTTON":(function(e){e.reduce(function(p,d){p[d.index]=d;return p},Array(e.length).fill("")).each(function(p,d){var g=c.addClass("kb-radio"),k=g.append,l=kb.create("label").append(kb.create("input").attr("type","radio").attr("data-name",b.code).val(p.label)).append(kb.create("span").html(p.label));0==d&&(l.elm("input").checked=!0);k.call(g,l)})})(Object.values(b.options));break;case "SINGLE_LINE_TEXT":b.lookup?c.addClass("kb-lookup").append(kb.create("input").addClass("kb-lookup-search").attr("type",
-"text").attr("data-type","text")).append(kb.create("button").addClass("kb-icon kb-icon-lookup kb-search")).append(kb.create("button").addClass("kb-icon kb-icon-del kb-clear")):c.addClass("kb-text").append(kb.create("input").attr("type","text").attr("data-type","text"));break;case "SPACER":c.html(b.contents);break;case "TIME":a(c);break;case "USER_SELECT":c.addClass("kb-user").append(kb.create("input").attr("type","hidden")).append(kb.create("button").addClass("kb-icon kb-icon-user kb-search"))}return"SPACER"!=
-b.type?c.append(kb.create("span").addClass("kb-guide")):c}(kb.create("div").addClass("kb-field-value")));switch(b.type){case "CALC":case "CATEGORY":case "CONDITION":case "CREATED_TIME":case "CREATOR":case "FILE":case "GROUP_SELECT":case "MODIFIER":case "ORGANIZATION_SELECT":case "RECORD_NUMBER":case "REFERENCE_TABLE":case "STATUS":case "STATUS_ASSIGNEE":case "UPDATED_TIME":case "USER_SELECT":f.elm(".kb-guide").addClass("kb-fixed")}if(b.required)switch(b.type){case "CALC":case "CATEGORY":case "CHECK_BOX":case "CONDITION":case "CREATED_TIME":case "CREATOR":case "FILE":case "GROUP_SELECT":case "MODIFIER":case "MULTI_SELECT":case "ORGANIZATION_SELECT":case "RECORD_NUMBER":case "REFERENCE_TABLE":case "STATUS":case "STATUS_ASSIGNEE":case "UPDATED_TIME":case "USER_SELECT":break;
-default:f.elms("input,select,textarea").each(function(c,e){return c.attr("required","required")})}b.placeholder&&f.elms("input,select,textarea").each(function(c,e){return c.attr("placeholder",b.placeholder)});return f}(kb.create("div").addClass("kb-field").attr("field-id",b.code))};
-window.KintoneBoosterField.prototype.get=function(b,a,f){var c=null;if(b.tableCode)c=kb.elms(".field-"+b.id).map(function(e){switch(f){case "create":case "edit":e.value=a?e.elm("input[type=text],textarea,ul")?e.elm("input[type=text],textarea,ul"):e.elm("[class^=forms-]"):e.elm(".input-checkbox-cybozu,.input-date-cybozu,.input-datetime-cybozu,.input-file-cybozu,.input-radio-cybozu,.input-text-outer-cybozu,.input-time-cybozu,.multipleselect-cybozu,.select-cybozu");break;case "detail":case "print":e.value=
-a?e.elm(".value-"+b.id):e}return e});else switch(c=kb.elm(".field-"+b.id),f){case "create":case "edit":c.value=a?c.elm("input[type=text],textarea,ul")?c.elm("input[type=text],textarea,ul"):c.elm("[class^=forms-]"):c.elm(".input-checkbox-cybozu,.input-date-cybozu,.input-datetime-cybozu,.input-file-cybozu,.input-radio-cybozu,.input-text-outer-cybozu,.input-time-cybozu,.multipleselect-cybozu,.select-cybozu");break;case "detail":case "print":c.value=c.elm(".value-"+b.id)}return c};
-window.KintoneBoosterField.prototype.load=function(b,a){var f=this;return new Promise(function(c,e){b in f.cache?c(f.cache[b]):kintone.api(kintone.api.url("/k/v1/app/form/layout",!0),"GET",{app:b}).then(function(p){(function(d){var g=[],k=[],l=function(r){return r.reduce(function(n,t){switch(t.type){case "GROUP":g.push(t.code);n=n.concat(l(t.layout));break;case "ROW":n=t.fields.reduce(function(h,q){"code"in q&&h.push(q.code);return h},n);break;case "SUBTABLE":k.push(t.code),n=t.fields.reduce(function(h,
-q){"code"in q&&h.push(q.code);return h},n)}return n},[])};kintone.api(kintone.api.url("/k/v1/app/form/fields",!0),"GET",{app:b,lang:"user"}).then(function(r){(function(n){n.each(function(t,h){delete r.properties[t]})})(Object.values(r.properties).reduce(function(n,t){switch(t.type){case "CATEGORY":n.push(t.code);break;case "STATUS":t.enabled||(n.push(t.code),n.push(Object.values(r.properties).filter(function(h){return"STATUS_ASSIGNEE"==h.type}).first().code))}return n},[]));(function(n,t,h){f.cache[b]=
-{origin:r.properties,groups:g.reduce(function(q,m){q[m]=r.properties[m];return q},{}),tables:k.reduce(function(q,m){q[m]=r.properties[m];m in h.table&&(q[m].id=h.table[m]);return q},{}),changes:function(q){var m=[];m=Object.values(n).reduce(function(v,u){q.includes(u.code)||v.push(u.code);return v},[]);return m.concat(k)}(function(){var q=[],m;for(m in n)(function(v){v.expression&&q.push(v.code);v.lookup&&function(u){0!=u.length&&(q=q.concat(u.slice(0,-1)))}(v.lookup.fieldMappings.map(function(u){return u.field}))})(n[m]);
-return Array.from(new Set(q))}()),criterias:function(){var q={};t.each(function(v,u){"FILE"!=n[v].type&&(q[v]=n[v])});for(var m in n)(function(v){switch(v.type){case "CALC":case "CATEGORY":case "CREATED_TIME":case "CREATOR":case "MODIFIER":case "RECORD_NUMBER":case "REFERENCE_TABLE":case "UPDATED_TIME":q[v.code]=v;break;case "STATUS":v.enabled&&(q[v.code]=v,function(u){q[u.code]=u}(Object.values(n).filter(function(u){return"STATUS_ASSIGNEE"==u.type}).first()))}})(n[m]);return q}(),disables:function(){var q=
-[],m;for(m in n)(function(v){kb.field.reserved.includes(v.type)?q.push(v.code):(v.expression&&q.push(v.code),v.lookup&&function(u){0!=u.length&&(q=q.concat(u))}(v.lookup.fieldMappings.map(function(u){return u.field})))})(n[m]);return Array.from(new Set(q))}(),parallelize:function(){var q={};t.each(function(v,u){q[v]=n[v]});for(var m in n)(function(v){switch(v.type){case "CREATED_TIME":case "CREATOR":case "MODIFIER":case "RECORD_NUMBER":case "UPDATED_TIME":q[v.code]=v;break;case "STATUS":v.enabled&&
-(q[v.code]=v,function(u){q[u.code]=u}(Object.values(n).filter(function(u){return"STATUS_ASSIGNEE"==u.type}).first()))}v.code in h.field&&v.code in q&&(q[v.code].id=h.field[v.code])})(n[m]);return q}(),placed:function(){var q={};t.each(function(m,v){q[m]=n[m]});return q}()};c(f.cache[b])})(kb.field.parallelize(r.properties),l(d),function(){var n={field:{},table:{}};a&&(Object.values(cybozu.data.page.FORM_DATA.schema.table.fieldList).each(function(t,h){n.field[t["var"]]=t.id}),"subTable"in cybozu.data.page.FORM_DATA.schema&&
-Object.values(cybozu.data.page.FORM_DATA.schema.subTable).each(function(t,h){n.table[t["var"]]=t.id;Object.values(t.fieldList).each(function(q,m){n.field[q["var"]]=q.id})}));return n}())})["catch"](function(r){return kb.alert(kb.error.parse(r))})})(p.layout)})["catch"](function(p){return kb.alert(kb.error.parse(p))})})};
-window.KintoneBoosterField.prototype.parallelize=function(b){b=kb.extend({},b);var a={},f;for(f in b){var c=void 0,e=b[f];switch(e.type){case "SUBTABLE":var p=e.code;for(c in e.fields)e.fields[c]=kb.extend({tableCode:p},e.fields[c]),a[e.fields[c].code]=e.fields[c];break;default:e=kb.extend({tableCode:""},e),a[e.code]=e}}return a};
-window.KintoneBoosterField.prototype.stringify=function(b,a,f){var c="";if(a)switch(b.type){case "CATEGORY":case "CHECK_BOX":case "MULTI_SELECT":c=a.join(f);break;case "CREATOR":case "MODIFIER":c=a.name;break;case "CREATED_TIME":case "DATETIME":case "UPDATED_TIME":c=a.parseDateTime().format("Y-m-d H:i");break;case "FILE":case "GROUP_SELECT":case "ORGANIZATION_SELECT":case "STATUS_ASSIGNEE":case "USER_SELECT":c=a.map(function(e){return e.name}).join(f);break;case "MULTI_LINE_TEXT":case "RICH_TEXT":c=
-a.replace(/\n/g,"");break;case "NUMBER":kb.isNumeric(a)&&(c=b.digit?Number(a).comma(b.displayScale):b.displayScale?Number(a).toFloor(parseInt(b.displayScale)):a);b.unit&&(c="prefix"==b.unitPosition?b.unit+" "+c:c+" "+b.unit);break;default:c=a}return c};
-window.KintoneBoosterField.prototype.typing=function(b,a,f){f=void 0===f?!1:f;var c=!1;if("SINGLE_LINE_TEXT"==a.type)switch(b.type){case "CALC":case "CREATED_TIME":case "DATE":case "DATETIME":case "DROP_DOWN":case "LINK":case "NUMBER":case "RADIO_BUTTON":case "RECORD_NUMBER":case "SINGLE_LINE_TEXT":case "STATUS":case "TIME":case "UPDATED_TIME":c=f?!0:!a.expression}if(!c)switch(b.type){case "CALC":if(a.type==b.type)c=a.format==b.format&&f;else switch(b.format){case "DATE":case "DATETIME":case "TIME":c=
-a.type==b.format;break;case "NUMBER":case "NUMBER_DIGIT":c=(f?["NUMBER","RECORD_NUMBER"]:["NUMBER"]).includes(a.type)}break;case "CHECK_BOX":case "MULTI_SELECT":c=["CHECK_BOX","MULTI_SELECT"].includes(a.type);break;case "CREATED_TIME":case "DATETIME":case "UPDATED_TIME":c="CALC"==a.type?"DATETIME"==a.format&&f:(f?["CREATED_TIME","DATETIME","UPDATED_TIME"]:["DATETIME"]).includes(a.type);break;case "CREATOR":case "MODIFIER":case "STATUS_ASSIGNEE":case "USER_SELECT":c=(f?["CREATOR","MODIFIER","STATUS_ASSIGNEE",
-"USER_SELECT"]:["USER_SELECT"]).includes(a.type);break;case "DATE":c="CALC"==a.type?"DATE"==a.format&&f:a.type==b.type;break;case "DROP_DOWN":case "RADIO_BUTTON":c=["DROP_DOWN","LINK","RADIO_BUTTON"].includes(a.type);break;case "FILE":case "MULTI_LINE_TEXT":case "RICH_TEXT":c=f?!1:a.type==b.type;break;case "GROUP_SELECT":case "LINK":case "ORGANIZATION_SELECT":case "STATUS":case "TIME":c=a.type==b.type;break;case "NUMBER":case "RECORD_NUMBER":c="CALC"==a.type?"NUMBER"==a.format&&f:(f?["NUMBER","RECORD_NUMBER"]:
-["NUMBER"]).includes(a.type);break;case "SINGLE_LINE_TEXT":c=f?["DROP_DOWN","RADIO_BUTTON","LINK","MULTI_LINE_TEXT","RICH_TEXT"].includes(a.type):["LINK","MULTI_LINE_TEXT","RICH_TEXT"].includes(a.type)}return c};window.KintoneBoosterField.prototype.objectUrl=function(b,a){var f=atob(b),c=new Uint8Array(f.length),e=window.URL||window.webkitURL;f.length.each(function(p){return c[p]=f.charCodeAt(p)});return e.createObjectURL(new Blob([c.buffer],{type:a}))};window.KintoneBoosterTable=function(){};
-window.KintoneBoosterTable.prototype.activate=function(b,a){return b.spread(function(f,c){(function(e){f.elm(".kb-table-row-add").on("click",function(p){b.insertRow(f);kb.event.call("kb.row.add."+b.attr("field-id"),{container:b,record:kb.record.get(e,a,!0).record,rowindex:parseInt(f.attr("row-idx"))+1}).then(function(d){d.error?b.delRow(f):kb.event.call("kb.action.call",{record:d.record,workplace:e.closest(".kb-view")?"view":"record"}).then(function(g){kb.record.set(e,a,g.record);g=new Event("change");
-e.attr("unsaved","unsaved").dispatchEvent(g)})})});f.elm(".kb-table-row-copy").on("click",function(p){b.insertRow(f);kb.event.call("kb.row.copy."+b.attr("field-id"),{container:b,record:function(d,g){d[b.attr("field-id")].value[g+1]=kb.extend({},d[b.attr("field-id")].value[g]);return d}(kb.record.get(e,a,!0).record,parseInt(f.attr("row-idx"))),rowindex:parseInt(f.attr("row-idx"))+1}).then(function(d){d.error?b.delRow(f):kb.event.call("kb.action.call",{record:d.record,workplace:e.closest(".kb-view")?
-"view":"record"}).then(function(g){kb.record.set(e,a,g.record);g=new Event("change");e.attr("unsaved","unsaved").dispatchEvent(g)})})});f.elm(".kb-table-row-del").on("click",function(p){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],function(){kb.event.call("kb.row.del."+b.attr("field-id"),{container:b,record:kb.record.get(e,a,!0).record,rowindex:parseInt(f.attr("row-idx"))}).then(function(d){d.error||(b.delRow(f),kb.event.call("kb.action.call",{record:kb.record.get(e,
-a,!0).record,workplace:e.closest(".kb-view")?"view":"record"}).then(function(g){kb.record.set(e,a,g.record);g=new Event("change");e.attr("unsaved","unsaved").dispatchEvent(g)}))})})});f.elms(".kb-field").each(function(p,d){return kb.field.activate(p,a)});b.tr.each(function(p,d){return p.attr("row-idx",d)})})(b.closest("[form-id=form_"+a.id+"]"))},function(f,c){0==f.tr.length?f.addRow():f.tr.each(function(e,p){return e.attr("row-idx",p)})},!1)};
-window.KintoneBoosterTable.prototype.create=function(b,a,f,c){return function(e){f||c||e.append(kb.create("thead").append(kb.create("tr")));e.append(kb.create("tbody").append(kb.create("tr").addClass("kb-scope").attr("row-idx","")));for(var p in b.fields)(function(d){f||c||e.elm("thead tr").append(kb.create("th").append(kb.create("span").html(d.label)));var g=e.elm("tbody tr"),k=g.append,l=kb.create("td"),r=l.append,n=kb.field,t=n.create;d=kb.extend({},d);c||(d.noLabel=!0);k.call(g,r.call(l,t.call(n,
-d)))})(b.fields[p]);f||c||e.elm("thead tr").append(kb.create("th").addClass("kb-table-button"+(a?" kb-table-button-extension":"")));e.elm("tbody tr").append(kb.create("td").addClass("kb-table-button"+(a?" kb-table-button-extension":"")).append(kb.create("button").addClass("kb-icon kb-icon-add kb-table-row-add")).append(kb.create("button").addClass("kb-icon kb-icon-copy kb-table-row-copy").css({display:a?"inline-block":"none"})).append(kb.create("button").addClass("kb-icon kb-icon-del kb-table-row-del")));
-for(p in b.fields)(function(d){d.lookup&&d.lookup.fieldMappings.each(function(g,k){g.field in b.fields&&e.elm('[field-id="'+CSS.escape(g.field)+'"]')&&e.elm('[field-id="'+CSS.escape(g.field)+'"]').addClass("kb-readonly")})})(b.fields[p]);return e.attr("field-id",b.code)}(kb.create("table").addClass("kb-table"))};
-window.KintoneBoosterView=function(){this.records={get:function(b,a,f){return new Promise(function(c,e){(function(p){var d=function(g,k,l){kintone.api(kintone.api.url("/k/v1/records",!0),"GET",{app:b,query:a+" order by "+p+" limit 500 offset "+k.toString()}).then(function(r){Array.prototype.push.apply(g,r.records);k+=500;500==r.records.length?d(g,k,l):l(g)})["catch"](function(r){return e(r)})};kintone.api(kintone.api.url("/k/v1/records",!0),"GET",{app:b,query:a,totalCount:!0}).then(function(g){1E4>
-g.totalCount?d([],0,function(k){return c(k)}):kintone.api(kintone.api.url("/k/v1/records/cursor",!0),"POST",{app:b,query:a+" order by "+p,size:500}).then(function(k){(function(l){var r=function(n,t){kintone.api(kintone.api.url("/k/v1/records/cursor",!0),"GET",{id:l}).then(function(h){Array.prototype.push.apply(n,h.records);h.next?r(n,t):t(n)})["catch"](function(h){return e(h)})};r([],function(n){return c(n)})})(k.id)})["catch"](function(k){return e(k)})})["catch"](function(g){return e(g)})})(f||"$id asc")})},
-set:function(b,a,f){f=void 0===f?!1:f;return new Promise(function(c,e){var p=function(g,k){0!=a.post.length?kintone.api(kintone.api.url("/k/v1/records",!0),"POST",{app:b,records:a.post.slice(g,g+100)}).then(function(l){f||kb.progressUpdate();g+=100;0<a.post.slice(g,g+100).length?p(g,k):k()})["catch"](function(l){return e(l)}):k()},d=function(g,k){0!=a.put.length?kintone.api(kintone.api.url("/k/v1/records",!0),"PUT",{app:b,records:a.put.slice(g,g+100)}).then(function(l){f||kb.progressUpdate();g+=100;
-0<a.put.slice(g,g+100).length?d(g,k):k()})["catch"](function(l){return e(l)}):k()};"post"in a||(a.post=[]);"put"in a||(a.put=[]);f||kb.progressStart(Math.ceil(a.post.length/100)+Math.ceil(a.put.length/100));p(0,function(){d(0,function(){f||kb.progressEnd();c()})})})}}};
-window.KintoneBoosterView.prototype.load=function(b){return new Promise(function(a,f){kintone.api(kintone.api.url("/k/v1/app/views",!0),"GET",{app:b}).then(function(c){(function(e){a({origin:e,calendar:e.filter(function(p){return"CALENDAR"==p.type}),custom:e.filter(function(p){return"CUSTOM"==p.type}),list:e.filter(function(p){return"LIST"==p.type})})})(Object.values(c.views).sort(function(e,p){return e.index-p.index}))})["catch"](function(c){return kb.alert(kb.error.parse(c))})})};
-window.kb.record||(window.kb.record=new KintoneBoosterRecord);window.kb.button||(window.kb.button=new KintoneBoosterButton);window.kb.field||(window.kb.field=new KintoneBoosterField);window.kb.table||(window.kb.table=new KintoneBoosterTable);window.kb.view||(window.kb.view=new KintoneBoosterView);
-kb.constants=kb.extend({common:{caption:{sort:{asc:{en:"asc",ja:"\u6607\u9806",zh:"\u5347\u5e8f"},desc:{en:"desc",ja:"\u964d\u9806",zh:"\u964d\u5e8f"}}},message:{confirm:{copy:{en:"Are you sure on copy?",ja:"\u30b3\u30d4\u30fc\u3057\u3066\u3082\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",zh:"\u6211\u53ef\u4ee5\u590d\u5236\u5417\uff1f"},"delete":{en:"Are you sure on delete?",ja:"\u524a\u9664\u3057\u3066\u3082\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",zh:"\u6211\u53ef\u4ee5\u5220\u9664\u5417\uff1f"},
-save:{en:"Are you sure on copy?",ja:"\u4fdd\u5b58\u3057\u3066\u3082\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",zh:"\u6211\u53ef\u4ee5\u4fdd\u5b58\u5417\uff1f"}},invalid:{record:{en:"There is an error in the input data.",ja:"\u5165\u529b\u5185\u5bb9\u306b\u8aa4\u308a\u304c\u3042\u308a\u307e\u3059\u3002",zh:"\u8f93\u5165\u5185\u5bb9\u6709\u8bef\u3002"}}}},picker:{caption:{name:{en:"Name",ja:"\u8868\u793a\u540d",zh:"\u663e\u793a\u540d\u79f0"},recordnumber:{en:"Record number",ja:"\u30ec\u30b3\u30fc\u30c9\u756a\u53f7",
-zh:"\u8bb0\u5f55\u53f7"}}}},kb.constants);
+"use strict";
+window.KintoneBoosterRecord=class{
+	/* constructor */
+	constructor(){
+		this.page={
+			add:(mobile,app) => {
+				return kintone.api.url('/k/',true).replace(/\.json/g,'')+((mobile)?'m/'+app:app)+'/edit';
+			},
+			detail:(mobile,app,id) => {
+				return kintone.api.url('/k/',true).replace(/\.json/g,'')+((mobile)?'m/'+app:app)+'/show'+((mobile)?'?':'#')+'record='+id;
+			},
+			edit:(mobile,app,id) => {
+				return kintone.api.url('/k/',true).replace(/\.json/g,'')+((mobile)?'m/'+app:app)+'/show'+((mobile)?'?':'#')+'record='+id+((mobile)?'#':'&')+'mode=edit';
+			}
+		}
+	}
+	/* create record */
+	create(app,isRecord=true){
+		var res={};
+		for (var key in app.fields)
+			((fieldInfo) => {
+				switch (fieldInfo.type)
+				{
+					case 'CHECK_BOX':
+					case 'CONDITION':
+					case 'FILE':
+					case 'GROUP_SELECT':
+					case 'MULTI_SELECT':
+					case 'ORGANIZATION_SELECT':
+					case 'USER_SELECT':
+						res[key]={value:[]};
+						break;
+					case 'RADIO_BUTTON':
+						((options) => {
+							res[key]={value:(options.length!=0)?options.reduce((result,current) => {
+								result[current.index]=current;
+								return result;
+							},Array(options.length).fill('')).first().label:''};
+						})(Object.values(fieldInfo.options));
+						break;
+					case 'SUBTABLE':
+						res[key]={value:[{value:this.create(fieldInfo,false)}]};
+						break;
+					default:
+						if (!kb.field.reserved.includes(fieldInfo.type)) res[key]={value:''};
+						break;
+				}
+			})(app.fields[key]);
+		/* reserved field */
+		if (isRecord) res['$id']={value:''};
+		return res;
+	}
+	/* get record */
+	get(container,app,errorThrow){
+		var res={
+			error:false,
+			record:{}
+		};
+		if (!errorThrow)
+			for (var key in app.fields)
+			{
+				((field,fieldInfo) => {
+					if (field)
+					{
+						if (fieldInfo.type!='SUBTABLE') field=field.elm('.kb-field-value');
+						switch (fieldInfo.type)
+						{
+							case 'CHECK_BOX':
+							case 'MULTI_SELECT':
+								if (fieldInfo.required)
+									if (!field.elms('input').some((item) => item.checked))
+									{
+										field.alert(kb.constants.common.message.invalid.required[kb.operator.language]);
+										res.error=true;
+									}
+								break;
+							case 'FILE':
+							case 'GROUP_SELECT':
+							case 'ORGANIZATION_SELECT':
+							case 'USER_SELECT':
+								if (fieldInfo.required)
+									((value) => {
+										if (value.length==0)
+										{
+											field.alert(kb.constants.common.message.invalid.required[kb.operator.language]);
+											res.error=true;
+										}
+									})((field.elm('input').val())?JSON.parse(field.elm('input').val()):[]);
+								break;
+							case 'SUBTABLE':
+								break;
+							default:
+								field.elms('input,select,textarea').each((element,index) => {
+									if (!element.checkValidity()) res.error=true;
+								});
+								break;
+						}
+					}
+				})(container.elm('[field-id="'+CSS.escape(key)+'"]'),app.fields[key]);
+				if (res.error) break;
+			}
+		if (!res.error)
+		{
+			for (var key in app.fields)
+				((field,fieldInfo) => {
+					if (field)
+					{
+						if (fieldInfo.type!='SUBTABLE') field=field.elm('.kb-field-value');
+						switch (fieldInfo.type)
+						{
+							case 'CALC':
+								res.record[fieldInfo.code]={
+									value:null
+								};
+								break;
+							case 'CHECK_BOX':
+							case 'MULTI_SELECT':
+								res.record[fieldInfo.code]={
+									value:(() => {
+										var res=[];
+										field.elms('input').each((element,index) => {
+											if (element.checked && !element.parentNode.hasClass('kb-hidden')) res.push(element.val());
+										});
+										return res;
+									})()
+								};
+								break;
+							case 'DATETIME':
+								res.record[fieldInfo.code]={
+									value:(() => {
+										var res='';
+										if (field.elm('input').val())
+										{
+											if (!field.elm('.kb-hour').elm('select').val()) field.elm('.kb-hour').elm('select').val('00');
+											if (!field.elm('.kb-minute').elm('select').val()) field.elm('.kb-minute').elm('select').val('00');
+										}
+										if (field.elm('input').val() && field.elm('.kb-hour').elm('select').val() && field.elm('.kb-minute').elm('select').val())
+											res=(field.elm('input').val()+' '+field.elm('.kb-hour').elm('select').val()+':'+field.elm('.kb-minute').elm('select').val()+':00').parseDateTime().format('ISO');
+										return res;
+									})()
+								};
+								break;
+							case 'DROP_DOWN':
+								res.record[fieldInfo.code]={
+									value:field.elm('select').val()
+								};
+								break;
+							case 'FILE':
+							case 'GROUP_SELECT':
+							case 'ORGANIZATION_SELECT':
+							case 'USER_SELECT':
+								res.record[fieldInfo.code]={
+									value:((field.elm('input').val())?JSON.parse(field.elm('input').val()):[])
+								};
+								break;
+							case 'NUMBER':
+								res.record[fieldInfo.code]={
+									value:((kb.isNumeric(field.elm('input').val()))?parseFloat(field.elm('input').val()):field.elm('input').val())
+								};
+								break;
+							case 'RADIO_BUTTON':
+								res.record[fieldInfo.code]={
+									value:(() => {
+										var res='';
+										field.elms('[data-name='+fieldInfo.code+']').each((element,index) => {
+											if (element.checked && !element.parentNode.hasClass('kb-hidden')) res=element.val();
+										});
+										return res;
+									})()
+								};
+								break;
+							case 'MULTI_LINE_TEXT':
+							case 'RICH_TEXT':
+								res.record[fieldInfo.code]={
+									value:field.elm('textarea').val()
+								};
+								break;
+							case 'SUBTABLE':
+								res.record[fieldInfo.code]={
+									value:(() => {
+										var rows=[];
+										field.tr.each((element,index) => {
+											var row=this.get(element,fieldInfo,errorThrow);
+											if (row.error)
+											{
+												res.error=row.error;
+												return PD_BREAK;
+											}
+											else rows.push({value:row.record});
+										});
+										return rows;
+									})()
+								};
+								break;
+							case 'TIME':
+								res.record[fieldInfo.code]={
+									value:(() => {
+										var res='';
+										if (field.elm('.kb-hour').elm('select').val())
+											if (!field.elm('.kb-minute').elm('select').val()) field.elm('.kb-minute').elm('select').val('00');
+										if (field.elm('.kb-minute').elm('select').val())
+											if (!field.elm('.kb-hour').elm('select').val()) field.elm('.kb-hour').elm('select').val('00');
+										if (field.elm('.kb-hour').elm('select').val() && field.elm('.kb-minute').elm('select').val())
+											res=field.elm('.kb-hour').elm('select').val()+':'+field.elm('.kb-minute').elm('select').val();
+										return res;
+									})()
+								};
+								break;
+							default:
+								if (!kb.field.reserved.includes(fieldInfo.type))
+									res.record[fieldInfo.code]={
+										value:field.elm('input').val()
+									};
+								break;
+						}
+					}
+				})(container.elm('[field-id="'+CSS.escape(key)+'"]'),app.fields[key]);
+			/* reserved field */
+			if (container.elm('[data-type=id]')) res.record['$id']={value:((container.elm('[data-type=id]').val())?parseInt(container.elm('[data-type=id]').val()):container.elm('[data-type=id]').val())};
+		}
+		else kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);
+		return res;
+	}
+	/* set record */
+	set(container,app,record){
+		return new Promise((resolve,reject) => {
+			var assign=(container,app,record,callback) => {
+				var res=[];
+				for (var key in record)
+					((field,fieldInfo,value) => {
+						if (field)
+						{
+							if ('disabled' in value)
+							{
+								if (value.disabled) field.addClass('kb-disabled');
+								else field.removeClass('kb-disabled');
+							}
+							if ('hidden' in value)
+							{
+								if (value.hidden) field.addClass('kb-hidden');
+								else field.removeClass('kb-hidden');
+							}
+							if (fieldInfo.type!='SUBTABLE')
+							{
+								field=field.elm('.kb-field-value');
+								if ('backcolor' in value)
+								{
+									if (value.backcolor) field.addClass('kb-force-backcolor').elm('.kb-guide').css({backgroundColor:value.backcolor});
+									else field.removeClass('kb-force-backcolor').elm('.kb-guide').css({backgroundColor:''});
+								}
+								if ('forecolor' in value)
+								{
+									if (value.forecolor) field.addClass('kb-force-forecolor').elm('.kb-guide').css({color:value.forecolor});
+									else field.removeClass('kb-force-forecolor').elm('.kb-guide').css({color:''});
+								}
+								switch (fieldInfo.type)
+								{
+									case 'CALC':
+									case 'CATEGORY':
+									case 'CHECK_BOX':
+									case 'CONDITION':
+									case 'CREATED_TIME':
+									case 'CREATOR':
+									case 'FILE':
+									case 'GROUP_SELECT':
+									case 'MODIFIER':
+									case 'MULTI_SELECT':
+									case 'ORGANIZATION_SELECT':
+									case 'RADIO_BUTTON':
+									case 'RECORD_NUMBER':
+									case 'REFERENCE_TABLE':
+									case 'SPACER':
+									case 'STATUS':
+									case 'STATUS_ASSIGNEE':
+									case 'UPDATED_TIME':
+									case 'USER_SELECT':
+										if ('backcolor' in value) field.css({backgroundColor:(value.backcolor)?value.backcolor:''});
+										if ('forecolor' in value) field.css({color:(value.forecolor)?value.forecolor:''});
+										break;
+									default:
+										field.elms('input,select,textarea').each((element,index) => {
+											if ('backcolor' in value) element.css({backgroundColor:(value.backcolor)?value.backcolor:''});
+											if ('forecolor' in value) element.css({color:(value.forecolor)?value.forecolor:''});
+										});
+										break;
+								}
+							}
+							switch (fieldInfo.type)
+							{
+								case 'CALC':
+								case 'RECORD_NUMBER':
+								case 'STATUS':
+									field.elm('.kb-guide').html(value.value);
+									break;
+								case 'CATEGORY':
+									field.elm('.kb-guide').html(value.value.join('<br>'));
+									break;
+								case 'CHECK_BOX':
+								case 'MULTI_SELECT':
+									field.elms('input').each((element,index) => {
+										element.checked=value.value.includes(element.val());
+									});
+									field.elm('.kb-guide').html(value.value.join('<br>'));
+									break;
+								case 'COLOR':
+									field.css({backgroundColor:(value.value)?value.value:'transparent'}).elm('input').val(value.value);
+									field.elm('.kb-guide').html(value.value);
+									break;
+								case 'CONDITION':
+									field.elm('.kb-guide').empty();
+									if (value.value)
+									{
+										field.elm('input').val(value.value);
+										value.value.split(' and ').each((value,index) => field.guide(value));
+									}
+									else field.elm('input').val('');
+									break;
+								case 'CREATOR':
+								case 'MODIFIER':
+									field.elm('.kb-guide').html(value.name);
+									break;
+								case 'CREATED_TIME':
+								case 'UPDATED_TIME':
+									if (value.value) field.elm('.kb-guide').html(new Date(value.value).format('Y-m-d H:i'));
+									else field.elm('.kb-guide').html('');
+									break;
+								case 'DATETIME':
+									if (value.value)
+									{
+										var date=value.value.parseDateTime();
+										field.elm('input').val(date.format('Y-m-d'));
+										field.elm('.kb-hour').elm('select').val(date.format('H'));
+										field.elm('.kb-minute').elm('select').val(date.format('i'));
+										field.elm('.kb-guide').html(date.format('Y-m-d H:i'));
+									}
+									else
+									{
+										field.elm('input').val('');
+										field.elm('.kb-hour').elm('select').val('');
+										field.elm('.kb-minute').elm('select').val('');
+										field.elm('.kb-guide').html('');
+									}
+									break;
+								case 'DROP_DOWN':
+									field.elm('select').val(value.value);
+									field.elm('.kb-guide').html(field.elm('select').selectedText());
+									break;
+								case 'FILE':
+								case 'GROUP_SELECT':
+								case 'ORGANIZATION_SELECT':
+								case 'USER_SELECT':
+									field.elm('.kb-guide').empty();
+									if (value.value)
+									{
+										field.elm('input').val(JSON.stringify(value.value));
+										value.value.each((value,index) => field.guide(value));
+									}
+									else field.elm('input').val('[]');
+									break;
+								case 'LINK':
+									field.elm('input').val(value.value);
+									switch (fieldInfo.protocol)
+									{
+										case 'MAIL':
+											field.elm('.kb-guide').empty().append(
+												kb.create('a').attr('href','mailto:'+value.value).html(value.value)
+											);
+											break;
+										case 'CALL':
+											field.elm('.kb-guide').empty().append(
+												kb.create('a').attr('href','tel:'+value.value).html(value.value)
+											);
+											break;
+										case 'WEB':
+											field.elm('.kb-guide').empty().append(
+												kb.create('a').attr('href',value.value).attr('target','_blank').html(value.value)
+											);
+											break;
+									}
+									break;
+								case 'MULTI_LINE_TEXT':
+								case 'RICH_TEXT':
+									field.elm('textarea').val(value.value);
+									field.elm('.kb-guide').html(value.value.replace(/\n/g,'<br>'));
+									break;
+								case 'NUMBER':
+									if (fieldInfo.digit)
+									{
+										if (kb.isNumeric(value.value))
+										{
+											field.elm('input').val(Number(value.value).comma(fieldInfo.displayScale));
+											field.elm('.kb-guide').html(Number(value.value).comma(fieldInfo.displayScale));
+										}
+										else
+										{
+											field.elm('input').val(value.value);
+											field.elm('.kb-guide').html(value.value);
+										}
+									}
+									else
+									{
+										if (fieldInfo.displayScale)
+										{
+											if (kb.isNumeric(value.value))
+											{
+												field.elm('input').val(Number(value.value).toFloor(parseInt(fieldInfo.displayScale)));
+												field.elm('.kb-guide').html(Number(value.value).toFloor(parseInt(fieldInfo.displayScale)));
+											}
+											else
+											{
+												field.elm('input').val(value.value);
+												field.elm('.kb-guide').html(value.value);
+											}
+										}
+										else
+										{
+											field.elm('input').val(value.value);
+											field.elm('.kb-guide').html(value.value);
+										}
+									}
+									if (fieldInfo.unit)
+									{
+										if (fieldInfo.unitPosition=='prefix') field.elm('.kb-guide').html(fieldInfo.unit+' '+field.elm('.kb-guide').text());
+										else field.elm('.kb-guide').html(field.elm('.kb-guide').text()+' '+fieldInfo.unit);
+									}
+									break;
+								case 'RADIO_BUTTON':
+									field.elms('[data-name='+key+']').each((element,index) => {
+										element.checked=(value.value==element.val());
+									});
+									field.elm('.kb-guide').html(value.value);
+									break;
+								case 'SPACER':
+									break;
+								case 'STATUS_ASSIGNEE':
+									field.elm('.kb-guide').empty();
+									if (value.value)
+									{
+										value.value.each((value,index) => {
+											field.elm('.kb-guide')
+											.append(
+												kb.create('span').addClass('kb-guide-item')
+												.append(kb.create('span').addClass('kb-guide-item-label').html(value.name))
+											);
+										});
+									}
+									break;
+								case 'SUBTABLE':
+									if (value.value.length==0) field.clearRows();
+									else
+									{
+										field.tr.each((element,index) => {
+											if (value.value.length>index)
+												assign(element,fieldInfo,((values) => {
+													if (value.disabled)
+														for (var key in values) values[key].disabled=true;
+													return values;
+												})(value.value.map((item) => item.value)[index]),(unassinged) => res=res.concat(unassinged));
+										});
+										for (var i=field.tr.length;i<value.value.length;i++)
+											assign(field.addRow(),fieldInfo,((values) => {
+												if (value.disabled)
+													for (var key in values) values[key].disabled=true;
+												return values;
+											})(value.value.map((item) => item.value)[i]),(unassinged) => res=res.concat(unassinged));
+										field.tr.slice(value.value.length).each((element,index) => field.delRow(element));
+									}
+									if (field.tr.length==0)
+										((row) => {
+											if (value.disabled)
+												assign(row,fieldInfo,((values) => {
+													for (var key in values) values[key].disabled=true;
+													return values;
+												})(this.get(row,fieldInfo,true).record),(unassinged) => res=res.concat(unassinged));
+										})(field.addRow());
+									break;
+								case 'TIME':
+									if (value.value)
+									{
+										field.elm('.kb-hour').elm('select').val(value.value.split(':')[0]);
+										field.elm('.kb-minute').elm('select').val(value.value.split(':')[1]);
+										field.elm('.kb-guide').html(value.value);
+									}
+									else
+									{
+										field.elm('.kb-hour').elm('select').val('');
+										field.elm('.kb-minute').elm('select').val('');
+										field.elm('.kb-guide').html('');
+									}
+									break;
+								default:
+									field.elm('input').val(value.value);
+									field.elm('.kb-guide').html(value.value);
+									break;
+							}
+						}
+					})(container.elm('[field-id="'+CSS.escape(key)+'"]'),app.fields[key],record[key]);
+				/* reserved field */
+				if ('$id' in record)
+					if (container.elm('[data-type=id]')) container.elm('[data-type=id]').val(record['$id'].value);
+				callback(res);
+			};
+			assign(container,app,record,(unassinged) => {
+				if (container.hasOwnProperty('cleanup')) container.cleanup();
+				resolve();
+			});
+		});
+	}
+};
+window.KintoneBoosterRecordPicker=class extends KintoneBoosterDialog{
+	/* constructor */
+	constructor(type,multiSelect,prepend){
+		super(999997,false,!multiSelect);
+		/* setup properties */
+		this.multiSelect=multiSelect;
+		this.prepend=prepend;
+		this.type=type;
+		this.limit=50;
+		this.offset=0;
+		this.table=null;
+		this.fieldInfo={};
+		this.records=[];
+		this.selection=[];
+		this.img=this.parts.icon.clone().css({top:'0px'});
+		this.prev=this.img.clone()
+		.css({right:'4em'})
+		.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAjZJREFUeNpiYKAJ6J8y8T+MzYIm0QCk6pHFmNA016ObhqKgMCefkfoOBggg6vr9Psz/LLgCBcVb6BI4gxSvQqJMAQggugYDinNYSNVAUDOxHmbCJghNRo2ENDMSG+VASoGq6RMggIY7Agbae6Limdh4ZyGgaT2QCiAphRGbyliwaALZtJ7s5EksYCTF2ehJE6fNUIUbqFIIUFQuYUskAwcAAmgUUTP3F5CUpSi0DD07TqCZxUDLQBXBfVL1sZBpmQCQoiiPsJCRIQWoES3ENAn2AykHaic+Rlr6GF8DgJGWcUx1i4lN1TS1GF8+HpC2FqGSa+QBgAAaRaNgFBBVcJDVm6BCL4uo2ouFShYaAKnzNG/6oFkKstCALm0uarS7mMi0tJ+ujT1i+79UtRhav/ZTKwewUDubULN5S5MRO4KJC9pu+kB3i6GWC4KoAWvQkxL0hFqYJOdjqIET6BLUWCwHBbsg3S2GWv4B6vsLdLUYyQGGQMqQ5omL2IKG6omL3tluFIwCkgFAgPbN6AZAGASi1XQQR3BD3aSrGhLilzZqoQK9iwu8RLnrUfFAEORKbla63NNSRbq21KPZOCQFqJIqC133wAxJt2FU+uZsCHRPF9d+QgFzq7FJlwymgHk/U3pCdgfmgpMm7PL3p5MVIU8bsTQUpbtxcRsxB6xtI9Ka02CaPL7SLdFSLUtrDi2TwJq2ZB5YOni4ApaIlm6Bvx4eQgC/8fVQwE9sLizwnc3hbwMIgobRAdIK28oCHbudAAAAAElFTkSuQmCC')
+		.on('click',(e) => {
+			this.offset-=this.limit;
+			/* search records */
+			this.search();
+		});
+		this.next=this.img.clone()
+		.css({right:'2em'})
+		.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAi1JREFUeNpiYKAa6J8y8T8Q30cXZ0LjK4AU4lMANw3GZkGXLMzJZ2QgpIskABBAVPI/Xr9DA6gBn7/rcUri9DNJACCAaO9lXICRkGZ8HmQkxWZ0g5iIdGEjNhew4NHwAKhBkWaBCxBAwwUBo+o9sWqxRZUAsamMiUDJtJ4szVAQgM8VTMRmFiAOIEszLsBCjCJcOYuQzRvwZUkWUm2jWiIZOAAQQKMIW8QV0MJcRmKyExI3EJjsNgyExchAEeiIBwNhMTIQBDriw0BYDAMfgA4QHAiLkcEBoCMcKSo1aeFjallMchxTYjFFqZpUi6mWjwes5Bp5ACCARtEoGJlNn/+0KESI7RD0U7vRTEpPRADqewN6WwwD54GWnx/Ixh5Z9TBVOn1A8B7osP6BsBgECshplzENVLZjona2JzbbUdtiogdDaGHxB2K69dS2uJDe7WqSBy+o4eMJ5IyYUOpjsksuci2+ALTQkBIXk2OxIdDSC5TGDwuJ2USQWomRidrZZBSMggEHAAHaNaMbAEEYiBLDgo7AJo7gaI7gCI5giMSAn0LLNb0XBuAlhF4LXIQQU3Q/vZfcnsPI2jNPtSZck+e66W/utCjcpPzw/DC4vAjXZPHNk/DbDxT53YvwVz6pvecACNec5aY/vAg3zb5UmUMVFitzFoSHlrklOCMa2OPQI40qLHZpIQmrlKXZwurBI06SnBYtNYUhmgdpYbj2UEIYegAwStjMiIcQQkxxA49895hLUEtfAAAAAElFTkSuQmCC')
+		.on('click',(e) => {
+			this.offset+=this.limit;
+			/* search records */
+			this.search();
+		});
+		this.submit=this.img.clone()
+		.css({left:'0'})
+		.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA7BJREFUeNpiYKAa6J8yMQFK/yfbhP9Qej7RigkpOk+U1QABRLnf92MTZ4LSDkgKHbDpNiDoHZACvIqIChCAAKIIMeLwNtxHhTn5jCTFNHoo4FLPRISZ58mJNQdCwctIauIlKRzwAYAAGqKIkUBcNwIDp4GsRAIqFoC4gBiNAaTmEOQUZkBpWfCeXJtB4AFSMRgAYoNSE9Zyg5R0TVbaRteEnK4JZkn0TAA0rIGcwPxP+4KNWAAQQKO5mVCeg2WdA8DYP0Azi6FZTACILwAtMkQSB4ndxyZHjfbNf2LaE1RNsqBMQ4phUMsdSLEDV04+gBSkRJW3pMY5E45iA2RIIxC/x9cQhEbFeiB2pHqqhlYz/TikHUGOhLZXzpNS6TNSIT2A4nY/MQUuVS0mpibD5gCqt4NwOCARaPkCuhSJ0CyZMFo5wABAAI2iUTCwLRBoLVWAVBI10NRioIUK0JYG0UUhxRaj1TiBQEs2oLWu66FcQaDcB1ItZiHUu8bmK2hQw1op78kp85lw+HY9kUGpiFRnU24xEICaMwSDD+iwBzC3UstiEJhIpBlkta+ZqJAlBahtcT2RZhhQ0+IFxDRvkdrSgVSxGJhoEqHM9wRKs/1Q9RuoGdSCSL2E+WiW7oc5Cpbl8A3Jkduufo8jAT0AWqqIRQ1RDTtSuqmw+PwANPgCWm/CgNRWJTUa9Lja03gtp0Y+xpWi5+Nr3lJsMTRFJ5JqOTV8zAANUpyW08xiIiynncV4LBekW0MO1GQiawxwFAwrABCgXau9QRCIoYQJWMENdAJlBCZQJjCOwAZugE4AG+AGygSs4AjapJra8HF3HEcx96J/jCR91uu1r8+/PDw8/k+FUGw+jzhg9gGGT+iSMjJkLoMwzgxVS5v/xKG1Jp9tA+IfIIDOPDYRMZwRRgnozogq77dxysvZvwE2Z7E4wi17h2yMyMacI5Dl1dTZDjWCixjZZKyiiFm9EAmlmjrDOvMDlc5KE9FhQOwArHU3k1MSpqgtx3FzVbRMCW8tDnURq+AyzjCe108wO4uTZ8GOykNSlYYrqWEBJiMy25Dr7SvRiWs8WuQ7OIOpSveERalg9/j5/exJeqcVYeC7gUIUBd3i+Q9R7N5y8v0n/pDl7IRbyB/e733QvxmAwK+cQE+bSmHFVjC7F5RbVRQwirgI82vPrsE6cTFuXxTPc4NHtYiLszcbEofitlG5JUJphCFbuKdLNR77FM3lZdgw48om0MU49juIO1dMPDw8PJziBXvFttyY+HdhAAAAAElFTkSuQmCC')
+		.on('click',(e) => {
+			this.offset=0;
+			/* search records */
+			this.search();
+		});
+		this.input=this.parts.input.clone().css({
+			paddingLeft:'2em',
+			paddingRight:'4em'
+		})
+		.attr('placeholder',kb.constants.common.prompt.keyword[kb.operator.language])
+		.attr('type','text')
+		.on('keydown',(e) => {
+			var code=e.keyCode||e.which;
+			if (code==13)
+			{
+				this.offset=0;
+				/* search records */
+				this.search();
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			}
+		});
+		/* modify elements */
+		this.container.css({
+			height:'calc(34em + 16px)',
+			minWidth:'16em'
+		});
+		this.contents.css({
+			padding:'0px'
+		});
+		this.header.css({boxShadow:'none'})
+		.append(this.input)
+		.append(this.next)
+		.append(this.prev)
+		.append(this.submit)
+	}
+	/* search records */
+	search(callback){
+		switch (this.type)
+		{
+			case 'record':
+				kintone.api(
+					kintone.api.url('/k/v1/records',true),
+					'GET',
+					{
+						app:this.fieldInfo.app,
+						query:(() => {
+							var res=[];
+							if (this.fieldInfo.query) res.push(this.fieldInfo.query);
+							if (this.input.val())
+							{
+								res.push(((keywords) => {
+									var res=[];
+									keywords.each((keyword,index) => {
+										for (var key in this.fieldInfo.picker)
+											((picker) => {
+												switch (picker.type)
+												{
+													case 'LINK':
+													case 'MULTI_LINE_TEXT':
+													case 'RICH_TEXT':
+													case 'SINGLE_LINE_TEXT':
+														res.push(picker.code+' like "'+keyword+'"');
+														break;
+												}
+											})(this.fieldInfo.picker[key]);
+									});
+									return '('+res.join(' or ')+')';
+								})(this.input.val().replace(/[　 ]+/g,' ').split(' ').filter((item) => item)));
+							}
+							return res.join(' and ')+' order by '+((this.fieldInfo.sort)?this.fieldInfo.sort:'$id asc')+' limit '+this.limit+' offset '+this.offset;
+						})()
+					}
+				)
+				.then((resp) => {
+					/* setup properties */
+					this.records=resp.records;
+					/* create table */
+					this.table.clearRows();
+					/* append records */
+					this.records.each((record,index) => {
+						((row) => {
+							kb.record.set(row,{fields:this.fieldInfo.picker},record);
+							if (this.multiSelect)
+								if (this.selection.some((item) => item['$id'].value==record['$id'].value)) row.css({backgroundColor:'rgba(66,165,245,0.5)',color:''});
+						})(this.table.addRow());
+					});
+					/* modify elements */
+					if (this.offset>0) this.prev.show();
+					else this.prev.hide();
+					if (this.offset+((this.limit==this.records.length)?this.limit:this.records.length)<resp.total) this.next.show();
+					else this.next.hide();
+					if (callback) callback();
+				})
+				.catch((error) => kb.alert(kb.error.parse(error)));
+				break;
+			default:
+				var setup=() => {
+					var records=(() => {
+						var res=(this.prepend)?this.prepend.concat(kb.roleSet[this.type]):kb.extend({},kb.roleSet[this.type]);
+						if (this.input.val())
+						{
+							((keywords) => {
+								res=res.filter((record) => {
+									var exists=false;
+									if (record['name'].value) exists=keywords.some((item) => (record['name'].value.match(new RegExp(item,'ig'))));
+									return exists;
+								});
+							})(this.input.val().replace(/[　 ]+/g,' ').split(' ').filter((item) => item));
+						}
+						return res;
+					})();
+					/* setup properties */
+					this.records=records.slice(this.offset,this.offset+this.limit);
+					/* create table */
+					this.table.clearRows();
+					/* append records */
+					this.records.each((record,index) => {
+						((row) => {
+							kb.record.set(row,{fields:this.fieldInfo.picker},record);
+							if (this.multiSelect)
+								if (this.selection.some((item) => item['code'].value==record['code'].value)) row.css({backgroundColor:'rgba(66,165,245,0.5)',color:''});
+						})(this.table.addRow());
+					});
+					/* modify elements */
+					if (this.offset>0) this.prev.show();
+					else this.prev.hide();
+					if (this.offset+((this.limit==this.records.length)?this.limit:this.records.length)<records.length) this.next.show();
+					else this.next.hide();
+					if (callback) callback();
+				};
+				if (kb.roleSet.user.length==0) kb.roleSet.load().then(() => setup());
+				else setup();
+				break;
+		}
+	}
+	/* show records */
+	show(fieldInfo,callback){
+		var div=this.parts.div.clone().css({
+			borderTop:'1px solid #42a5f5',
+			borderBottom:'1px solid #42a5f5',
+			lineHeight:'2em',
+			padding:'0px 0.5em'
+		});
+		var td=this.parts.td.clone().css({cursor:'pointer',padding:'0',userSelect:'none'});
+		var th=this.parts.th.clone().css({backgroundColor:kb.themeColor().backcolor});
+		/* setup properties */
+		this.offset=0;
+		this.fieldInfo=fieldInfo;
+		this.records=[];
+		this.selection=[];
+		/* setup elements */
+		this.input.val('');
+		/* create table */
+		this.table=this.parts.table.clone().css({marginBottom:'0.5em'})
+		.append(kb.create('thead').append(kb.create('tr')))
+		.append(kb.create('tbody').append(kb.create('tr')));
+		for (var key in this.fieldInfo.picker)
+			((picker) => {
+				this.table.elm('thead tr').append(
+					th.clone()
+					.append(div.clone().html(('label' in picker)?picker.label:''))
+				);
+				this.table.elm('tbody tr').append(
+					td.clone()
+					.append(kb.field.create(((fieldInfo) => {
+						fieldInfo.noLabel=true;
+						return fieldInfo;
+					})(kb.extend({},picker))).css({width:'100%'}).addClass('kb-picker kb-readonly'))
+				);
+			})(this.fieldInfo.picker[key]);
+		this.contents.empty().append(
+			this.table.spread((row,index) => {
+				row.on('click',(e) => {
+					((record) => {
+						if (this.multiSelect)
+						{
+							((filter) => {
+								if (filter.length==this.selection.length)
+								{
+									this.selection.push(kb.extend({},record));
+									row.css({backgroundColor:'rgba(66,165,245,0.5)',color:''});
+								}
+								else
+								{
+									this.selection=filter;
+									row.css({backgroundColor:'transparent',color:kb.themeColor().forecolor});
+								}
+							})(this.selection.filter((item) => {
+								return (this.type=='record')?(item['$id'].value!=record['$id'].value):(item['code'].value!=record['code'].value);
+							}));
+						}
+						else
+						{
+							if (callback) callback(record);
+							this.hide();
+						}
+					})(this.records[index]);
+				});
+				/* activation */
+				((app) => {
+					row.addClass('kb-scope').elms('.kb-field').each((element,index) => kb.field.activate(element,app));
+				})({id:'recordPicker',fields:kb.extend({},this.fieldInfo.picker)})
+			})
+		);
+		if (this.multiSelect)
+		{
+			/* setup handler */
+			if (this.handler) this.ok.off('click',this.handler);
+			this.handler=(e) => {
+				if (callback) callback(this.selection);
+				this.hide();
+			};
+			this.ok.on('click',this.handler);
+			this.cancel.on('click',(e) => this.hide());
+		}
+		/* show */
+		this.search(() => super.show());
+	}
+};
+window.KintoneBoosterButton=class{
+	/* constructor */
+	constructor(){}
+	/* create */
+	create(mobile,type,id,label,message,handler){
+		((element) => {
+			if (element) element.parentNode.removeChild(element);
+		})(kb.elm('#'+id));
+		switch (type)
+		{
+			case 'detail':
+				((mobile)?kintone.mobile.app.getHeaderSpaceElement():kintone.app.record.getHeaderMenuSpaceElement().css({padding:'0 0.75em 0 1em'}))
+				.append(
+					kb.create('button').addClass('kb-action-button '+((mobile)?'kb-action-button-mobile-detail':'kb-action-button-detail')).attr('id',id).html(label).on('click',(e) => {
+						kb.confirm(message,() => handler());
+					})
+				);
+				break;
+			case 'index':
+				((mobile)?kintone.mobile.app.getHeaderSpaceElement():kintone.app.getHeaderMenuSpaceElement())
+				.append(
+					kb.create('button').addClass('kb-action-button '+((mobile)?'kb-action-button-mobile-index':'kb-action-button-index')).attr('id',id).html(label).on('click',(e) => {
+						kb.confirm(message,() => handler());
+					})
+				);
+				break;
+		}
+	}
+};
+window.KintoneBoosterField=class{
+	/* constructor */
+	constructor(){
+		this.cache={};
+		this.reserved=['CATEGORY','CREATED_TIME','CREATOR','GROUP','HR','LABEL','MODIFIER','RECORD_NUMBER','REFERENCE_TABLE','SPACER','STATUS','STATUS_ASSIGNEE','UPDATED_TIME','__ID__','__REVISION__'];
+	}
+	/* activate */
+	activate(field,app){
+		var fieldInfos=kb.field.parallelize(app.fields);
+		var alert=() => {
+			return kb.create('div').css({
+				zIndex:kb.popups.alert.cover.style.zIndex-4
+			})
+			.append(
+				kb.create('img')
+				.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkVGNzA3QTE1RTc4MTFFOEI5MDA5RUE2NDFCQTUzNDciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkVGNzA3QTI1RTc4MTFFOEI5MDA5RUE2NDFCQTUzNDciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpCRUY3MDc5RjVFNzgxMUU4QjkwMDlFQTY0MUJBNTM0NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCRUY3MDdBMDVFNzgxMUU4QjkwMDlFQTY0MUJBNTM0NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkBlNTAAAADNSURBVHja7NHBCcJAFATQZNBcYwmSmycPlpI2bCVgAVqAVmAFHmxqncAKQVyz+/N/grADc0iyy0Be6ZwrlgiKhZKH83Ae/v/h1X23l9499vfZk2hYOHpgO7ZkH+xzjl9dsze2Ytfsld3MMXxhm8Hzlj1bD/eu7Zf3rf9mMvx2DaXzZ1SHh66hVP5MrTn86RpK48+qDIdcQ4nyxkRXsTcmuoq9oeAq8oaSa7I3FF2TvKHomuQNZddobxi4RnnDyHXUG0auo94wdP3p/RJgAMw4In5GE/6/AAAAAElFTkSuQmCC')
+			)
+			.append(
+				kb.create('span')
+			);
+		};
+		var call=(type) => {
+			((container,scope) => {
+				if (field.elm('.kb-field-alert')) field.elm('.kb-field-alert').hide();
+				else
+				{
+					field.elms('input,select,textarea').each((element,index) => {
+						if (element.alert) element.alert.hide();
+					});
+				}
+				kb.event.call(type,(() => {
+					var res={
+						container:scope,
+						record:kb.record.get(container,app,true).record
+					};
+					return res;
+				})())
+				.then((param) => {
+					if (!param.error)
+					{
+						kb.event.call('kb.action.call',{
+							record:param.record,
+							workplace:(container.closest('.kb-view'))?'view':'record'
+						})
+						.then((param) => {
+							kb.record.set(container,app,param.record);
+							((event) => {
+								container.attr('unsaved','unsaved').dispatchEvent(event);
+							})(new Event('change'));
+						});
+					}
+				});
+			})(field.closest('[form-id=form_'+app.id+']'),field.closest('.kb-scope'));
+		};
+		if (field.attr('field-id'))
+			((field,fieldInfo) => {
+				if (!fieldInfo.lookup)
+				{
+					switch (fieldInfo.type)
+					{
+						case 'CHECK_BOX':
+						case 'MULTI_SELECT':
+							if (fieldInfo.required)
+							{
+								field.alert=(message) => {
+									if (!field.elm('.kb-field-alert')) field.append(alert().addClass('kb-field-alert'));
+									field.elm('.kb-field-alert').elm('span').html(message).parentNode.show();
+								};
+							}
+							break;
+						case 'COLOR':
+							field.elm('.kb-search').on('click',(e) => {
+								kb.pickupColor((color) => {
+									field.css({backgroundColor:color}).elm('input').val(color);
+									call('kb.change.'+fieldInfo.code);
+								});
+							});
+							field.elm('input').on('change',(e) => {
+								if (!e.currentTarget.val())
+								{
+									field.css({backgroundColor:'transparent'});
+									call('kb.change.'+fieldInfo.code);
+								}
+								else
+								{
+									var color=e.currentTarget.val().replace(/#/g,'');
+									if (color.match(/([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/g))
+									{
+										field.css({backgroundColor:'#'+color}).elm('input').val('#'+color);
+										call('kb.change.'+fieldInfo.code);
+									}
+								}
+							});
+							break;
+						case 'CONDITION':
+							field.elm('.kb-search').on('click',(e) => {
+								kb.filter.build(fieldInfo.app,field.elm('input').val(),(query) => {
+									field.elm('input').val(query);
+									call('kb.change.'+fieldInfo.code);
+								});
+							});
+							field.reset=(app) => {
+								fieldInfo.app=app;
+								field.elm('input').val('');
+								field.elm('.kb-guide').empty();
+							};
+							field.guide=(value) => {
+								field.elm('.kb-guide').append(
+									((guide) => {
+										guide
+										.append(
+											kb.create('button').addClass('kb-icon kb-icon-del kb-guide-item-icon').on('click',(e) => {
+												kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+													field.elm('input').val(field.elm('input').val().split(' and ').filter((item) => item!=value).join(' and '));
+													call('kb.change.'+fieldInfo.code);
+												});
+											})
+										)
+										.append(kb.create('span').addClass('kb-guide-item-label').html(value));
+										return guide;
+									})(kb.create('span').addClass('kb-guide-item'))
+								);
+							};
+							if (fieldInfo.required)
+							{
+								field.alert=(message) => {
+									if (!field.elm('.kb-field-alert')) field.append(alert().addClass('kb-field-alert'));
+									field.elm('.kb-field-alert').elm('span').html(message).parentNode.show();
+								};
+							}
+							break;
+						case 'DATE':
+							field.elm('.kb-search').on('click',(e) => {
+								kb.pickupDate(field.elm('input').val(),(date) => {
+									field.elm('input').val(date);
+									call('kb.change.'+fieldInfo.code);
+								});
+							});
+							break;
+						case 'DATETIME':
+							field.elm('.kb-search').on('click',(e) => {
+								kb.pickupDate(field.elm('input').val(),(date) => {
+									field.elm('input').val(date);
+									call('kb.change.'+fieldInfo.code);
+								});
+							});
+							break;
+						case 'FILE':
+							field.elm('.kb-search').on('click',(e) => {
+								((file) => {
+									kb.elm('body').append(file.on('change',(e) => {
+										if (e.currentTarget.files)
+										{
+											((data) => {
+												kb.file.upload(Array.from(e.currentTarget.files).first())
+												.then((resp) => {
+													field.elm('input').val(((files) => {
+														return JSON.stringify(files.concat(resp));
+													})((field.elm('input').val())?JSON.parse(field.elm('input').val()):[]));
+													call('kb.change.'+fieldInfo.code);
+												})
+												.catch((error) => kb.alert(kb.error.parse(error)))
+												.finally(() => document.body.removeChild(file));
+											})(Array.from(e.currentTarget.files).first());
+										}
+										else document.body.removeChild(file);
+									}));
+									file.click();
+								})(kb.create('input').attr('type','file').css({display:'none'}));
+							});
+							field.guide=(file) => {
+								field.elm('.kb-guide').append(
+									((guide) => {
+										guide
+										.append(
+											kb.create('button').addClass('kb-icon kb-icon-del kb-guide-item-icon').on('click',(e) => {
+												kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+													field.elm('input').val(JSON.stringify(JSON.parse(field.elm('input').val()).filter((item) => item.fileKey!=file.fileKey)));
+													call('kb.change.'+fieldInfo.code);
+												});
+											})
+										)
+										.append(
+											kb.create('span').addClass('kb-guide-item-label').html(file.name).on('click',(e) => field.open(file))
+										);
+										return guide;
+									})(kb.create('span').addClass('kb-guide-item'))
+								);
+							};
+							field.open=(file) => {
+								kb.file.download(file)
+								.then((resp) => {
+									try
+									{
+										var src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAFN++nkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA1FJREFUeNpiYKA66J8y8T8ynwmfJE6dQHYAjM9CtAlIihJIcjRAANHD71hdDxIA+RVdAbKf1wMFqeRXgACiqdcbQBiXPBMB/fVQTLxmoG3riRHDlXwWgIjCnHxGJOkPMHmYOCMx0QwDaIZRBgACaDgiYMDtxydPKJE4UKIZL8AVzwZA6jySkCEwji8QtBmoUQBIgbAhTCOIDxXHX4DgSl3Y5CjyMwspaRuvn6EJfwEOtQtIyhiEEsnAAYAAGkV0A4wUFDH/KSmPmYaEj4nJpcT6niQfQw01xCFtSEqQMxLwYT+QKsDmI6RyGV4eYwmRCUC5QpIsRjJEEaj5ARmJTwFI3ccV/CxEmHEfS2svEWjYArQG33yKi3ooCAQ1MXHIzQdaRqxFjtRI1aDgA5X+ClikQdHhSE60jAKaAoAAGkWjYBSgtF8pacOyUGC3AyUOH7Cmz8izmJGUxEREvB4AVouOtGhlvod2Y7GBD0BLBWnWoMdhOUmWEh3HoDYVrKkDteADNktBaogdcGMksZnTCLSkAcnnDEiWgsTriW0KMRKZkEDd8kQiQwcUMgmEEhwLgVKJ5LiDOjARKS04kFNkCkAb9h+gwXaBgG8NoNEjQK2yGmTQeWjD/gCozQ10xAekkaL1pJbduCz+gMfVIAve4x1LxjSLuOwEjdcNVCgZN+BKI4xEpFKi4w3JhwTTA6lFJqjL2o8rQQMtm0CPFgjesfhRMAoGDAAEaNdqbxCEgWhjGKAjMAKbyAg6ATM4gWECGQE2cBRGcAS5eI1VGvt110C8F/hDSNvX69217yqPQCAQbBnF69iuikbJevrh3ywshIUwrf82Md93E7QSjpXJR81NRelE4ixEi6alQOKsRMkI4+XCo/rU7wxAiBo9xFdEsU1X0XhY3sluk5VwhHo2q5c+dTHKm8Pi3fL2LotiP6DAAvHa09ddWQofNWHXvQ8YMMh6Y2iniStJ4wTARDWpuzWKtNTgkm6ZQ4FxnawUVhEOpv26kDFblp8jLFlblqypZ61itAgMFtTVqyVkP9C3J/UWwM3q0KoAYglDUeOW0Z/GaH4i5nEO/THneh7r0vNkgGhXYdt4YBWRKoiNmHeHPe60uh++any7595pCQQCgWDLeALGLWqyLWBxZQAAAABJRU5ErkJggg==';
+										var download=() => {
+											var a=kb.create('a')
+											.css({display:'none'})
+											.attr('href',this.objectUrl(resp,file.contentType))
+											.attr('target','_blank')
+											.attr('download',file.name);
+											kb.elm('body').append(a);
+											a.click();
+											document.body.removeChild(a);
+										};
+										switch (file.contentType)
+										{
+											case 'application/javascript':
+												fetch(new Request(this.objectUrl(resp,file.contentType)))
+												.then((resp) => resp.text())
+												.then((text) => {
+													var lines=text.split('\n');
+													kb.create('div')
+													.append(
+														((container) => {
+															lines.each((line,index) => container.append(kb.create('code').css({display:'block'}).text(line)));
+															return container
+														})(kb.create('pre'))
+													)
+													.popup('full','full',[{src:src,handler:download}]).show();
+												});
+												break;
+											case 'application/json':
+												fetch(new Request(this.objectUrl(resp,file.contentType)))
+												.then((resp) => resp.text())
+												.then((text) => {
+													kb.create('div').html(text.replace(/\n/g,'<br>')).popup('full','full',[{src:src,handler:download}]).show();
+												});
+												break;
+											case 'application/pdf':
+												kb.create('iframe').css({
+													border:'none',
+													height:'100%',
+													outline:'none',
+													width:'100%'
+												})
+												.attr('src',this.objectUrl(resp,file.contentType)).popup('full','full',[{src:src,handler:download}]).show();
+												break;
+											case 'audio/mpeg':
+											case 'audio/x-m4a':
+												kb.create('audio').css({
+													outline:'none'
+												})
+												.attr('controls','controls')
+												.attr('src',this.objectUrl(resp,file.contentType))
+												.popup(null,null,[{src:src,handler:download}]).show();
+												break;
+											case 'image/bmp':
+											case 'image/gif':
+											case 'image/jpeg':
+											case 'image/png':
+												kb.create('img').css({
+													maxHeight:'calc(100vh - 4em)',
+													maxWidth:'calc(100vw - 2em)'
+												}).attr('src',this.objectUrl(resp,file.contentType)).popup(null,null,[{src:src,handler:download}]).show();
+												break;
+											case 'text/plain':
+											case 'text/css':
+												fetch(new Request(this.objectUrl(resp,file.contentType)))
+												.then((resp) => resp.text())
+												.then((text) => {
+													kb.create('div').html(text.replace(/\n/g,'<br>')).popup('full','full',[{src:src,handler:download}]).show();
+												});
+												break;
+											case 'text/csv':
+												fetch(new Request(this.objectUrl(resp,file.contentType)))
+												.then((resp) => resp.text())
+												.then((text) => {
+													var csv=text.parseCSV();
+													if (csv.length!=0)
+														((table) => {
+															csv.each((cells,index) => {
+																table.append(
+																	((row) => {
+																		cells.each((cell,index) => row.append(kb.create('td').css({padding:'0.25em'}).html(cell.replace(/\n/g,'<br>'))));
+																		return row;
+																	})(kb.create('tr'))
+																);
+															});
+															return table;
+														})(kb.create('table')).popup(null,'full',[{src:src,handler:download}]).show();
+												});
+												break;
+											case 'video/mp4':
+											case 'video/mpeg':
+												kb.create('video').css({
+													maxHeight:'calc(100vh - 4em)',
+													maxWidth:'calc(100vw - 2em)',
+													outline:'none'
+												})
+												.attr('controls','controls')
+												.attr('src',this.objectUrl(resp,file.contentType))
+												.popup(null,null,[{src:src,handler:download}]).show();
+												break;
+											default:
+												download();
+												break;
+										};
+									}
+									catch(error){kb.alert(kb.error.parse(error))}
+								})
+								.catch((error) => kb.alert(kb.error.parse(error)));
+							};
+							if (fieldInfo.required)
+							{
+								field.alert=(message) => {
+									if (!field.elm('.kb-field-alert')) field.append(alert().addClass('kb-field-alert'));
+									field.elm('.kb-field-alert').elm('span').html(message).parentNode.show();
+								};
+							}
+							break;
+						case 'GROUP_SELECT':
+						case 'ORGANIZATION_SELECT':
+						case 'USER_SELECT':
+							((type) => {
+								field.elm('.kb-search').on('click',(e) => {
+									field.recordPicker.show(
+										{
+											picker:{
+												name:{
+													code:'name',
+													type:'SINGLE_LINE_TEXT',
+													label:kb.constants.picker.caption.name[kb.operator.language],
+													required:false,
+													noLabel:true
+												}
+											}
+										},
+										(records) => {
+											((values) => {
+												((codes) => {
+													records.each((record,index) => {
+														if (!codes.includes(record['code'].value))
+															values.push({
+																code:record['code'].value,
+																name:record['name'].value
+															});
+													});
+												})(values.map((item) => item.code));
+												field.elm('input').val(JSON.stringify(values));
+												call('kb.change.'+fieldInfo.code);
+											})((field.elm('input').val())?JSON.parse(field.elm('input').val()):[]);
+										}
+									);
+								});
+								field.recordPicker=new KintoneBoosterRecordPicker(
+									type,
+									true,
+									(() => {
+										var res=[];
+										if (fieldInfo.loginuser) res.push({code:{value:'LOGINUSER()'},name:{value:'Login user'}});
+										if (fieldInfo.guestuser) res.push({code:{value:'GUESTUSER()'},name:{value:'Guest user'}});
+										return res;
+									})()
+								);
+								field.guide=(value) => {
+									field.elm('.kb-guide').append(
+										((guide) => {
+											guide
+											.append(
+												kb.create('button').addClass('kb-icon kb-icon-del kb-guide-item-icon').on('click',(e) => {
+													kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+														field.elm('input').val(JSON.stringify(JSON.parse(field.elm('input').val()).filter((item) => item.code!=value.code)));
+														call('kb.change.'+fieldInfo.code);
+													});
+												})
+											)
+											.append(kb.create('span').addClass('kb-guide-item-label').html(value.name));
+											return guide;
+										})(kb.create('span').addClass('kb-guide-item'))
+									);
+								};
+								if (fieldInfo.required)
+								{
+									field.alert=(message) => {
+										if (!field.elm('.kb-field-alert')) field.append(alert().addClass('kb-field-alert'));
+										field.elm('.kb-field-alert').elm('span').html(message).parentNode.show();
+									};
+								}
+							})((() => {
+								var res='';
+								switch (fieldInfo.type)
+								{
+									case 'GROUP_SELECT':
+										res='group';
+										break;
+									case 'ORGANIZATION_SELECT':
+										res='organization';
+										break;
+									case 'USER_SELECT':
+										res='user';
+										break;
+								}
+								return res;
+							})());
+						case 'NUMBER':
+							((handler) => {
+								field.on('show',(e) => handler());
+								handler();
+							})(() => {
+								if (field.elm('.kb-unit')) field.elm('input').css({width:'calc(100% - '+field.elm('.kb-unit').outerWidth(true)+'px)'});
+								else field.elm('input').css({width:null});
+							});
+							break;
+						case 'RADIO_BUTTON':
+							field.elms('[data-name='+fieldInfo.code+']').each((element,index) => {
+								element.closest('label').on('click',(e) => {
+									((value) => {
+										field.elms('[data-name='+fieldInfo.code+']').each((element,index) => element.checked=(value==element.val()));
+										call('kb.change.'+fieldInfo.code);
+									})(element.val());
+									e.stopPropagation();
+									e.preventDefault();
+								});
+							});
+							break;
+					}
+				}
+				else
+				{
+					((handler) => {
+						field.elm('.kb-search').on('click',(e) => {
+							handler(field.elm('.kb-lookup-search').val(),kb.extend({},fieldInfo));
+						});
+						field.elm('.kb-clear').on('click',(e) => {
+							kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+								field.lookup('').then(() => call('kb.change.'+fieldInfo.code));
+							});
+						});
+						field.elm('input').on('change',(e) => {
+							handler(e.currentTarget.val(),kb.extend({},fieldInfo));
+						});
+					})((search,fieldInfo) => {
+						this.get(fieldInfo.lookup.relatedApp.app).then((resp) => {
+							((fields) => {
+								var get=() => {
+									fieldInfo.picker=((picker) => {
+										var res={};
+										picker.each((picker,index) => {
+											if (picker in fields.external) res[picker]=kb.extend({},fields.external[picker]);
+										});
+										if (Object.keys(res).length==0)
+											res['$id']={
+												code:'$id',
+												type:'RECORD_NUMBER',
+												label:kb.constants.picker.caption.recordnumber[kb.operator.language],
+												required:false,
+												noLabel:false
+											};
+										return res;
+									})(fieldInfo.lookup.lookupPickerFields);
+									field.recordPicker.show(
+										{
+											app:fieldInfo.lookup.relatedApp.app,
+											query:fieldInfo.query,
+											sort:(fieldInfo.lookup.sort || '$id asc'),
+											picker:fieldInfo.picker
+										},
+										(record) => field.lookup(record['$id'].value).then(() => call('kb.change.'+fieldInfo.code))
+									);
+								};
+								if (search)
+								{
+									fieldInfo.query=[fieldInfo.lookup.filterCond,fieldInfo.lookup.relatedKeyField+((fieldInfo.type=='NUMBER')?'=':' like ')+'"'+search+'"'].filter((item) => item).join(' and ');
+									kintone.api(
+										kintone.api.url('/k/v1/records',true),
+										'GET',
+										{
+											app:fieldInfo.lookup.relatedApp.app,
+											query:fieldInfo.query
+										}
+									)
+									.then((resp) => {
+										if (resp.records.length==1) field.lookup(resp.records.first()['$id'].value).then(() => call('kb.change.'+fieldInfo.code));
+										else get();
+									})
+									.catch((error) => kb.alert(kb.error.parse(error)));
+								}
+								else
+								{
+									fieldInfo.query=fieldInfo.lookup.filterCond;
+									get();
+								}
+							})({
+								external:resp.parallelize,
+								internal:fieldInfos
+							});
+						});
+					});
+					field.recordPicker=new KintoneBoosterRecordPicker('record');
+					field.lookup=(id) => {
+						return new Promise((resolve,reject) => {
+							((scope) => {
+								var clear=() => {
+									kb.record.set(scope,((fieldInfo.tableCode)?app.fields[fieldInfo.tableCode]:app),(() => {
+										return fieldInfo.lookup.fieldMappings.reduce((result,current) => {
+											if (current.field in fieldInfos)
+											{
+												switch (fieldInfos[current.field].type)
+												{
+													case 'CHECK_BOX':
+													case 'FILE':
+													case 'GROUP_SELECT':
+													case 'MULTI_SELECT':
+													case 'ORGANIZATION_SELECT':
+													case 'USER_SELECT':
+														result[current.field]={value:[]};
+														break;
+													default:
+														result[current.field]={value:''};
+														break;
+												}
+											}
+											return result;
+										},((res) => {
+											res[fieldInfo.code]={value:''};
+											return res;
+										})({}));
+									})(),false).then(() => resolve());
+								};
+								if (id)
+								{
+									kintone.api(
+										kintone.api.url('/k/v1/record',true),
+										'GET',
+										{
+											app:fieldInfo.lookup.relatedApp.app,
+											id:id
+										}
+									)
+									.then((resp) => {
+										if (resp.record)
+										{
+											kb.record.set(scope,((fieldInfo.tableCode)?app.fields[fieldInfo.tableCode]:app),(() => {
+												return fieldInfo.lookup.fieldMappings.reduce((result,current) => {
+													if ((current.relatedField in resp.record) && (current.field in fieldInfos))
+														result[current.field]={value:resp.record[current.relatedField].value};
+													return result;
+												},((res) => {
+													res[fieldInfo.code]={value:resp.record[fieldInfo.lookup.relatedKeyField].value};
+													return res;
+												})({}));
+											})(),false).then(() => resolve());
+										}
+										else clear();
+									})
+									.catch((error) => kb.alert(kb.error.parse(error)));
+								}
+								else clear();
+							})(field.closest('.kb-scope'));
+						});
+					};
+				}
+				field.elms('input,select,textarea').each((element,index) => {
+					switch (fieldInfo.type)
+					{
+						case 'COLOR':
+						case 'CONDITION':
+						case 'FILE':
+						case 'GROUP_SELECT':
+						case 'ORGANIZATION_SELECT':
+						case 'RADIO_BUTTON':
+						case 'USER_SELECT':
+							break;
+						default:
+							element.on('change',(e) => call('kb.change.'+fieldInfo.code));
+							break;
+					}
+				});
+			})(field.elm('.kb-field-value'),fieldInfos[field.attr('field-id')]);
+		return field;
+	}
+	/* from blob to Base64 */
+	blobToBase64(blob,callback){
+		var reader=new FileReader();
+		reader.onload=() => {
+			callback(reader.result.replace(/^data:.+;base64,/,''));
+		};
+		reader.readAsDataURL(blob);
+	}
+	/* create */
+	create(fieldInfo){
+		var time=(container) => {
+			container
+			.append(
+				kb.create('div').addClass('kb-dropdown kb-hour').append(
+					kb.create('select').assignOption((() => {
+						var res=[{value:''}];
+						(24).each((index) => res.push({value:index.toString().lpad('0',2)}));
+						return res;
+					})(),'value','value')
+				)
+			)
+			.append(
+				kb.create('div').addClass('kb-dropdown kb-minute').append(
+					kb.create('select').assignOption((() => {
+						var res=[{value:''}];
+						(60).each((index) => res.push({value:index.toString().lpad('0',2)}));
+						return res;
+					})(),'value','value')
+				)
+			);
+		};
+		if (!('type' in fieldInfo)) throw new Error('You shoud setup [type] in field information');
+		return ((field) => {
+			field.append(kb.create('span').addClass('kb-field-caption').html(fieldInfo.label));
+			if (fieldInfo.noLabel) field.elm('.kb-field-caption').addClass('kb-hidden');
+			field.append(
+				((field) => {
+					switch (fieldInfo.type)
+					{
+						case 'CHECK_BOX':
+						case 'MULTI_SELECT':
+							((options) => {
+								options.reduce((result,current) => {
+									result[current.index]=current;
+									return result;
+								},Array(options.length).fill('')).each((option,index) => {
+									field.addClass('kb-checkbox')
+									.append(
+										kb.create('label')
+										.append(kb.create('input').attr('type','checkbox').val(option.label))
+										.append(kb.create('span').html(option.label))
+									);
+								});
+							})(Object.values(fieldInfo.options));
+							break;
+						case 'COLOR':
+							field.addClass('kb-color')
+							.append(kb.create('input').attr('type','text').attr('data-type','color'))
+							.append(kb.create('button').addClass('kb-icon kb-icon-color kb-search'));
+							break;
+						case 'CONDITION':
+							field.addClass('kb-condition')
+							.append(kb.create('input').attr('type','hidden'))
+							.append(kb.create('button').addClass('kb-icon kb-icon-filter kb-search'));
+							break;
+						case 'DATE':
+							field.addClass('kb-date')
+							.append(kb.create('input').attr('type','text').attr('data-type','date'))
+							.append(kb.create('button').addClass('kb-icon kb-icon-date kb-search'));
+							break;
+						case 'DATETIME':
+							time(
+								field.addClass('kb-datetime')
+								.append(kb.create('input').attr('type','text').attr('data-type','date'))
+								.append(kb.create('button').addClass('kb-icon kb-icon-date kb-search'))
+							);
+							break;
+						case 'DROP_DOWN':
+							((options) => {
+								field.addClass('kb-dropdown').append(kb.create('select').assignOption(options.reduce((result,current) => {
+									result[current.index]=current;
+									return result;
+								},Array(options.length).fill('')),'label','label'));
+							})(Object.values(fieldInfo.options));
+							break;
+						case 'FILE':
+							field.addClass('kb-file')
+							.append(kb.create('input').attr('type','hidden'))
+							.append(kb.create('button').addClass('kb-icon kb-icon-file kb-search'));
+							break;
+						case 'GROUP_SELECT':
+							field.addClass('kb-group')
+							.append(kb.create('input').attr('type','hidden'))
+							.append(kb.create('button').addClass('kb-icon kb-icon-group kb-search'));
+							break;
+						case 'LINK':
+							switch (fieldInfo.protocol)
+							{
+								case 'WEB':
+									field.addClass('kb-text').append(kb.create('input').attr('type','text').attr('data-type','url'));
+									break;
+								case 'CALL':
+									field.addClass('kb-text').append(kb.create('input').attr('type','text').attr('data-type','tel'));
+									break;
+								case 'MAIL':
+									field.addClass('kb-text').append(kb.create('input').attr('type','text').attr('data-type','mail'));
+									break;
+							}
+							break;
+						case 'MULTI_LINE_TEXT':
+						case 'RICH_TEXT':
+							field.addClass('kb-textarea').append(((res) => {
+								if (fieldInfo.lines) res.css({height:'calc('+(parseFloat(fieldInfo.lines)*1.5).toString()+'em + 2px)'});
+								return res;
+							})(kb.create('textarea')));
+							break;
+						case 'NUMBER':
+							if (fieldInfo.lookup)
+							{
+								field.addClass('kb-lookup')
+								.append(kb.create('input').addClass('kb-lookup-search').attr('type','text').attr('data-type','nondemiliternumber'))
+								.append(kb.create('button').addClass('kb-icon kb-icon-lookup kb-search'))
+								.append(kb.create('button').addClass('kb-icon kb-icon-del kb-clear'));
+							}
+							else
+							{
+								field.addClass('kb-number').append(
+									((res) => {
+										if ('displayScale' in fieldInfo) res.attr('data-decimals',fieldInfo.displayScale);
+										return res.attr('data-type',((fieldInfo.digit)?'number':'nondemiliternumber'));
+									})(kb.create('input').attr('type','text'))
+								);
+								if (fieldInfo.unit)
+									((unit) => {
+										if (fieldInfo.unitPosition=='prefix') field.insertBefore(unit,field.elm('input'));
+										else field.insertBefore(unit,field.elm('input').nextElementSibling);
+									})(kb.create('span').addClass('kb-unit').html(fieldInfo.unit))
+							}
+							break;
+						case 'ORGANIZATION_SELECT':
+							field.addClass('kb-organization')
+							.append(kb.create('input').attr('type','hidden'))
+							.append(kb.create('button').addClass('kb-icon kb-icon-organization kb-search'));
+							break;
+						case 'RADIO_BUTTON':
+							((options) => {
+								options.reduce((result,current) => {
+									result[current.index]=current;
+									return result;
+								},Array(options.length).fill('')).each((option,index) => {
+									field.addClass('kb-radio')
+									.append(
+										(() => {
+											var res=kb.create('label')
+											.append(kb.create('input').attr('type','radio').attr('data-name',fieldInfo.code).val(option.label))
+											.append(kb.create('span').html(option.label));
+											if (index==0) res.elm('input').checked=true;
+											return res;
+										})()
+									);
+								});
+							})(Object.values(fieldInfo.options));
+							break;
+						case 'SINGLE_LINE_TEXT':
+							if (fieldInfo.lookup)
+							{
+								field.addClass('kb-lookup')
+								.append(kb.create('input').addClass('kb-lookup-search').attr('type','text').attr('data-type','text'))
+								.append(kb.create('button').addClass('kb-icon kb-icon-lookup kb-search'))
+								.append(kb.create('button').addClass('kb-icon kb-icon-del kb-clear'));
+							}
+							else
+							{
+								switch (fieldInfo.format)
+								{
+									case 'password':
+										field.addClass('kb-text').append(kb.create('input').attr('type','password').attr('data-type',fieldInfo.type));
+										break;
+									default:
+										field.addClass('kb-text').append(kb.create('input').attr('type','text').attr('data-type',(fieldInfo.format)?fieldInfo.format:'text'));
+										break;
+								}
+							}
+							break;
+						case 'SPACER':
+							field.html(fieldInfo.contents);
+							break;
+						case 'TIME':
+							time(field);
+							break;
+						case 'USER_SELECT':
+							field.addClass('kb-user')
+							.append(kb.create('input').attr('type','hidden'))
+							.append(kb.create('button').addClass('kb-icon kb-icon-user kb-search'));
+							break;
+					}
+					return (fieldInfo.type!='SPACER')?field.append(kb.create('span').addClass('kb-guide')):field;
+				})(kb.create('div').addClass('kb-field-value'))
+			);
+			switch (fieldInfo.type)
+			{
+				case 'CALC':
+				case 'CATEGORY':
+				case 'CONDITION':
+				case 'CREATED_TIME':
+				case 'CREATOR':
+				case 'FILE':
+				case 'GROUP_SELECT':
+				case 'MODIFIER':
+				case 'ORGANIZATION_SELECT':
+				case 'RECORD_NUMBER':
+				case 'REFERENCE_TABLE':
+				case 'STATUS':
+				case 'STATUS_ASSIGNEE':
+				case 'UPDATED_TIME':
+				case 'USER_SELECT':
+					field.elm('.kb-guide').addClass('kb-fixed');
+					break;
+			}
+			if (fieldInfo.required)
+			{
+				switch (fieldInfo.type)
+				{
+					case 'CALC':
+					case 'CATEGORY':
+					case 'CHECK_BOX':
+					case 'CONDITION':
+					case 'CREATED_TIME':
+					case 'CREATOR':
+					case 'FILE':
+					case 'GROUP_SELECT':
+					case 'MODIFIER':
+					case 'MULTI_SELECT':
+					case 'ORGANIZATION_SELECT':
+					case 'RECORD_NUMBER':
+					case 'REFERENCE_TABLE':
+					case 'STATUS':
+					case 'STATUS_ASSIGNEE':
+					case 'UPDATED_TIME':
+					case 'USER_SELECT':
+						break;
+					default:
+						field.elms('input,select,textarea').each((element,index) => element.attr('required','required'));
+						break;
+				}
+			}
+			if (fieldInfo.placeholder) field.elms('input,select,textarea').each((element,index) => element.attr('placeholder',fieldInfo.placeholder));
+			return field;
+		})(kb.create('div').addClass('kb-field').attr('field-id',fieldInfo.code));
+	}
+	/* get */
+	get(fieldInfo,mobile,type){
+		var res=null;
+		var selector='.input-checkbox-cybozu,.input-date-cybozu,.input-datetime-cybozu,.input-file-cybozu,.input-radio-cybozu,.input-text-outer-cybozu,.input-time-cybozu,.multipleselect-cybozu,.select-cybozu';
+		if (fieldInfo.tableCode)
+		{
+			res=kb.elms('.field-'+fieldInfo.id).map((item) => {
+				switch (type)
+				{
+					case 'create':
+					case 'edit':
+						if (mobile) item.value=(item.elm('input[type=text],textarea,ul'))?item.elm('input[type=text],textarea,ul'):item.elm('[class^=forms-]');
+						else item.value=item.elm(selector);
+						break;
+					case 'detail':
+					case 'print':
+						if (mobile) item.value=item.elm('.value-'+fieldInfo.id);
+						else item.value=item;
+						break;
+				}
+				return item;
+			});
+		}
+		else
+		{
+			res=kb.elm('.field-'+fieldInfo.id);
+			switch (type)
+			{
+				case 'create':
+				case 'edit':
+					if (mobile) res.value=(res.elm('input[type=text],textarea,ul'))?res.elm('input[type=text],textarea,ul'):res.elm('[class^=forms-]');
+					else res.value=res.elm(selector);
+					break;
+				case 'detail':
+				case 'print':
+					res.value=res.elm('.value-'+fieldInfo.id);
+					break;
+			}
+		}
+		return res;
+	}
+	/* load */
+	load(app,useid){
+		return new Promise((resolve,reject) => {
+			if (!(app in this.cache))
+			{
+				kintone.api(kintone.api.url('/k/v1/app/form/layout',true),'GET',{app:app})
+				.then((resp) => {
+					((layout) => {
+						var groups=[];
+						var tables=[];
+						var sort=(layout) => {
+							return layout.reduce((result,current) => {
+								switch (current.type)
+								{
+									case 'GROUP':
+										groups.push(current.code);
+										result=result.concat(sort(current.layout));
+										break;
+									case 'ROW':
+										result=current.fields.reduce((result,current) => {
+											if ('code' in current) result.push(current.code);
+											return result;
+										},result);
+										break;
+									case 'SUBTABLE':
+										tables.push(current.code);
+										result=current.fields.reduce((result,current) => {
+											if ('code' in current) result.push(current.code);
+											return result;
+										},result);
+										break;
+								}
+								return result;
+							},[]);
+						};
+						kintone.api(kintone.api.url('/k/v1/app/form/fields',true),'GET',{app:app,lang:'user'})
+						.then((resp) => {
+							((codes) => {
+								codes.each((code,index) => {
+									delete resp.properties[code];
+								});
+							})(Object.values(resp.properties).reduce((result,current) => {
+								switch (current.type)
+								{
+									case 'CATEGORY':
+										result.push(current.code);
+										break;
+									case 'STATUS':
+										if (!current.enabled)
+										{
+											result.push(current.code);
+											result.push(Object.values(resp.properties).filter((item) => item.type=='STATUS_ASSIGNEE').first().code);
+										}
+										break;
+								}
+								return result;
+							},[]));
+							((fieldInfos,sorted,ids) => {
+								this.cache[app]={
+									origin:resp.properties,
+									groups:groups.reduce((result,current) => {
+										result[current]=resp.properties[current]
+										return result;
+									},{}),
+									tables:tables.reduce((result,current) => {
+										result[current]=resp.properties[current]
+										if (current in ids.table) result[current].id=ids.table[current];
+										return result;
+									},{}),
+									changes:((exclude) => {
+										var res=[]
+										res=Object.values(fieldInfos).reduce((result,current) => {
+											if (!exclude.includes(current.code)) result.push(current.code);
+											return result;
+										},[]);
+										return res.concat(tables);
+									})((() => {
+										var res=[];
+										for (var key in fieldInfos)
+											((fieldInfo) => {
+												if (fieldInfo.expression) res.push(fieldInfo.code);
+												if (fieldInfo.lookup)
+													((mappings) => {
+														if (mappings.length!=0) res=res.concat(mappings.slice(0,-1));
+													})(fieldInfo.lookup.fieldMappings.map((item) => item.field));
+											})(fieldInfos[key]);
+										return Array.from(new Set(res));
+									})()),
+									criterias:(() => {
+										var res={};
+										sorted.each((sort,index) => {
+											if (fieldInfos[sort].type!='FILE') res[sort]=fieldInfos[sort];
+										});
+										for (var key in fieldInfos)
+											((fieldInfo) => {
+												switch (fieldInfo.type)
+												{
+													case 'CALC':
+													case 'CATEGORY':
+													case 'CREATED_TIME':
+													case 'CREATOR':
+													case 'MODIFIER':
+													case 'RECORD_NUMBER':
+													case 'REFERENCE_TABLE':
+													case 'UPDATED_TIME':
+														res[fieldInfo.code]=fieldInfo;
+														break;
+													case 'STATUS':
+														if (fieldInfo.enabled)
+														{
+															res[fieldInfo.code]=fieldInfo;
+															((fieldInfo) => {
+																res[fieldInfo.code]=fieldInfo;
+															})(Object.values(fieldInfos).filter((item) => item.type=='STATUS_ASSIGNEE').first())
+														}
+														break;
+												}
+											})(fieldInfos[key]);
+										return res;
+									})(),
+									disables:(() => {
+										var res=[];
+										for (var key in fieldInfos)
+											((fieldInfo) => {
+												if (kb.field.reserved.includes(fieldInfo.type)) res.push(fieldInfo.code);
+												else
+												{
+													if (fieldInfo.expression) res.push(fieldInfo.code);
+													if (fieldInfo.lookup)
+														((mappings) => {
+															if (mappings.length!=0) res=res.concat(mappings);
+														})(fieldInfo.lookup.fieldMappings.map((item) => item.field));
+												}
+											})(fieldInfos[key]);
+										return Array.from(new Set(res));
+									})(),
+									parallelize:(() => {
+										var res={};
+										sorted.each((sort,index) => {
+											res[sort]=fieldInfos[sort];
+										});
+										for (var key in fieldInfos)
+											((fieldInfo) => {
+												switch (fieldInfo.type)
+												{
+													case 'CREATED_TIME':
+													case 'CREATOR':
+													case 'MODIFIER':
+													case 'RECORD_NUMBER':
+													case 'UPDATED_TIME':
+														res[fieldInfo.code]=fieldInfo;
+														break;
+													case 'STATUS':
+														if (fieldInfo.enabled)
+														{
+															res[fieldInfo.code]=fieldInfo;
+															((fieldInfo) => {
+																res[fieldInfo.code]=fieldInfo;
+															})(Object.values(fieldInfos).filter((item) => item.type=='STATUS_ASSIGNEE').first())
+														}
+														break;
+												}
+												if (fieldInfo.code in ids.field)
+													if (fieldInfo.code in res)
+														res[fieldInfo.code].id=ids.field[fieldInfo.code];
+											})(fieldInfos[key]);
+										return res;
+									})(),
+									placed:(() => {
+										var res={};
+										sorted.each((sort,index) => {
+											res[sort]=fieldInfos[sort];
+										});
+										return res;
+									})()
+								};
+								resolve(this.cache[app]);
+							})(
+								kb.field.parallelize(resp.properties),
+								sort(layout),
+								(() => {
+									var res={
+										field:{},
+										table:{}
+									};
+									if (useid)
+									{
+										Object.values(cybozu.data.page.FORM_DATA.schema.table.fieldList).each((field,index) => {
+											res.field[field.var]=field.id;
+										});
+										if ('subTable' in cybozu.data.page.FORM_DATA.schema)
+										{
+											Object.values(cybozu.data.page.FORM_DATA.schema.subTable).each((table,index) => {
+												res.table[table.var]=table.id;
+												Object.values(table.fieldList).each((field,index) => {
+													res.field[field.var]=field.id;
+												});
+											});
+										}
+									}
+									return res;
+								})()
+							)
+						})
+						.catch((error) => kb.alert(kb.error.parse(error)));
+					})(resp.layout);
+				})
+				.catch((error) => kb.alert(kb.error.parse(error)));
+			}
+			else resolve(this.cache[app]);
+		});
+	}
+	/* parallelize */
+	parallelize(fields){
+		return ((fields) => {
+			var res={};
+			for (var key in fields)
+				((fieldInfo) => {
+					switch (fieldInfo.type)
+					{
+						case 'SUBTABLE':
+							var tableCode=fieldInfo.code;
+							for (var subkey in fieldInfo.fields)
+							{
+								fieldInfo.fields[subkey]=kb.extend({
+									tableCode:tableCode
+								},fieldInfo.fields[subkey]);
+								res[fieldInfo.fields[subkey].code]=fieldInfo.fields[subkey];
+							}
+							break;
+						default:
+							fieldInfo=kb.extend({
+								tableCode:''
+							},fieldInfo);
+							res[fieldInfo.code]=fieldInfo;
+							break;
+					}
+				})(fields[key]);
+			return res;
+		})(kb.extend({},fields));
+	}
+	/* stringify */
+	stringify(fieldInfo,value,separator){
+		var res='';
+		if (fieldInfo && value)
+			switch (fieldInfo.type)
+			{
+				case 'CATEGORY':
+				case 'CHECK_BOX':
+				case 'MULTI_SELECT':
+					res=value.join(separator);
+					break;
+				case 'CREATOR':
+				case 'MODIFIER':
+					res=value.name;
+					break;
+				case 'CREATED_TIME':
+				case 'DATETIME':
+				case 'UPDATED_TIME':
+					res=value.parseDateTime().format('Y-m-d H:i');
+					break;
+				case 'FILE':
+				case 'GROUP_SELECT':
+				case 'ORGANIZATION_SELECT':
+				case 'STATUS_ASSIGNEE':
+				case 'USER_SELECT':
+					res=value.map((item) => item.name).join(separator);
+					break;
+				case 'MULTI_LINE_TEXT':
+				case 'RICH_TEXT':
+					res=value.replace(/\n/g,'');
+					break;
+				case 'NUMBER':
+					if (kb.isNumeric(value))
+					{
+						if (fieldInfo.digit) res=Number(value).comma(fieldInfo.displayScale);
+						else
+						{
+							if (fieldInfo.displayScale) res=Number(value).toFloor(parseInt(fieldInfo.displayScale));
+							else res=value;
+						}
+					}
+					if (fieldInfo.unit)
+					{
+						if (fieldInfo.unitPosition=='prefix') res=fieldInfo.unit+' '+res;
+						else res=res+' '+fieldInfo.unit;
+					}
+					break;
+				default:
+					res=value;
+					break;
+			}
+		return res;
+	}
+	/* typing */
+	typing(sender,receiver,isFilter=false){
+		var res=false;
+		if (receiver.type=='SINGLE_LINE_TEXT')
+		{
+			switch (sender.type)
+			{
+					case 'CALC':
+					case 'CREATED_TIME':
+					case 'DATE':
+					case 'DATETIME':
+					case 'DROP_DOWN':
+					case 'LINK':
+					case 'NUMBER':
+					case 'RADIO_BUTTON':
+					case 'RECORD_NUMBER':
+					case 'SINGLE_LINE_TEXT':
+					case 'STATUS':
+					case 'TIME':
+					case 'UPDATED_TIME':
+						res=(isFilter)?true:!receiver.expression;
+						break;
+			}
+		}
+		if (!res)
+			switch (sender.type)
+			{
+				case 'CALC':
+					if (receiver.type==sender.type) res=((receiver.format==sender.format) && isFilter);
+					else
+					{
+						switch (sender.format)
+						{
+							case 'DATE':
+							case 'DATETIME':
+							case 'TIME':
+								res=(receiver.type==sender.format);
+								break;
+							case 'NUMBER':
+							case 'NUMBER_DIGIT':
+								res=((isFilter)?['NUMBER','RECORD_NUMBER']:['NUMBER']).includes(receiver.type);
+								break;
+						}
+					}
+					break;
+				case 'CHECK_BOX':
+				case 'MULTI_SELECT':
+					res=['CHECK_BOX','MULTI_SELECT'].includes(receiver.type);
+					break;
+				case 'CREATED_TIME':
+				case 'DATETIME':
+				case 'UPDATED_TIME':
+					if (receiver.type=='CALC') res=((receiver.format=='DATETIME') && isFilter);
+					else res=((isFilter)?['CREATED_TIME','DATETIME','UPDATED_TIME']:['DATETIME']).includes(receiver.type);
+					break;
+				case 'CREATOR':
+				case 'MODIFIER':
+				case 'STATUS_ASSIGNEE':
+				case 'USER_SELECT':
+					res=((isFilter)?['CREATOR','MODIFIER','STATUS_ASSIGNEE','USER_SELECT']:['USER_SELECT']).includes(receiver.type);
+					break;
+				case 'DATE':
+					if (receiver.type=='CALC') res=((receiver.format=='DATE') && isFilter);
+					else res=(receiver.type==sender.type);
+					break;
+				case 'DROP_DOWN':
+				case 'RADIO_BUTTON':
+					res=['DROP_DOWN','LINK','RADIO_BUTTON'].includes(receiver.type);
+					break;
+				case 'FILE':
+				case 'MULTI_LINE_TEXT':
+				case 'RICH_TEXT':
+					res=(isFilter)?false:(receiver.type==sender.type);
+					break;
+				case 'GROUP_SELECT':
+				case 'LINK':
+				case 'ORGANIZATION_SELECT':
+				case 'STATUS':
+				case 'TIME':
+					res=(receiver.type==sender.type);
+					break;
+				case 'NUMBER':
+				case 'RECORD_NUMBER':
+					if (receiver.type=='CALC') res=((receiver.format=='NUMBER') && isFilter);
+					else res=((isFilter)?['NUMBER','RECORD_NUMBER']:['NUMBER']).includes(receiver.type);
+					break;
+				case 'SINGLE_LINE_TEXT':
+					res=(isFilter)?['DROP_DOWN','RADIO_BUTTON','LINK','MULTI_LINE_TEXT','RICH_TEXT'].includes(receiver.type):['LINK','MULTI_LINE_TEXT','RICH_TEXT'].includes(receiver.type);
+					break;
+			}
+		return res;
+	}
+	/* create objectUrl */
+	objectUrl(data,type){
+		var datas=atob(data);
+		var buffer=new Uint8Array(datas.length);
+		var url=window.URL || window.webkitURL;
+		datas.length.each((index) => buffer[index]=datas.charCodeAt(index));
+		return url.createObjectURL(new Blob([buffer.buffer],{type:type}));
+	}
+};
+window.KintoneBoosterTable=class{
+	/* constructor */
+	constructor(){}
+	/* activate */
+	activate(table,app){
+		/* setup spread */
+		return table.spread((row,index) => {
+			((container) => {
+				/* event */
+				row.elm('.kb-table-row-add').on('click',(e) => {
+					table.insertRow(row);
+					kb.event.call('kb.row.add.'+table.attr('field-id'),{
+						container:table,
+						record:kb.record.get(container,app,true).record,
+						rowindex:parseInt(row.attr('row-idx'))+1
+					})
+					.then((param) => {
+						if (!param.error)
+						{
+							kb.event.call('kb.action.call',{
+								record:param.record,
+								workplace:(container.closest('.kb-view'))?'view':'record'
+							})
+							.then((param) => {
+								kb.record.set(container,app,param.record);
+								((event) => {
+									container.attr('unsaved','unsaved').dispatchEvent(event);
+								})(new Event('change'));
+							});
+						}
+						else table.delRow(row);
+					});
+				});
+				row.elm('.kb-table-row-copy').on('click',(e) => {
+					table.insertRow(row);
+					kb.event.call('kb.row.copy.'+table.attr('field-id'),{
+						container:table,
+						record:((record,index) => {
+							record[table.attr('field-id')].value[index+1]=kb.extend({},record[table.attr('field-id')].value[index]);
+							return record;
+						})(kb.record.get(container,app,true).record,parseInt(row.attr('row-idx'))),
+						rowindex:parseInt(row.attr('row-idx'))+1
+					})
+					.then((param) => {
+						if (!param.error)
+						{
+							kb.event.call('kb.action.call',{
+								record:param.record,
+								workplace:(container.closest('.kb-view'))?'view':'record'
+							})
+							.then((param) => {
+								kb.record.set(container,app,param.record);
+								((event) => {
+									container.attr('unsaved','unsaved').dispatchEvent(event);
+								})(new Event('change'));
+							});
+						}
+						else table.delRow(row);
+					});
+				});
+				row.elm('.kb-table-row-del').on('click',(e) => {
+					kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+						kb.event.call('kb.row.del.'+table.attr('field-id'),{
+							container:table,
+							record:kb.record.get(container,app,true).record,
+							rowindex:parseInt(row.attr('row-idx'))
+						})
+						.then((param) => {
+							if (!param.error)
+							{
+								table.delRow(row);
+								kb.event.call('kb.action.call',{
+									record:kb.record.get(container,app,true).record,
+									workplace:(container.closest('.kb-view'))?'view':'record'
+								})
+								.then((param) => {
+									kb.record.set(container,app,param.record);
+									((event) => {
+										container.attr('unsaved','unsaved').dispatchEvent(event);
+									})(new Event('change'));
+								});
+							}
+						});
+					});
+				});
+				/* activation */
+				row.elms('.kb-field').each((element,index) => kb.field.activate(element,app));
+				/* setup row index */
+				table.tr.each((element,index) => element.attr('row-idx',index));
+			})(table.closest('[form-id=form_'+app.id+']'));
+		},(table,index) => {
+			if (table.tr.length==0) table.addRow();
+			else
+			{
+				/* setup row index */
+				table.tr.each((element,index) => element.attr('row-idx',index));
+			}
+		},false);
+	}
+	/* activate */
+	create(table,isform,isview,isstacked){
+		return ((res) => {
+			if (!isview && !isstacked) res.append(kb.create('thead').append(kb.create('tr')));
+			res.append(kb.create('tbody').append(kb.create('tr').addClass('kb-scope').attr('row-idx','')));
+			for (var key in table.fields)
+				((fieldInfo) => {
+					if (!isview && !isstacked)
+						res.elm('thead tr').append(kb.create('th').append(kb.create('span').html(fieldInfo.label)));
+					res.elm('tbody tr').append(kb.create('td').append(kb.field.create(((fieldInfo) => {
+						if (!isstacked) fieldInfo.noLabel=true;
+						return fieldInfo;
+					})(kb.extend({},fieldInfo)))));
+				})(table.fields[key]);
+			if (!isview && !isstacked) res.elm('thead tr').append(kb.create('th').addClass('kb-table-button'+((isform)?' kb-table-button-extension':'')));
+			res.elm('tbody tr').append(
+				kb.create('td').addClass('kb-table-button'+((isform)?' kb-table-button-extension':''))
+				.append(kb.create('button').addClass('kb-icon kb-icon-add kb-table-row-add'))
+				.append(kb.create('button').addClass('kb-icon kb-icon-copy kb-table-row-copy').css({display:((isform)?'inline-block':'none')}))
+				.append(kb.create('button').addClass('kb-icon kb-icon-del kb-table-row-del'))
+			);
+			/* setup to readonly field */
+			for (var key in table.fields)
+				((fieldInfo) => {
+					if (fieldInfo.lookup)
+					{
+						fieldInfo.lookup.fieldMappings.each((mapping,index) => {
+							if (mapping.field in table.fields)
+								if (res.elm('[field-id="'+CSS.escape(mapping.field)+'"]')) res.elm('[field-id="'+CSS.escape(mapping.field)+'"]').addClass('kb-readonly');
+						});
+					}
+				})(table.fields[key]);
+			return res.attr('field-id',table.code);
+		})(kb.create('table').addClass('kb-table'));
+	}
+};
+window.KintoneBoosterView=class{
+	/* constructor */
+	constructor(){
+		this.records={
+			get:(app,query,sort) => {
+				return new Promise((resolve,reject) => {
+					((sort) => {
+						var load=(records,offset,callback) => {
+							kintone.api(kintone.api.url('/k/v1/records',true),'GET',{app:app,query:query+' order by '+sort+' limit 500 offset '+offset.toString()})
+							.then((resp) => {
+								Array.prototype.push.apply(records,resp.records);
+								offset+=500;
+								if (resp.records.length==500) load(records,offset,callback);
+								else callback(records);
+							})
+							.catch((error) => reject(error));
+						}
+						kintone.api(kintone.api.url('/k/v1/records',true),'GET',{app:app,query:query,totalCount:true})
+						.then((resp) => {
+							if (resp.totalCount<10000) load([],0,(records) => resolve(records));
+							else
+							{
+								kintone.api(kintone.api.url('/k/v1/records/cursor',true),'POST',{app:app,query:query+' order by '+sort,size:500})
+								.then((resp) => {
+									((cursorId) => {
+										var fetch=(records,callback) => {
+											kintone.api(kintone.api.url('/k/v1/records/cursor',true),'GET',{id:cursorId})
+											.then((resp) => {
+												Array.prototype.push.apply(records,resp.records);
+												if (resp.next) fetch(records,callback);
+												else callback(records);
+											})
+											.catch((error) => reject(error));
+										};
+										fetch([],(records) => resolve(records));
+									})(resp.id);
+								})
+								.catch((error) => reject(error));
+							}
+						})
+						.catch((error) => reject(error));
+					})(sort || '$id asc');
+				});
+			},
+			set:(app,records,silent=false) => {
+				return new Promise((resolve,reject) => {
+					var post=(offset,callback) => {
+						if (records.post.length!=0)
+						{
+							kintone.api(
+								kintone.api.url('/k/v1/records',true),
+								'POST',
+								{
+									app:app,
+									records:records.post.slice(offset,offset+100)
+								}
+							)
+							.then((resp) => {
+								if (!silent) kb.progressUpdate();
+								offset+=100;
+								if (records.post.slice(offset,offset+100).length>0) post(offset,callback);
+								else callback();
+							})
+							.catch((error) => reject(error));
+						}
+						else callback();
+					};
+					var put=(offset,callback) => {
+						if (records.put.length!=0)
+						{
+							kintone.api(
+								kintone.api.url('/k/v1/records',true),
+								'PUT',
+								{
+									app:app,
+									records:records.put.slice(offset,offset+100)
+								}
+							)
+							.then((resp) => {
+								if (!silent) kb.progressUpdate();
+								offset+=100;
+								if (records.put.slice(offset,offset+100).length>0) put(offset,callback);
+								else callback();
+							})
+							.catch((error) => reject(error));
+						}
+						else callback();
+					};
+					if (!('post' in records)) records.post=[];
+					if (!('put' in records)) records.put=[];
+					if (!silent) kb.progressStart(Math.ceil(records.post.length/100)+Math.ceil(records.put.length/100));
+					post(0,() => {
+						put(0,() => {
+							if (!silent) kb.progressEnd();
+							resolve();
+						});
+					});
+				});
+			}
+		};
+	}
+	/* load */
+	load(app){
+		return new Promise((resolve,reject) => {
+			kintone.api(kintone.api.url('/k/v1/app/views',true),'GET',{app:app})
+			.then((resp) => {
+				((views) => {
+					resolve({
+						origin:views,
+						calendar:views.filter((item) => item.type=='CALENDAR'),
+						custom:views.filter((item) => item.type=='CUSTOM'),
+						list:views.filter((item) => item.type=='LIST')
+					});
+				})(Object.values(resp.views).sort((a,b) => a.index-b.index));
+			})
+			.catch((error) => kb.alert(kb.error.parse(error)));
+		});
+	}
+};
+/* Added additional core functions */
+if (!window.kb.record) window.kb.record=new KintoneBoosterRecord();
+/* Added UI operation functions */
+if (!window.kb.button) window.kb.button=new KintoneBoosterButton();
+if (!window.kb.field) window.kb.field=new KintoneBoosterField();
+if (!window.kb.table) window.kb.table=new KintoneBoosterTable();
+if (!window.kb.view) window.kb.view=new KintoneBoosterView();
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	common:{
+		caption:{
+			sort:{
+				asc:{
+					en:'asc',
+					ja:'昇順',
+					zh:'升序'
+				},
+				desc:{
+					en:'desc',
+					ja:'降順',
+					zh:'降序'
+				}
+			}
+		},
+		message:{
+			confirm:{
+				copy:{
+					en:'Are you sure on copy?',
+					ja:'コピーしてもよろしいですか？',
+					zh:'我可以复制吗？'
+				},
+				delete:{
+					en:'Are you sure on delete?',
+					ja:'削除してもよろしいですか？',
+					zh:'我可以删除吗？'
+				},
+				save:{
+					en:'Are you sure on copy?',
+					ja:'保存してもよろしいですか？',
+					zh:'我可以保存吗？'
+				}
+			},
+			invalid:{
+				record:{
+					en:'There is an error in the input data.',
+					ja:'入力内容に誤りがあります。',
+					zh:'输入内容有误。'
+				}
+			}
+		}
+	},
+	picker:{
+		caption:{
+			name:{
+				en:'Name',
+				ja:'表示名',
+				zh:'显示名称'
+			},
+			recordnumber:{
+				en:'Record number',
+				ja:'レコード番号',
+				zh:'记录号'
+			}
+		}
+	}
+},kb.constants);
