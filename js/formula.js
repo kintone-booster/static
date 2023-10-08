@@ -172,7 +172,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				var res=false;
 				if (!res)
 					if (user.length!=0)
-						res=(user.includes(kb.operator.code));
+						res=(user.map((item) => item.code).includes(kb.operator.code));
 				if (!res)
 					if (organization.length!=0)
 						res=kb.operator.organizations.some((item) => organization.map((item) => item.code).includes(item));
