@@ -924,7 +924,6 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 			{
 				case 'CHECK_BOX':
 				case 'MULTI_SELECT':
-				case 'STATUS':
 					rhs=rhs.split(',').map((item) => item.trim()).reduce((result,current) => {
 						if (current) result.push(current.replace(/(^["']{1}|["']{1}$)/g,''));
 						return result;
@@ -1011,6 +1010,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 					break;
 				case 'DROP_DOWN':
 				case 'RADIO_BUTTON':
+				case 'STATUS':
 					rhs=rhs.split(',').map((item) => item.trim()).reduce((result,current) => {
 						if (current) result.push(current.replace(/(^["']{1}|["']{1}$)/g,''));
 						return result;
