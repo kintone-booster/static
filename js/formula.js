@@ -1576,7 +1576,7 @@ window.KintoneBoosterFormula=class{
 						res=((kb.isNumeric(answer))?parseFloat(answer):null);
 						break;
 					default:
-						res=(answer)?((Array.isArray(answer))?answer.join(','):answer.toString()):'';
+						res=(TO_STRING(answer).length!=0)?((Array.isArray(answer))?answer.join(','):answer.toString()):'';
 						break;
 				}
 				return res;
@@ -1642,12 +1642,20 @@ window.KintoneBoosterFormula=class{
 							return formula;
 						})(
 							formula
-							.replace(new RegExp('(MIN|MAX|ROWS)\\([ ]*(%'+fieldInfo.code+'%)[ ]*\\)','g'),(match,functions,field) => {
-								reserved.push(functions+'("'+field+'"")');
+							.replace(new RegExp('(MIN|MAX)\\([ ]*(%'+fieldInfo.code+'%)[ ]*\\)','g'),(match,functions,field) => {
+								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'")');
 								return 'calculate_'+reserved.length.toString();
 							})
-							.replace(new RegExp('(MIN|MAX|ROWS)\\([ ]*(%'+fieldInfo.code+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
-								reserved.push(functions+'("'+field+'",'+bool+')');
+							.replace(new RegExp('(MIN|MAX)\\([ ]*(%'+fieldInfo.code+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
+								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'",'+bool+')');
+								return 'calculate_'+reserved.length.toString();
+							})
+							.replace(new RegExp('(ROWS)\\([ ]*(%'+fieldInfo.tableCode+'%)[ ]*\\)','g'),(match,functions,field) => {
+								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'")');
+								return 'calculate_'+reserved.length.toString();
+							})
+							.replace(new RegExp('(ROWS)\\([ ]*(%'+fieldInfo.tableCode+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
+								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'",'+bool+')');
 								return 'calculate_'+reserved.length.toString();
 							})
 						);
