@@ -191,7 +191,7 @@
 }
 .kb-field .kb-field-value textarea{
 	height:100%;
-	min-height:3em;
+	min-height:calc(3em + 2px);
 	resize:vertical;
 }
 .kb-field .kb-field-value .kb-guide{
