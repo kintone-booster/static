@@ -499,6 +499,12 @@
 	padding:0.25em 0.25em 0 0.25em;
 	user-select:none;
 }
+.kb-verify .kb-field{
+	margin-bottom:1em;
+}
+.kb-verify .kb-field .kb-field-caption{
+	border-bottom:1px solid var(--field-focus-color) !important;
+}
 .kb-view{
 	border-collapse:collapse;
 	table-layout:fixed;
