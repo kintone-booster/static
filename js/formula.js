@@ -1576,7 +1576,7 @@ window.KintoneBoosterFormula=class{
 						res=((kb.isNumeric(answer))?parseFloat(answer):null);
 						break;
 					default:
-						res=(TO_STRING(answer).length!=0)?((Array.isArray(answer))?answer.join(','):answer.toString()):'';
+						res=(Array.isArray(answer))?answer.join(','):TO_STRING(answer);
 						break;
 				}
 				return res;
