@@ -348,7 +348,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 															case 'ORGANIZATION_SELECT':
 															case 'STATUS_ASSIGNEE':
 															case 'USER_SELECT':
-																res='('+JSON.parse(field.elm('input').val()).map((item) => '"'+item.code+'"').join(',').replace(/["']{1}LOGINUSER\(\)["']{1}/g,'LOGINUSER()')+')';
+																res='('+JSON.parse(field.elm('input').val() || "[]").map((item) => '"'+item.code+'"').join(',').replace(/["']{1}LOGINUSER\(\)["']{1}/g,'LOGINUSER()')+')';
 																break;
 															case 'NUMBER':
 															case 'RECORD_NUMBER':
@@ -924,10 +924,10 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 			{
 				case 'CHECK_BOX':
 				case 'MULTI_SELECT':
-					rhs=rhs.split(',').map((item) => item.trim()).reduce((result,current) => {
+					rhs=(rhs!='()')?rhs.split(',').map((item) => item.trim()).reduce((result,current) => {
 						if (current) result.push(current.replace(/(^["']{1}|["']{1}$)/g,''));
 						return result;
-					},[]);
+					},[]):[];
 					formula='CONTAIN_MULTIPLE()';
 					break;
 				case 'CREATOR':
@@ -936,10 +936,10 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				case 'ORGANIZATION_SELECT':
 				case 'STATUS_ASSIGNEE':
 				case 'USER_SELECT':
-					rhs=rhs.split(',').map((item) => item.trim().replace(/LOGINUSER\(\)/g,kb.operator.code)).reduce((result,current) => {
+					rhs=(rhs!='()')?rhs.split(',').map((item) => item.trim().replace(/LOGINUSER\(\)/g,kb.operator.code)).reduce((result,current) => {
 						if (current) result.push(current.replace(/(^["']{1}|["']{1}$)/g,''));
 						return result;
-					},[]);
+					},[]):[];
 					formula='CONTAIN_CODE()';
 					break;
 				case 'CREATED_TIME':
@@ -1011,10 +1011,10 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				case 'DROP_DOWN':
 				case 'RADIO_BUTTON':
 				case 'STATUS':
-					rhs=rhs.split(',').map((item) => item.trim()).reduce((result,current) => {
+					rhs=(rhs!='()')?rhs.split(',').map((item) => item.trim()).reduce((result,current) => {
 						if (current) result.push(current.replace(/(^["']{1}|["']{1}$)/g,''));
 						return result;
-					},[]);
+					},[]):[];
 					switch (operator)
 					{
 						case 'not in':
