@@ -216,7 +216,7 @@
 	white-space:normal;
 	width:100%;
 }
-.kb-field .kb-field-value .kb-guide .kb-guide-item :.kb-guide-item-icon+.kb-guide-item-label{
+.kb-field .kb-field-value .kb-guide .kb-guide-item .kb-guide-item-icon+.kb-guide-item-label{
 	margin-left:0.25em;
 	width:calc(100% - 1.75em);
 }
