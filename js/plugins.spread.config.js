@@ -5,13 +5,237 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(h){var e={};kb.field.load(kintone.app.getId()).then(function(l){kb.view.load(kintone.app.getId()).then(function(k){kb.config[h].build({submit:function(f,d){try{var b=!1;d.tab=[];d.flat={};(function(a){a=kb.record.get(f.main.elm(".kb-flat"),a);a.error?(kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]),b=!0):a.record.setting.value.length!=Array.from(new Set(a.record.setting.value.map(function(c){return c.value.view.value}))).length?(kb.alert(kb.constants.config.message.invalid.duplicate[kb.operator.language]),
-b=!0):d.flat=a.record})({id:e.app.id,fields:e.app.fields.flat});d.tab=JSON.stringify(d.tab);d.flat=JSON.stringify(d.flat);return b?!1:d}catch(a){return kb.alert(kb.error.parse(a)),!1}}},function(f,d){try{e.app={id:h,fields:{tab:{},flat:{setting:{code:"setting",type:"SUBTABLE",label:"",noLabel:!0,fields:{view:{code:"view",type:"DROP_DOWN",label:kb.constants.config.caption.view[kb.operator.language],required:!0,noLabel:!1,options:[]},mode:{code:"mode",type:"RADIO_BUTTON",label:kb.constants.config.caption.mode[kb.operator.language],
-required:!0,noLabel:!1,options:[{index:0,label:"editor"},{index:1,label:"viewer"}]},buttons:{code:"buttons",type:"CHECK_BOX",label:kb.constants.config.caption.buttons[kb.operator.language],required:!1,noLabel:!1,options:[{index:0,label:"detail"},{index:1,label:"delete"},{index:2,label:"add"},{index:3,label:"clone"}]}}}}}},function(b){f.main.append(kb.create("div").addClass("kb-flat kb-scope").attr("form-id","form_"+b.id).append(function(a){a.template.elm("[field-id=view]").elm("select").empty().assignOption([{code:"20",
-label:kb.constants.config.caption.view.all[kb.operator.language]}].concat(k.list.map(function(c){return{code:c.id,label:c.name}})),"label","code");a.template.elms("[data-name="+b.fields.setting.fields.mode.code+"]").each(function(c,g){c.closest("label").elm("span").html(kb.constants.config.caption.mode[c.val()][kb.operator.language])});a.template.elm("[field-id="+b.fields.setting.fields.buttons.code+"]").elms("[type=checkbox]").each(function(c,g){c.closest("label").elm("span").html(kb.constants.config.caption.buttons[c.val()][kb.operator.language])});
-return a}(kb.table.activate(kb.table.create(b.fields.setting),b))));kb.event.on("kb.change.mode",function(a){switch(a.record.setting.value[parseInt(a.container.attr("row-idx"))].value.mode.value){case "viewer":a.container.elm("[value=add]").parentNode.addClass("kb-hidden");a.container.elm("[value=clone]").parentNode.addClass("kb-hidden");break;case "editor":a.container.elm("[value=add]").parentNode.removeClass("kb-hidden"),a.container.elm("[value=clone]").parentNode.removeClass("kb-hidden")}return a});
-f.main.elms("input,select,textarea").each(function(a,c){return a.initialize()})}({id:e.app.id,fields:e.app.fields.flat}),0!=Object.keys(d).length?function(b){(function(a){kb.record.set(f.main.elm(".kb-flat"),a,b).then(function(){f.main.elm(".kb-flat").elm("[field-id=setting]").tr.each(function(c,g){switch(b.setting.value[g].value.mode.value){case "viewer":c.elm("[value=add]").parentNode.addClass("kb-hidden"),c.elm("[value=clone]").parentNode.addClass("kb-hidden")}})})})({id:e.app.id,fields:e.app.fields.flat})}(JSON.parse(d.flat)):
-f.main.elm(".kb-flat").elm("[field-id=setting]").addRow()}catch(b){kb.alert(kb.error.parse(b))}})})})})(kintone.$PLUGIN_ID);
-kb.constants=kb.extend({config:{caption:{buttons:{en:"Hide buttons",ja:"\u975e\u8868\u793a\u306b\u3059\u308b\u30dc\u30bf\u30f3",zh:"\u9690\u85cf\u6309\u94ae",detail:{en:"Open",ja:"\u958b\u304f",zh:"\u6253\u5f00"},"delete":{en:"Delete",ja:"\u524a\u9664",zh:"\u5220\u9664"},add:{en:"Create",ja:"\u65b0\u898f\u4f5c\u6210",zh:"\u65b0\u5efa"},clone:{en:"Duplicate",ja:"\u8907\u88fd",zh:"\u590d\u5236"}},mode:{en:"Mode",ja:"\u30e2\u30fc\u30c9",zh:"\u6a21\u5f0f",editor:{en:"Edit Mode",ja:"\u7de8\u96c6\u30e2\u30fc\u30c9",
-zh:"\u7f16\u8f91\u6a21\u5f0f"},viewer:{en:"View Mode",ja:"\u95b2\u89a7\u30e2\u30fc\u30c9",zh:"\u6d4f\u89c8\u6a21\u5f0f"}},view:{en:"View",ja:"\u4f7f\u7528\u4e00\u89a7",zh:"\u6807\u9898",all:{en:"(All records)",ja:"\uff08\u3059\u3079\u3066\uff09",zh:"\uff08\u5168\u90e8\uff09"}}},message:{invalid:{duplicate:{en:"You cannot specify the same list on different rows.",ja:"\u7570\u306a\u308b\u884c\u3067\u540c\u3058\u4e00\u89a7\u3092\u6307\u5b9a\u3059\u308b\u3053\u3068\u306f\u51fa\u6765\u307e\u305b\u3093\u3002",
-zh:"\u60a8\u4e0d\u80fd\u5728\u4e0d\u540c\u7684\u884c\u4e0a\u6307\u5b9a\u76f8\u540c\u7684\u5217\u8868\u3002"}}}}},kb.constants);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	kb.field.load(kintone.app.getId()).then((fieldInfos) => {
+		kb.view.load(kintone.app.getId()).then((viewInfos) => {
+			kb.config[PLUGIN_ID].build(
+				{
+					submit:(container,config) => {
+						try
+						{
+							var error=false;
+							config.tab=[];
+							config.flat={};
+							((app) => {
+								var res=kb.record.get(container.main.elm('.kb-flat'),app);
+								if (!res.error)
+								{
+									if (res.record.setting.value.length!=Array.from(new Set(res.record.setting.value.map((item) => item.value.view.value))).length)
+									{
+										kb.alert(kb.constants.config.message.invalid.duplicate[kb.operator.language]);
+										error=true;
+									}
+									else config.flat=res.record;
+								}
+								else
+								{
+									kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);
+									error=true;
+								}
+							})({
+								id:vars.app.id,
+								fields:vars.app.fields.flat
+							});
+							config.tab=JSON.stringify(config.tab);
+							config.flat=JSON.stringify(config.flat);
+							return !(error)?config:false;
+						}
+						catch(error)
+						{
+							kb.alert(kb.error.parse(error));
+							return false;
+						}
+					}
+				},
+				(container,config) => {
+					try
+					{
+						vars.app={
+							id:PLUGIN_ID,
+							fields:{
+								tab:{
+								},
+								flat:{
+									setting:{
+										code:'setting',
+										type:'SUBTABLE',
+										label:'',
+										noLabel:true,
+										fields:{
+											view:{
+												code:'view',
+												type:'DROP_DOWN',
+												label:kb.constants.config.caption.view[kb.operator.language],
+												required:true,
+												noLabel:false,
+												options:[]
+											},
+											mode:{
+												code:'mode',
+												type:'RADIO_BUTTON',
+												label:kb.constants.config.caption.mode[kb.operator.language],
+												required:true,
+												noLabel:false,
+												options:[
+													{index:0,label:'editor'},
+													{index:1,label:'viewer'}
+												]
+											},
+											buttons:{
+												code:'buttons',
+												type:'CHECK_BOX',
+												label:kb.constants.config.caption.buttons[kb.operator.language],
+												required:false,
+												noLabel:false,
+												options:[
+													{index:0,label:'detail'},
+													{index:1,label:'delete'},
+													{index:2,label:'add'},
+													{index:3,label:'clone'}
+												]
+											}
+										}
+									},
+								}
+							}
+						};
+						/* flat */
+						((app) => {
+							container.main.append(
+								kb.create('div').addClass('kb-flat kb-scope').attr('form-id','form_'+app.id)
+								.append(((table) => {
+									table.template.elm('[field-id=view]').elm('select').empty().assignOption(
+										([{code:'20',label:kb.constants.config.caption.view.all[kb.operator.language]}]).concat(viewInfos.list.map((item) => ({code:item.id,label:item.name}))),
+										'label',
+										'code'
+									);
+									table.template.elms('[data-name='+app.fields.setting.fields.mode.code+']').each((element,index) => {
+										element.closest('label').elm('span').html(kb.constants.config.caption.mode[element.val()][kb.operator.language]);
+									});
+									table.template.elm('[field-id='+app.fields.setting.fields.buttons.code+']').elms('[type=checkbox]').each((element,index) => {
+										element.closest('label').elm('span').html(kb.constants.config.caption.buttons[element.val()][kb.operator.language]);
+									});
+									return table;
+								})(kb.table.activate(kb.table.create(app.fields.setting),app)))
+							);
+							/* event */
+							kb.event.on('kb.change.mode',(e) => {
+								switch (e.record.setting.value[parseInt(e.container.attr('row-idx'))].value.mode.value)
+								{
+									case 'viewer':
+										e.container.elm('[value=add]').parentNode.addClass('kb-hidden');
+										e.container.elm('[value=clone]').parentNode.addClass('kb-hidden');
+										break;
+									case 'editor':
+										e.container.elm('[value=add]').parentNode.removeClass('kb-hidden');
+										e.container.elm('[value=clone]').parentNode.removeClass('kb-hidden');
+										break;
+								}
+								return e;
+							});
+							container.main.elms('input,select,textarea').each((element,index) => element.initialize());
+						})({
+							id:vars.app.id,
+							fields:vars.app.fields.flat
+						});
+						/* setup */
+						if (Object.keys(config).length!=0)
+						{
+							((setting) => {
+								((app) => {
+									kb.record.set(container.main.elm('.kb-flat'),app,setting)
+									.then(() => {
+										container.main.elm('.kb-flat').elm('[field-id=setting]').tr.each((element,index) => {
+											switch (setting.setting.value[index].value.mode.value)
+											{
+												case 'viewer':
+													element.elm('[value=add]').parentNode.addClass('kb-hidden');
+													element.elm('[value=clone]').parentNode.addClass('kb-hidden');
+													break;
+											}
+										});
+									});
+								})({
+									id:vars.app.id,
+									fields:vars.app.fields.flat
+								});
+							})(JSON.parse(config.flat));
+						}
+						else container.main.elm('.kb-flat').elm('[field-id=setting]').addRow();
+					}
+					catch(error){kb.alert(kb.error.parse(error))}
+				}
+			);
+		});
+	});
+})(kintone.$PLUGIN_ID);
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	config:{
+		caption:{
+			buttons:{
+				en:'Hide buttons',
+				ja:'非表示にするボタン',
+				zh:'隐藏按钮',
+				detail:{
+					en:'Open',
+					ja:'開く',
+					zh:'打开'
+				},
+				delete:{
+					en:'Delete',
+					ja:'削除',
+					zh:'删除'
+				},
+				add:{
+					en:'Create',
+					ja:'新規作成',
+					zh:'新建'
+				},
+				clone:{
+					en:'Duplicate',
+					ja:'複製',
+					zh:'复制'
+				}
+			},
+			mode:{
+				en:'Mode',
+				ja:'モード',
+				zh:'模式',
+				editor:{
+					en:'Edit Mode',
+					ja:'編集モード',
+					zh:'编辑模式'
+				},
+				viewer:{
+					en:'View Mode',
+					ja:'閲覧モード',
+					zh:'浏览模式'
+				}
+			},
+			view:{
+				en:'View',
+				ja:'使用一覧',
+				zh:'标题',
+				all:{
+					en:'(All records)',
+					ja:'（すべて）',
+					zh:'（全部）'
+				}
+			}
+		},
+		message:{
+			invalid:{
+				duplicate:{
+					en:'You cannot specify the same list on different rows.',
+					ja:'異なる行で同じ一覧を指定することは出来ません。',
+					zh:'您不能在不同的行上指定相同的列表。'
+				}
+			}
+		}
+	}
+},kb.constants);

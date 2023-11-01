@@ -5,39 +5,701 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(f){var g={};kb.field.load(kintone.app.getId()).then(function(l){kb.status.load(kintone.app.getId()).then(function(n){kb.apps.load().then(function(q){kb.config[f].build({submit:function(m,h){try{var k=!1;h.tab=[];h.flat={};(function(c){kb.config[f].tabbed.tabs.some(function(b){var a=kb.record.get(b.panel,c);a.error?(kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]),kb.config[f].tabbed.activate(b),k=!0):(k||(a.record.event.value.includes("process")?a.record.action.value||
-(kb.alert(kb.constants.config.message.invalid.action[kb.operator.language]),kb.config[f].tabbed.activate(b),k=!0):a.record.action.value=""),k||(a.record.numberingField.value&&!a.record.numberingDigits.value&&(kb.alert(kb.constants.config.message.invalid.numbering[kb.operator.language]),kb.config[f].tabbed.activate(b),k=!0),k||(a.record.numberingGroup.value=a.record.numberingGroup.value.filter(function(d){return d.value.field.value}),a.record.promptField.value=a.record.promptField.value.filter(function(d){return d.value.field.value}),
-a.record.verifyField.value=a.record.verifyField.value.filter(function(d){return d.value.field.value}),a.record.errorField.value=a.record.errorField.value.filter(function(d){return d.value.field.value}).filter(function(d){return d.value.message.value}),h.tab.push({label:b.label.html(),setting:a.record}))));return k})})({id:g.app.id,fields:g.app.fields.tab});h.tab=JSON.stringify(h.tab);h.flat=JSON.stringify(h.flat);return k?!1:h}catch(c){return kb.alert(kb.error.parse(c)),!1}}},function(m,h){try{g.app=
-{id:f,fields:{tab:{event:{code:"event",type:"CHECK_BOX",label:"",required:!0,noLabel:!0,options:[{index:0,label:"create"},{index:1,label:"edit"},{index:2,label:"process"}]},action:{code:"action",type:"DROP_DOWN",label:kb.constants.config.caption.action[kb.operator.language],required:!1,noLabel:!1,options:[]},numberingField:{code:"numberingField",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},numberingGroup:{code:"numberingGroup",type:"SUBTABLE",label:"",noLabel:!0,fields:{field:{code:"field",
-type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]}}},numberingDigits:{code:"numberingDigits",type:"NUMBER",label:"",required:!1,noLabel:!0},promptField:{code:"promptField",type:"SUBTABLE",label:"",noLabel:!0,fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]}}},promptOverwrite:{code:"promptOverwrite",type:"CHECK_BOX",label:"",required:!1,noLabel:!0,options:[{index:0,label:"overwrite"}]},verifyField:{code:"verifyField",type:"SUBTABLE",label:"",noLabel:!0,
-fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]}}},verifyMessage:{code:"verifyMessage",type:"SINGLE_LINE_TEXT",label:"",required:!1,noLabel:!0,placeholder:""},errorFilter:{code:"errorFilter",type:"CONDITION",label:"",required:!1,noLabel:!0,app:{id:kintone.app.getId(),fields:l.parallelize}},errorMessage:{code:"errorMessage",type:"SINGLE_LINE_TEXT",label:"",required:!1,noLabel:!0,placeholder:""},errorField:{code:"errorField",type:"SUBTABLE",label:"",noLabel:!0,
-fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},message:{code:"message",type:"SINGLE_LINE_TEXT",label:"",required:!1,noLabel:!0,placeholder:kb.constants.config.prompt.error.message[kb.operator.language]}}},url:{code:"url",type:"SINGLE_LINE_TEXT",label:"",required:!1,noLabel:!0,placeholder:kb.constants.config.prompt.url[kb.operator.language]}},flat:{}}};var k=function(c,b,a){var d=kb.record,e=d.set,p=c.panel;a.event.value.includes("process")&&c.panel.elm("[field-id=action]").closest("section").removeClass("kb-hidden");
-e.call(d,p,b,a)};(function(c){for(var b in c)g.app.fields.tab[b]=c[b]})(kb.config[f].ui.fields.conditions.get(l));(function(c){for(var b in c)g.app.fields.tab[b]=c[b]})(kb.config[f].ui.fields.users.get(l));kb.config[f].tabbed=new KintoneBoosterConfigTabbed(m,{add:function(c){(function(b){c.tables={numberingGroup:kb.table.activate(kb.table.create(b.fields.numberingGroup),b),promptField:kb.table.activate(kb.table.create(b.fields.promptField),b),verifyField:kb.table.activate(kb.table.create(b.fields.verifyField),
-b),errorField:kb.table.activate(kb.table.create(b.fields.errorField),b)};c.panel.addClass("kb-scope").attr("form-id","form_"+b.id).append(kb.config[f].ui.fields.users.set(kb.config[f].ui.fields.conditions.set(kb.create("div").addClass("kb-config-tabbed-panel-block"),b),b).append(kb.create("h1").html(kb.constants.config.caption.event[kb.operator.language])).append(kb.create("section").append(kb.field.activate(function(a){a.elms("[type=checkbox]").each(function(d,e){d.closest("label").elm("span").html(kb.constants.config.caption.event[d.val()][kb.operator.language])});
-return a}(kb.field.create(b.fields.event)),b))).append(kb.create("section").addClass("kb-hidden").append(kb.field.activate(function(a){a.elm("select").empty().assignOption([{code:"",label:""}].concat(n.actions.map(function(d){return{code:d.key,label:d.name+"&nbsp;("+d.from+"&nbsp;&gt;&nbsp;"+d.to+")"}})),"label","code");return a}(kb.field.create(b.fields.action)),b)))).append(kb.create("h1").html(kb.constants.config.caption.numbering[kb.operator.language])).append(kb.create("section").append(kb.create("h1").html(kb.constants.config.caption.numbering.field[kb.operator.language])).append(kb.create("section").append(kb.field.activate(function(a){a.elm("select").empty().assignOption(kb.config[f].ui.options.fields(l,
-function(d,e){switch(e.type){case "SINGLE_LINE_TEXT":e.tableCode||e.expression||d.push({code:e.code,label:e.label})}return d}),"label","code");return a}(kb.field.create(b.fields.numberingField)),b)).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.numbering.caution[kb.operator.language]))).append(kb.create("h1").html(kb.constants.config.caption.numbering.group[kb.operator.language])).append(kb.create("section").append(kb.create("p").html(kb.constants.config.description.numbering.group[kb.operator.language])).append(function(a){a.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[f].ui.options.fields(l,
-function(d,e){switch(e.type){case "DROP_DOWN":case "RADIO_BUTTON":case "SINGLE_LINE_TEXT":e.tableCode||d.push({code:e.code,label:e.label})}return d}),"label","code");a.elm("thead").hide();return a}(c.tables.numberingGroup))).append(kb.create("h1").html(kb.constants.config.caption.numbering.digits[kb.operator.language])).append(kb.create("section").append(kb.create("p").html(kb.constants.config.description.numbering.digits[kb.operator.language])).append(kb.field.activate(kb.field.create(b.fields.numberingDigits),
-b)))).append(kb.create("h1").html(kb.constants.config.caption.prompt[kb.operator.language])).append(kb.create("section").append(kb.create("h1").html(kb.constants.config.caption.prompt.field[kb.operator.language])).append(kb.create("section").append(function(a){a.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[f].ui.options.fields(l,function(d,e){e.tableCode||l.disables.includes(e.code)||"FILE"==e.type||e.lookup||d.push({code:e.code,label:e.label});return d}),"label",
-"code");a.elm("thead").hide();return a}(c.tables.promptField)).append(kb.field.activate(function(a){a.elm("input").closest("label").elm("span").html(kb.constants.config.caption.prompt.overwrite[kb.operator.language]);return a}(kb.field.create(b.fields.promptOverwrite).css({width:"100%"})),b)).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.prompt.caution[kb.operator.language])))).append(kb.create("h1").html(kb.constants.config.caption.verify[kb.operator.language])).append(kb.create("section").append(kb.create("h1").html(kb.constants.config.caption.verify.field[kb.operator.language])).append(kb.create("section").append(function(a){a.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[f].ui.options.fields(l,
-function(d,e){e.tableCode||"FILE"!=e.type&&d.push({code:e.code,label:e.label});return d}),"label","code");a.elm("thead").hide();return a}(c.tables.verifyField)).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.verify.caution[kb.operator.language]))).append(kb.create("h1").html(kb.constants.config.caption.verify.message[kb.operator.language])).append(kb.create("section").append(kb.field.activate(kb.field.create(b.fields.verifyMessage).css({width:"100%"}),b)))).append(kb.create("h1").html(kb.constants.config.caption.error[kb.operator.language])).append(kb.create("section").append(kb.create("h1").html(kb.constants.config.caption.error.filter[kb.operator.language])).append(kb.create("section").append(kb.field.activate(kb.field.create(b.fields.errorFilter),
-b))).append(kb.create("h1").html(kb.constants.config.caption.error.message[kb.operator.language])).append(kb.create("section").append(kb.field.activate(kb.field.create(b.fields.errorMessage).css({width:"100%"}),b))).append(kb.create("h1").html(kb.constants.config.caption.error.field[kb.operator.language])).append(kb.create("section").append(kb.create("p").html(kb.constants.config.description.error.field[kb.operator.language])).append(function(a){a.template.elm("[field-id=field]").elm("select").empty().assignOption(kb.config[f].ui.options.fields(l,
-function(d,e){d.push({code:e.code,label:e.label});return d}),"label","code");a.elm("thead").hide();return a}(c.tables.errorField)))).append(kb.create("h1").html(kb.constants.config.caption.url[kb.operator.language])).append(kb.create("section").append(kb.field.activate(kb.field.create(b.fields.url).css({width:"100%"}),b)).append(kb.create("p").addClass("kb-hint").html(kb.constants.config.description.url.hint[kb.operator.language])).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.url.caution[kb.operator.language])));
-c.tables.numberingGroup.addRow();c.tables.promptField.addRow();c.tables.verifyField.addRow();c.tables.errorField.addRow();kb.event.on("kb.change.event",function(a){a.container==c.panel&&(c.panel.elm("[field-id=action]").closest("section").addClass("kb-hidden"),a.record.event.value.includes("process")&&c.panel.elm("[field-id=action]").closest("section").removeClass("kb-hidden"));return a});c.panel.elms("input,select,textarea").each(function(a,d){return a.initialize()})})({id:g.app.id,fields:g.app.fields.tab})},
-copy:function(c,b){var a={id:g.app.id,fields:g.app.fields.tab};k(b,a,kb.record.get(c.panel,a,!0).record)},del:function(c){}});m.main.append(kb.create("p").addClass("kb-hint").html(kb.constants.config.description.status[kb.operator.language]+"<br>"+function(){var c=null;switch(kb.operator.language){case "en":c=kb.create("a").attr("href","https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values").attr("target","_blank").html("https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values");
-break;case "ja":c=kb.create("a").attr("href","https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values").attr("target","_blank").html("https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values");break;case "zh":c=kb.create("a").attr("href","https://cybozudev.kf5.com/hc/kb/article/206907/#step4").attr("target","_blank").html("https://cybozudev.kf5.com/hc/kb/article/206907/#step4")}return c}().outerHTML));
-0!=Object.keys(h).length?function(c){c.each(function(b){var a={id:g.app.id,fields:g.app.fields.tab},d=kb.config[f].tabbed.add();k(d,a,b.setting);d.label.html(b.label)})}(JSON.parse(h.tab)):kb.config[f].tabbed.add()}catch(c){kb.alert(kb.error.parse(c))}})})})})})(kintone.$PLUGIN_ID);
-kb.constants=kb.extend({config:{caption:{action:{en:"Action Name",ja:"\u30a2\u30af\u30b7\u30e7\u30f3\u540d",zh:"\u64cd\u4f5c\u540d\u79f0"},error:{en:"If it meets additional conditions, make it an error",ja:"\u8ffd\u52a0\u6761\u4ef6\u306b\u5408\u81f4\u3057\u305f\u3089\u30a8\u30e9\u30fc\u306b\u3059\u308b",zh:"\u5982\u679c\u6ee1\u8db3\u989d\u5916\u7684\u6761\u4ef6\uff0c\u5c06\u5176\u89c6\u4e3a\u9519\u8bef",field:{en:"Display message for each field",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9\u6bce\u306b\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u8868\u793a",
-zh:"\u6bcf\u4e2a\u5b57\u6bb5\u663e\u793a\u6d88\u606f"},filter:{en:"Additional conditions to be considered as error",ja:"\u30a8\u30e9\u30fc\u3068\u3059\u308b\u8ffd\u52a0\u6761\u4ef6",zh:"\u88ab\u89c6\u4e3a\u9519\u8bef\u7684\u9644\u52a0\u6761\u4ef6"},message:{en:"Error message",ja:"\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8",zh:"\u9519\u8bef\u6d88\u606f"}},event:{en:"Action Available Event",ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8",zh:"\u53ef\u64cd\u4f5c\u4e8b\u4ef6",create:{en:"Submit on record creation",
-ja:"\u30ec\u30b3\u30fc\u30c9\u8ffd\u52a0\u753b\u9762\u3067\u306e\u4fdd\u5b58\u30dc\u30bf\u30f3\u30af\u30ea\u30c3\u30af",zh:"\u5728\u8bb0\u5f55\u521b\u5efa\u65f6\u63d0\u4ea4"},edit:{en:"Submit on record editing",ja:"\u30ec\u30b3\u30fc\u30c9\u7de8\u96c6\u753b\u9762\u3067\u306e\u4fdd\u5b58\u30dc\u30bf\u30f3\u30af\u30ea\u30c3\u30af",zh:"\u5728\u8bb0\u5f55\u7f16\u8f91\u65f6\u63d0\u4ea4"},process:{en:"Process Action",ja:"\u30d7\u30ed\u30bb\u30b9\u30a2\u30af\u30b7\u30e7\u30f3",zh:"\u8fc7\u7a0b\u64cd\u4f5c"}},
-numbering:{en:"Automatically number it",ja:"\u81ea\u52d5\u63a1\u756a\u3059\u308b",zh:"\u81ea\u52a8\u7f16\u53f7",digits:{en:"Number of digits",ja:"\u63a1\u756a\u6841\u6570",zh:"\u7f16\u53f7\u4f4d\u6570"},field:{en:"Field to save",ja:"\u4fdd\u5b58\u5148\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u4fdd\u5b58\u5b57\u6bb5"},group:{en:"Numbering group",ja:"\u63a1\u756a\u30b0\u30eb\u30fc\u30d7",zh:"\u7f16\u53f7\u7ec4"}},prompt:{en:"Show a popup prompting for input",ja:"\u5165\u529b\u3092\u4fc3\u3059\u30dd\u30c3\u30d7\u30a2\u30c3\u30d7\u3092\u8868\u793a\u3059\u308b",
-zh:"\u663e\u793a\u4e00\u4e2a\u63d0\u793a\u8f93\u5165\u7684\u5f39\u7a97",field:{en:"Field to prompt input",ja:"\u5165\u529b\u3092\u4fc3\u3059\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u63d0\u793a\u8f93\u5165\u7684\u5b57\u6bb5"},overwrite:{en:"Even if already inputted, prompt to enter again",ja:"\u5165\u529b\u6e08\u307f\u3067\u3042\u3063\u3066\u3082\u3001\u6539\u3081\u3066\u5165\u529b\u3092\u4fc3\u3059",zh:"\u5373\u4f7f\u5df2\u8f93\u5165\uff0c\u4e5f\u91cd\u65b0\u63d0\u793a\u8f93\u5165"}},url:{en:"Navigate to the specified URL after event processing",
-ja:"\u30a4\u30d9\u30f3\u30c8\u51e6\u7406\u5f8c\u306b\u6307\u5b9a\u3057\u305fURL\u3078\u9077\u79fb\u3059\u308b",zh:"\u4e8b\u4ef6\u5904\u7406\u540e\u8f6c\u5230\u6307\u5b9a\u7684URL"},verify:{en:"Show a popup to confirm the input content",ja:"\u5165\u529b\u5185\u5bb9\u306e\u78ba\u8a8d\u3092\u3059\u308b\u30dd\u30c3\u30d7\u30a2\u30c3\u30d7\u3092\u8868\u793a\u3059\u308b",zh:"\u663e\u793a\u4e00\u4e2a\u786e\u8ba4\u8f93\u5165\u5185\u5bb9\u7684\u5f39\u7a97",field:{en:"Field to confirm input contents",ja:"\u5165\u529b\u5185\u5bb9\u3092\u78ba\u8a8d\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9",
-zh:"\u786e\u8ba4\u8f93\u5165\u5185\u5bb9\u7684\u5b57\u6bb5"},message:{en:"Message to be displayed at the top of the popup screen",ja:"\u30dd\u30c3\u30d7\u30a2\u30c3\u30d7\u753b\u9762\u4e0a\u90e8\u306b\u8868\u793a\u3059\u308b\u30e1\u30c3\u30bb\u30fc\u30b8",zh:"\u5728\u5f39\u51fa\u5c4f\u5e55\u9876\u90e8\u663e\u793a\u7684\u6d88\u606f"}}},description:{error:{field:{en:"If you want to display error messages for each field, please specify them.",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9\u6bce\u306b\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u8868\u793a\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u305d\u308c\u3089\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5982\u679c\u60a8\u60f3\u4e3a\u6bcf\u4e2a\u5b57\u6bb5\u663e\u793a\u9519\u8bef\u4fe1\u606f\uff0c\u8bf7\u6307\u5b9a\u5b83\u4eec\u3002"}},numbering:{digits:{en:"Please input the number of digits to align with leading zeros.",ja:"\u5148\u982d\u3092\u30bc\u30ed\u3067\u63c3\u3048\u308b\u70ba\u306e\u6841\u6570\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8bf7\u8f93\u5165\u7528\u4e8e\u4f7f\u524d\u5bfc\u96f6\u5bf9\u9f50\u7684\u4f4d\u6570\u3002"},group:{en:"If you want to number by group, please specify the field for grouping.",
-ja:"\u30b0\u30eb\u30fc\u30d7\u6bce\u306b\u63a1\u756a\u3092\u884c\u3044\u305f\u3044\u5834\u5408\u306f\u3001\u30b0\u30eb\u30fc\u30d7\u5316\u3059\u308b\u70ba\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u5982\u679c\u60a8\u60f3\u6309\u7ec4\u7f16\u53f7\uff0c\u8bf7\u6307\u5b9a\u7528\u4e8e\u5206\u7ec4\u7684\u5b57\u6bb5\u3002"},caution:{en:'It will only operate if the field specified in the "Field to save" is empty.',ja:"\u4fdd\u5b58\u5148\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u6307\u5b9a\u3057\u305f\u30d5\u30a3\u30fc\u30eb\u30c9\u304c\u7a7a\u306e\u5834\u5408\u306e\u307f\u306e\u52d5\u4f5c\u306b\u306a\u308a\u307e\u3059\u3002",
-zh:"\u53ea\u6709\u5f53\u6307\u5b9a\u7684\u201c\u4fdd\u5b58\u5b57\u6bb5\u201d\u4e3a\u7a7a\u65f6\u624d\u4f1a\u64cd\u4f5c\u3002"}},prompt:{caution:{en:"Fields within a table cannot be specified.",ja:"\u30c6\u30fc\u30d6\u30eb\u5185\u30d5\u30a3\u30fc\u30eb\u30c9\u306f\u6307\u5b9a\u51fa\u6765\u307e\u305b\u3093\u3002",zh:"\u8868\u5185\u5b57\u6bb5\u4e0d\u80fd\u88ab\u6307\u5b9a\u3002"}},status:{en:"Due to kintone's specifications, there are fields that cannot be modified. Please check the URL below.",ja:"kintone\u306e\u4ed5\u69d8\u306b\u3088\u308a\u3001\u66f8\u304d\u63db\u3048\u308b\u3053\u3068\u304c\u51fa\u6765\u306a\u3044\u30d5\u30a3\u30fc\u30eb\u30c9\u304c\u3042\u308a\u307e\u3059\u306e\u3067\u3001\u4e0b\u8a18URL\u3092\u3054\u78ba\u8a8d\u304f\u3060\u3055\u3044\u3002",
-zh:"\u7531\u4e8ekintone\u7684\u89c4\u8303\uff0c\u6709\u4e9b\u5b57\u6bb5\u4e0d\u80fd\u88ab\u4fee\u6539\u3002\u8bf7\u68c0\u67e5\u4ee5\u4e0b\u7684URL\u3002"},url:{caution:{en:'There is no transition after "Process Action" is executed.',ja:"\u30d7\u30ed\u30bb\u30b9\u30a2\u30af\u30b7\u30e7\u30f3\u5b9f\u884c\u5f8c\u306e\u9077\u79fb\u306f\u3042\u308a\u307e\u305b\u3093\u3002",zh:'\u6267\u884c"Process Action"\u540e\u4e0d\u4f1a\u8fdb\u884c\u8f6c\u6362\u3002'},hint:{en:"To insert the value of a field at any position in URL, please enclose the field code of the field to be inserted with %.",
-ja:"URL\u306e\u4efb\u610f\u306e\u4f4d\u7f6e\u306b\u30d5\u30a3\u30fc\u30eb\u30c9\u306e\u5024\u3092\u633f\u5165\u3059\u308b\u5834\u5408\u306f\u3001\u633f\u5165\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u30b3\u30fc\u30c9\u3092\u3001%\u3067\u56f2\u3063\u3066\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8981\u5728URL\u7684\u4efb\u610f\u4f4d\u7f6e\u63d2\u5165\u5b57\u6bb5\u503c\uff0c\u8bf7\u7528%\u5305\u56f4\u8981\u63d2\u5165\u7684\u5b57\u6bb5\u7684\u5b57\u6bb5\u4ee3\u7801\u3002"}},
-verify:{caution:{en:"Fields within a table cannot be specified.",ja:"\u30c6\u30fc\u30d6\u30eb\u5185\u30d5\u30a3\u30fc\u30eb\u30c9\u306f\u6307\u5b9a\u51fa\u6765\u307e\u305b\u3093\u3002",zh:"\u8868\u5185\u5b57\u6bb5\u4e0d\u80fd\u88ab\u6307\u5b9a\u3002"}}},message:{invalid:{action:{en:'If you specify "Process Action" for the action event, please indicate its action name.',ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8\u306b\u300c\u30d7\u30ed\u30bb\u30b9\u30a2\u30af\u30b7\u30e7\u30f3\u300d\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u305d\u306e\u30a2\u30af\u30b7\u30e7\u30f3\u540d\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5982\u679c\u5728\u64cd\u4f5c\u4e8b\u4ef6\u4e2d\u6307\u5b9a\u4e86\u201c\u8fc7\u7a0b\u64cd\u4f5c\u201d\uff0c\u8bf7\u6307\u5b9a\u5176\u64cd\u4f5c\u540d\u79f0\u3002"},numbering:{en:"Please enter the number of digits for numbering.",ja:"\u63a1\u756a\u6841\u6570\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8bf7\u8f93\u5165\u7f16\u53f7\u7684\u4f4d\u6570\u3002"}}},prompt:{error:{message:{en:"Enter the error message",ja:"\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u5165\u529b",
-zh:"\u8bf7\u8f93\u5165\u9519\u8bef\u6d88\u606f"}},url:{en:"Enter the destination URL",ja:"\u9077\u79fb\u5148URL\u3092\u5165\u529b",zh:"\u8f93\u5165\u76ee\u6807URL"}}}},kb.constants);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	kb.field.load(kintone.app.getId()).then((fieldInfos) => {
+		kb.status.load(kintone.app.getId()).then((statusInfos) => {
+			kb.apps.load().then((appInfos) => {
+				kb.config[PLUGIN_ID].build(
+					{
+						submit:(container,config) => {
+							try
+							{
+								var error=false;
+								config.tab=[];
+								config.flat={};
+								((app) => {
+									kb.config[PLUGIN_ID].tabbed.tabs.some((item) => {
+										var res=kb.record.get(item.panel,app);
+										if (!res.error)
+										{
+											if (!error)
+											{
+												if (res.record.event.value.includes('process'))
+												{
+													if (!res.record.action.value)
+													{
+														kb.alert(kb.constants.config.message.invalid.action[kb.operator.language]);
+														kb.config[PLUGIN_ID].tabbed.activate(item);
+														error=true;
+													}
+												}
+												else res.record.action.value='';
+											}
+											if (!error)
+											{
+												if (res.record.numberingField.value)
+												{
+													if (!res.record.numberingDigits.value)
+													{
+														kb.alert(kb.constants.config.message.invalid.numbering[kb.operator.language]);
+														kb.config[PLUGIN_ID].tabbed.activate(item);
+														error=true;
+													}
+												}
+											}
+											if (!error)
+											{
+												res.record.numberingGroup.value=res.record.numberingGroup.value.filter((item) => item.value.field.value);
+												res.record.promptField.value=res.record.promptField.value.filter((item) => item.value.field.value);
+												res.record.verifyField.value=res.record.verifyField.value.filter((item) => item.value.field.value);
+												res.record.errorField.value=res.record.errorField.value.filter((item) => item.value.field.value).filter((item) => item.value.message.value);
+												config.tab.push({label:item.label.html(),setting:res.record});
+											}
+										}
+										else
+										{
+											kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);
+											kb.config[PLUGIN_ID].tabbed.activate(item);
+											error=true;
+										}
+										return error;
+									});
+								})({
+									id:vars.app.id,
+									fields:vars.app.fields.tab
+								});
+								config.tab=JSON.stringify(config.tab);
+								config.flat=JSON.stringify(config.flat);
+								return !(error)?config:false;
+							}
+							catch(error)
+							{
+								kb.alert(kb.error.parse(error));
+								return false;
+							}
+						}
+					},
+					(container,config) => {
+						try
+						{
+							vars.app={
+								id:PLUGIN_ID,
+								fields:{
+									tab:{
+										event:{
+											code:'event',
+											type:'CHECK_BOX',
+											label:'',
+											required:true,
+											noLabel:true,
+											options:[
+												{index:0,label:'create'},
+												{index:1,label:'edit'},
+												{index:2,label:'process'}
+											]
+										},
+										action:{
+											code:'action',
+											type:'DROP_DOWN',
+											label:kb.constants.config.caption.action[kb.operator.language],
+											required:false,
+											noLabel:false,
+											options:[]
+										},
+										numberingField:{
+											code:'numberingField',
+											type:'DROP_DOWN',
+											label:'',
+											required:false,
+											noLabel:true,
+											options:[]
+										},
+										numberingGroup:{
+											code:'numberingGroup',
+											type:'SUBTABLE',
+											label:'',
+											noLabel:true,
+											fields:{
+												field:{
+													code:'field',
+													type:'DROP_DOWN',
+													label:'',
+													required:false,
+													noLabel:true,
+													options:[]
+												}
+											}
+										},
+										numberingDigits:{
+											code:'numberingDigits',
+											type:'NUMBER',
+											label:'',
+											required:false,
+											noLabel:true
+										},
+										promptField:{
+											code:'promptField',
+											type:'SUBTABLE',
+											label:'',
+											noLabel:true,
+											fields:{
+												field:{
+													code:'field',
+													type:'DROP_DOWN',
+													label:'',
+													required:false,
+													noLabel:true,
+													options:[]
+												}
+											}
+										},
+										promptOverwrite:{
+											code:'promptOverwrite',
+											type:'CHECK_BOX',
+											label:'',
+											required:false,
+											noLabel:true,
+											options:[
+												{index:0,label:'overwrite'}
+											]
+										},
+										verifyField:{
+											code:'verifyField',
+											type:'SUBTABLE',
+											label:'',
+											noLabel:true,
+											fields:{
+												field:{
+													code:'field',
+													type:'DROP_DOWN',
+													label:'',
+													required:false,
+													noLabel:true,
+													options:[]
+												}
+											}
+										},
+										verifyMessage:{
+											code:'verifyMessage',
+											type:'SINGLE_LINE_TEXT',
+											label:'',
+											required:false,
+											noLabel:true,
+											placeholder:''
+										},
+										errorFilter:{
+											code:'errorFilter',
+											type:'CONDITION',
+											label:'',
+											required:false,
+											noLabel:true,
+											app:{
+												id:kintone.app.getId(),
+												fields:fieldInfos.parallelize
+											}
+										},
+										errorMessage:{
+											code:'errorMessage',
+											type:'SINGLE_LINE_TEXT',
+											label:'',
+											required:false,
+											noLabel:true,
+											placeholder:''
+										},
+										errorField:{
+											code:'errorField',
+											type:'SUBTABLE',
+											label:'',
+											noLabel:true,
+											fields:{
+												field:{
+													code:'field',
+													type:'DROP_DOWN',
+													label:'',
+													required:false,
+													noLabel:true,
+													options:[]
+												},
+												message:{
+													code:'message',
+													type:'SINGLE_LINE_TEXT',
+													label:'',
+													required:false,
+													noLabel:true,
+													placeholder:kb.constants.config.prompt.error.message[kb.operator.language]
+												}
+											}
+										},
+										url:{
+											code:'url',
+											type:'SINGLE_LINE_TEXT',
+											label:'',
+											required:false,
+											noLabel:true,
+											placeholder:kb.constants.config.prompt.url[kb.operator.language]
+										}
+									},
+									flat:{
+									}
+								}
+							};
+							var setup=(tab,app,record) => {
+								kb.record.set(tab.panel,app,(() => {
+									if (record.event.value.includes('process')) tab.panel.elm('[field-id=action]').closest('section').removeClass('kb-hidden');
+									return record;
+								})());
+							};
+							((fieldInfos) => {
+								for (var key in fieldInfos) vars.app.fields.tab[key]=fieldInfos[key];
+							})(kb.config[PLUGIN_ID].ui.fields.conditions.get(fieldInfos));
+							((fieldInfos) => {
+								for (var key in fieldInfos) vars.app.fields.tab[key]=fieldInfos[key];
+							})(kb.config[PLUGIN_ID].ui.fields.users.get(fieldInfos));
+							/* tabbed */
+							kb.config[PLUGIN_ID].tabbed=new KintoneBoosterConfigTabbed(
+								container,
+								{
+									add:(tab) => {
+										((app) => {
+											tab.tables={
+												numberingGroup:kb.table.activate(kb.table.create(app.fields.numberingGroup),app),
+												promptField:kb.table.activate(kb.table.create(app.fields.promptField),app),
+												verifyField:kb.table.activate(kb.table.create(app.fields.verifyField),app),
+												errorField:kb.table.activate(kb.table.create(app.fields.errorField),app)
+											};
+											tab.panel.addClass('kb-scope').attr('form-id','form_'+app.id)
+											.append(
+												kb.config[PLUGIN_ID].ui.fields.users.set(kb.config[PLUGIN_ID].ui.fields.conditions.set(kb.create('div').addClass('kb-config-tabbed-panel-block'),app),app)
+												.append(kb.create('h1').html(kb.constants.config.caption.event[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.field.activate(((res) => {
+														res.elms('[type=checkbox]').each((element,index) => {
+															element.closest('label').elm('span').html(kb.constants.config.caption.event[element.val()][kb.operator.language]);
+														});
+														return res;
+													})(kb.field.create(app.fields.event)),app))
+												)
+												.append(
+													kb.create('section').addClass('kb-hidden')
+													.append(kb.field.activate(((res) => {
+														res.elm('select').empty().assignOption(([{code:'',label:''}]).concat(statusInfos.actions.map((item) => {
+															return {code:item.key,label:item.name+'&nbsp;('+item.from+'&nbsp;&gt;&nbsp;'+item.to+')'};
+														})),'label','code');
+														return res;
+													})(kb.field.create(app.fields.action)),app))
+												)
+											)
+											.append(kb.create('h1').html(kb.constants.config.caption.numbering[kb.operator.language]))
+											.append(
+												kb.create('section')
+												.append(kb.create('h1').html(kb.constants.config.caption.numbering.field[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.field.activate(((res) => {
+														res.elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+															switch (current.type)
+															{
+																case 'SINGLE_LINE_TEXT':
+																	if (!current.tableCode)
+																		if (!current.expression) result.push({code:current.code,label:current.label});
+																	break;
+															}
+															return result;
+														}),'label','code');
+														return res;
+													})(kb.field.create(app.fields.numberingField)),app))
+													.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.numbering.caution[kb.operator.language]))
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.numbering.group[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.create('p').html(kb.constants.config.description.numbering.group[kb.operator.language]))
+													.append(((table) => {
+														table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+															switch (current.type)
+															{
+																case 'DROP_DOWN':
+																case 'RADIO_BUTTON':
+																case 'SINGLE_LINE_TEXT':
+																	if (!current.tableCode) result.push({code:current.code,label:current.label});
+																	break;
+															}
+															return result;
+														}),'label','code');
+														table.elm('thead').hide();
+														return table;
+													})(tab.tables.numberingGroup))
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.numbering.digits[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.create('p').html(kb.constants.config.description.numbering.digits[kb.operator.language]))
+													.append(kb.field.activate(kb.field.create(app.fields.numberingDigits),app))
+												)
+											)
+											.append(kb.create('h1').html(kb.constants.config.caption.prompt[kb.operator.language]))
+											.append(
+												kb.create('section')
+												.append(kb.create('h1').html(kb.constants.config.caption.prompt.field[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(((table) => {
+														table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+															if (!current.tableCode)
+																if (!fieldInfos.disables.includes(current.code))
+																	if (current.type!='FILE' && !current.lookup) result.push({code:current.code,label:current.label});
+															return result;
+														}),'label','code');
+														table.elm('thead').hide();
+														return table;
+													})(tab.tables.promptField))
+													.append(kb.field.activate(((res) => {
+														res.elm('input').closest('label').elm('span').html(kb.constants.config.caption.prompt.overwrite[kb.operator.language]);
+														return res;
+													})(kb.field.create(app.fields.promptOverwrite).css({width:'100%'})),app))
+													.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.prompt.caution[kb.operator.language]))
+												)
+											)
+											.append(kb.create('h1').html(kb.constants.config.caption.verify[kb.operator.language]))
+											.append(
+												kb.create('section')
+												.append(kb.create('h1').html(kb.constants.config.caption.verify.field[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(((table) => {
+														table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+															if (!current.tableCode)
+																if (current.type!='FILE') result.push({code:current.code,label:current.label});
+															return result;
+														}),'label','code');
+														table.elm('thead').hide();
+														return table;
+													})(tab.tables.verifyField))
+													.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.verify.caution[kb.operator.language]))
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.verify.message[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.field.activate(kb.field.create(app.fields.verifyMessage).css({width:'100%'}),app))
+												)
+											)
+											.append(kb.create('h1').html(kb.constants.config.caption.error[kb.operator.language]))
+											.append(
+												kb.create('section')
+												.append(kb.create('h1').html(kb.constants.config.caption.error.filter[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.field.activate(kb.field.create(app.fields.errorFilter),app))
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.error.message[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.field.activate(kb.field.create(app.fields.errorMessage).css({width:'100%'}),app))
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.error.field[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.create('p').html(kb.constants.config.description.error.field[kb.operator.language]))
+													.append(((table) => {
+														table.template.elm('[field-id=field]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+															result.push({code:current.code,label:current.label});
+															return result;
+														}),'label','code');
+														table.elm('thead').hide();
+														return table;
+													})(tab.tables.errorField))
+												)
+											)
+											.append(kb.create('h1').html(kb.constants.config.caption.url[kb.operator.language]))
+											.append(
+												kb.create('section')
+												.append(kb.field.activate(kb.field.create(app.fields.url).css({width:'100%'}),app))
+												.append(kb.create('p').addClass('kb-hint').html(kb.constants.config.description.url.hint[kb.operator.language]))
+												.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.url.caution[kb.operator.language]))
+											);
+											tab.tables.numberingGroup.addRow();
+											tab.tables.promptField.addRow();
+											tab.tables.verifyField.addRow();
+											tab.tables.errorField.addRow();
+											/* event */
+											kb.event.on('kb.change.event',(e) => {
+												if (e.container==tab.panel)
+												{
+													tab.panel.elm('[field-id=action]').closest('section').addClass('kb-hidden');
+													if (e.record.event.value.includes('process')) tab.panel.elm('[field-id=action]').closest('section').removeClass('kb-hidden');
+												}
+												return e;
+											});
+											tab.panel.elms('input,select,textarea').each((element,index) => element.initialize());
+										})({
+											id:vars.app.id,
+											fields:vars.app.fields.tab
+										});
+									},
+									copy:(source,destination) => {
+										((app) => {
+											setup(destination,app,kb.record.get(source.panel,app,true).record);
+										})({
+											id:vars.app.id,
+											fields:vars.app.fields.tab
+										});
+									},
+									del:(index) => {}
+								}
+							);
+							/* flat */
+							container.main.append(
+								kb.create('p').addClass('kb-hint').html(
+									((anchor) => {
+										return kb.constants.config.description.status[kb.operator.language]+'<br>'+anchor.outerHTML;
+									})((() => {
+										var res=null;
+										switch (kb.operator.language)
+										{
+											case 'en':
+												res=kb.create('a')
+												.attr('href','https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values')
+												.attr('target','_blank')
+												.html('https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values')
+												break;
+											case 'ja':
+												res=kb.create('a')
+												.attr('href','https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values')
+												.attr('target','_blank')
+												.html('https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values')
+												break;
+											case 'zh':
+												res=kb.create('a')
+												.attr('href','https://cybozudev.kf5.com/hc/kb/article/206907/#step4')
+												.attr('target','_blank')
+												.html('https://cybozudev.kf5.com/hc/kb/article/206907/#step4')
+												break;
+										}
+										return res;
+									})())
+								)
+							);
+							/* setup */
+							if (Object.keys(config).length!=0)
+							{
+								((settings) => {
+									settings.each((setting) => {
+										((app,tab) => {
+											setup(tab,app,setting.setting);
+											tab.label.html(setting.label);
+										})(
+											{
+												id:vars.app.id,
+												fields:vars.app.fields.tab
+											},
+											kb.config[PLUGIN_ID].tabbed.add()
+										);
+									});
+								})(JSON.parse(config.tab));
+							}
+							else kb.config[PLUGIN_ID].tabbed.add();
+						}
+						catch(error){kb.alert(kb.error.parse(error))}
+					}
+				);
+			});
+		});
+	});
+})(kintone.$PLUGIN_ID);
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	config:{
+		caption:{
+			action:{
+				en:'Action Name',
+				ja:'アクション名',
+				zh:'操作名称'
+			},
+			error:{
+				en:'If it meets additional conditions, make it an error',
+				ja:'追加条件に合致したらエラーにする',
+				zh:'如果满足额外的条件，将其视为错误',
+				field:{
+					en:'Display message for each field',
+					ja:'フィールド毎にメッセージを表示',
+					zh:'每个字段显示消息'
+				},
+				filter:{
+					en:'Additional conditions to be considered as error',
+					ja:'エラーとする追加条件',
+					zh:'被视为错误的附加条件'
+				},
+				message:{
+					en:'Error message',
+					ja:'エラーメッセージ',
+					zh:'错误消息'
+				}
+			},
+			event:{
+				en:'Action Available Event',
+				ja:'動作イベント',
+				zh:'可操作事件',
+				create:{
+					en:'Submit on record creation',
+					ja:'レコード追加画面での保存ボタンクリック',
+					zh:'在记录创建时提交'
+				},
+				edit:{
+					en:'Submit on record editing',
+					ja:'レコード編集画面での保存ボタンクリック',
+					zh:'在记录编辑时提交'
+				},
+				process:{
+					en:'Process Action',
+					ja:'プロセスアクション',
+					zh:'过程操作'
+				}
+			},
+			numbering:{
+				en:'Automatically number it',
+				ja:'自動採番する',
+				zh:'自动编号',
+				digits:{
+					en:'Number of digits',
+					ja:'採番桁数',
+					zh:'编号位数'
+				},
+				field:{
+					en:'Field to save',
+					ja:'保存先フィールド',
+					zh:'保存字段'
+				},
+				group:{
+					en:'Numbering group',
+					ja:'採番グループ',
+					zh:'编号组'
+				}
+			},
+			prompt:{
+				en:'Show a popup prompting for input',
+				ja:'入力を促すポップアップを表示する',
+				zh:'显示一个提示输入的弹窗',
+				field:{
+					en:'Field to prompt input',
+					ja:'入力を促すフィールド',
+					zh:'提示输入的字段'
+				},
+				overwrite:{
+					en:'Even if already inputted, prompt to enter again',
+					ja:'入力済みであっても、改めて入力を促す',
+					zh:'即使已输入，也重新提示输入'
+				}
+			},
+			url:{
+				en:'Navigate to the specified URL after event processing',
+				ja:'イベント処理後に指定したURLへ遷移する',
+				zh:'事件处理后转到指定的URL'
+			},
+			verify:{
+				en:'Show a popup to confirm the input content',
+				ja:'入力内容の確認をするポップアップを表示する',
+				zh:'显示一个确认输入内容的弹窗',
+				field:{
+					en:'Field to confirm input contents',
+					ja:'入力内容を確認するフィールド',
+					zh:'确认输入内容的字段'
+				},
+				message:{
+					en:'Message to be displayed at the top of the popup screen',
+					ja:'ポップアップ画面上部に表示するメッセージ',
+					zh:'在弹出屏幕顶部显示的消息'
+				}
+			}
+		},
+		description:{
+			error:{
+				field:{
+					en:'If you want to display error messages for each field, please specify them.',
+					ja:'フィールド毎にエラーメッセージを表示したい場合は、それらを指定して下さい。',
+					zh:'如果您想为每个字段显示错误信息，请指定它们。'
+				}
+			},
+			numbering:{
+				digits:{
+					en:'Please input the number of digits to align with leading zeros.',
+					ja:'先頭をゼロで揃える為の桁数を入力して下さい。',
+					zh:'请输入用于使前导零对齐的位数。'
+				},
+				group:{
+					en:'If you want to number by group, please specify the field for grouping.',
+					ja:'グループ毎に採番を行いたい場合は、グループ化する為のフィールドを指定して下さい。',
+					zh:'如果您想按组编号，请指定用于分组的字段。'
+				},
+				caution:{
+					en:'It will only operate if the field specified in the "Field to save" is empty.',
+					ja:'保存先フィールドに指定したフィールドが空の場合のみの動作になります。',
+					zh:'只有当指定的“保存字段”为空时才会操作。'
+				}
+			},
+			prompt:{
+				caution:{
+					en:'Fields within a table cannot be specified.',
+					ja:'テーブル内フィールドは指定出来ません。',
+					zh:'表内字段不能被指定。'
+				}
+			},
+			status:{
+				en:'Due to kintone\'s specifications, there are fields that cannot be modified. Please check the URL below.',
+				ja:'kintoneの仕様により、書き換えることが出来ないフィールドがありますので、下記URLをご確認ください。',
+				zh:'由于kintone的规范，有些字段不能被修改。请检查以下的URL。'
+			},
+			url:{
+				caution:{
+					en:'There is no transition after "Process Action" is executed.',
+					ja:'プロセスアクション実行後の遷移はありません。',
+					zh:'执行"Process Action"后不会进行转换。'
+				},
+				hint:{
+					en:'To insert the value of a field at any position in URL, please enclose the field code of the field to be inserted with %.',
+					ja:'URLの任意の位置にフィールドの値を挿入する場合は、挿入するフィールドのフィールドコードを、%で囲って入力して下さい。',
+					zh:'要在URL的任意位置插入字段值，请用%包围要插入的字段的字段代码。'
+				}
+			},
+			verify:{
+				caution:{
+					en:'Fields within a table cannot be specified.',
+					ja:'テーブル内フィールドは指定出来ません。',
+					zh:'表内字段不能被指定。'
+				}
+			}
+		},
+		message:{
+			invalid:{
+				action:{
+					en:'If you specify "Process Action" for the action event, please indicate its action name.',
+					ja:'動作イベントに「プロセスアクション」を指定した場合は、そのアクション名を指定して下さい。',
+					zh:'如果在操作事件中指定了“过程操作”，请指定其操作名称。'
+				},
+				numbering:{
+					en:'Please enter the number of digits for numbering.',
+					ja:'採番桁数を入力して下さい。',
+					zh:'请输入编号的位数。'
+				}
+			}
+		},
+		prompt:{
+			error:{
+				message:{
+					en:'Enter the error message',
+					ja:'エラーメッセージを入力',
+					zh:'请输入错误消息'
+				}
+			},
+			url:{
+				en:'Enter the destination URL',
+				ja:'遷移先URLを入力',
+				zh:'输入目标URL'
+			}
+		}
+	}
+},kb.constants);
