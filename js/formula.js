@@ -1021,7 +1021,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 							formula='(rhs.length==0 && !lhs.value)?false:!rhs.includes(lhs.value)';
 							break;
 						case 'in':
-							formula='(rhs.length==0 && lhs.value)?false:rhs.includes(lhs.value)';
+							formula='(rhs.length==0 && !lhs.value)?true:rhs.includes(lhs.value)';
 							break;
 					}
 					break;
