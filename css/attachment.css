@@ -1,0 +1,27 @@
+@charset "utf-8";
+/*
+* FileName "attachment.css"
+* Version: 1.0.0
+* Copyright (c) 2023 Pandafirm LLC
+* Distributed under the terms of the GNU Lesser General Public License.
+* https://opensource.org/licenses/LGPL-2.1
+*/
+.kb-attachment-file-operation{
+	color:var(--emphasis-color);
+	cursor:pointer;
+}
+.kb-attachment-file-operation+a{
+	display:none;
+}
+.kb-attachment-lookup-operation{
+	margin:0 8px;
+}
+.kb-attachment-lookup-operation+.input-lookup-gaia{
+	margin-left:0;
+}
+.kb-attachment-subtable-operation .subtable-operation-gaia button{
+	margin:0 12px 0 0 !important;
+}
+.kb-attachment-subtable-operation .subtable-operation-gaia+td{
+	border-left-width:1px !important;
+}
