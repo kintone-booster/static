@@ -223,7 +223,7 @@
 .kb-field .kb-field-value .kb-guide.kb-fixed{
 	display:inline-block !important;
 }
-.kb-field .kb-field-value .kb-icon:is(.kb-clear,.kb-search){
+.kb-field .kb-field-value .kb-icon:is(.kb-clear,.kb-open,.kb-search){
 	background-size:1.5em 1.5em;
 	height:1.5em;
 	width:1.5em;
@@ -271,7 +271,7 @@
 	width:calc(100% - 1.5em);
 }
 .kb-field .kb-field-value.kb-lookup input{
-	width:calc(100% - 3em) !important;
+	width:calc(100% - 4.5em) !important;
 }
 .kb-field .kb-field-value:is(.kb-id,.kb-number) *{
 	text-align:right;
@@ -289,14 +289,20 @@
 .kb-field:is(.kb-disabled,.kb-readonly) .kb-field-value:is(.kb-condition,.kb-file,.kb-organization,.kb-group,.kb-user) .kb-guide{
 	width:100%;
 }
-.kb-field:is(.kb-disabled,.kb-readonly) .kb-field-value > :not(.kb-guide){
+.kb-field:is(.kb-disabled,.kb-readonly) .kb-field-value > :not(.kb-guide,.kb-icon.kb-open){
 	display:none;
 }
 .kb-field:is(.kb-disabled,.kb-readonly) .kb-field-value.kb-dropdown:after{
 	display:none;
 }
+.kb-field:is(.kb-disabled,.kb-readonly).kb-picker .kb-field-value > .kb-icon.kb-open{
+	display:none;
+}
 .kb-field:is(.kb-disabled,.kb-readonly).kb-picker .kb-field-value.kb-file .kb-guide .kb-guide-item .kb-guide-item-label{
 	pointer-events:none;
+}
+.kb-field:is(.kb-disabled,.kb-readonly):not(.kb-picker) .kb-field-value.kb-lookup .kb-guide{
+	width:calc(100% - 1.5em);
 }
 .kb-filterbuilder{
 	background-color:var(--main-bg-color) !important;
