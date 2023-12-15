@@ -5,22 +5,538 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(y){var d={},z=function(b,c,u,p){u=void 0===u?!1:u;p=void 0===p?{}:p;return new Promise(function(q,k){var m=[],v=function(e,n){var w=function(){e++;e<b.length?v(e,n):n()};(function(g){kb.filter.scan(d.app,c,g.condition.value)?kb.filter.auth(g.user.value,g.organization.value,g.group.value).then(function(x){if(x){var t={duplicate:function(l){try{g.duplicateCriteria.value.some(function(a){return!(a.value.external.value in d.fieldInfos.parallelize&&a.value.internal.value in d.fieldInfos.parallelize)})?
-(kb.alert("No field to lookup was found"),k()):function(a){a&&m.push(a);l()}(g.duplicateCriteria.value.reduce(function(a,h){a.push(kb.filter.query.create(d.fieldInfos.parallelize[h.value.external.value],h.value.operator.value,c[d.fieldInfos.parallelize[h.value.internal.value].code]));return a},[]).join(" and "))}catch(a){kb.alert(kb.error.parse(a)),k()}},error:function(l){try{g.errorMessage.value||0!=g.errorField.value.length?kb.filter.scan(d.app,c,g.errorFilter.value)?(g.errorField.value.each(function(a,
-h){a.value.field.value in d.fieldInfos.parallelize&&(c[a.value.field.value].error=a.value.message.value)}),u||kb.loadEnd(),q({error:!0,message:g.errorMessage.value})):l():l()}catch(a){kb.alert(kb.error.parse(a)),k()}},numbering:function(l){try{if(g.numberingField.value in d.fieldInfos.parallelize)if(c[g.numberingField.value].value)l();else{var a="",h=g.numberingGroup.value.reduce(function(f,r){if(r.value.field.value in d.fieldInfos.parallelize)switch(a+=c[r.value.field.value].value,d.fieldInfos.parallelize[r.value.field.value].type){case "DROP_DOWN":case "RADIO_BUTTON":f.push(r.value.field.value+
-' in ("'+c[r.value.field.value].value+'")');break;default:f.push(r.value.field.value+'="'+c[r.value.field.value].value+'"')}return f},"$id"in c?['$id!="'+c.$id.value+'"']:[]);a in p?(p[a]++,c[g.numberingField.value].value=a+p[a].toString().lpad("0",parseInt(g.numberingDigits.value)),l()):kintone.api(kintone.api.url("/k/v1/records",!0),"GET",{app:d.app.id,query:h.join(" and ")+" order by "+g.numberingField.value+" desc limit 1 offset 0"}).then(function(f){f=f.records;var r=0;0!=f.length&&(r=parseInt((f.first()[g.numberingField.value].value||
-" ").replace(/[ ]+/g,"").replace(new RegExp("^"+a,"g"),"")));r++;f=r;p[a]=f;c[g.numberingField.value].value=a+f.toString().lpad("0",parseInt(g.numberingDigits.value));l()})["catch"](function(f){kb.alert(kb.error.parse(f));k()})}else l()}catch(f){kb.alert(kb.error.parse(f)),k()}},prompt:function(l){try{(function(a){0!=a.length?function(h){a.each(function(f,r){h.append(kb.field.activate(kb.field.create(f).css({width:"100%"}),d.app,!1))});u||kb.loadEnd();(new KintoneBoosterPopupform(h,600,"full",{ok:function(){var f=
-kb.record.get(h,d.app,!0);a.each(function(r,A){c[r.code].value=f.record[r.code].value});u||kb.loadStart();l()},cancel:function(){u||kb.loadStart();l()}})).show()}(kb.create("div").addClass("kb-scope").attr("form-id","form_"+d.app.id)):l()})(g.promptField.value.reduce(function(a,h){h.value.field.value in d.fieldInfos.parallelize&&(g.promptOverwrite.value.includes("overwrite")?a.push(d.fieldInfos.parallelize[h.value.field.value]):kb.field.isEmpty(c[h.value.field.value].value)&&a.push(d.fieldInfos.parallelize[h.value.field.value]));
-return a},[]))}catch(a){kb.alert(kb.error.parse(a)),k()}},verify:function(l){try{(function(a){0!=a.length?function(h){a.each(function(f,r){h.append(kb.field.activate(kb.field.create(f).addClass("kb-readonly").css({width:"100%"}),d.app,!1))});kb.record.set(h,d.app,c);u||kb.loadEnd();(new KintoneBoosterPopupform(h,600,"full",{ok:function(){u||kb.loadStart();l()},cancel:function(){u||kb.loadEnd();q({error:!0})}})).show()}(kb.create("div").addClass("kb-scope kb-verify").attr("form-id","form_"+d.app.id).append(kb.create("p").html(g.verifyMessage.value))):
-l()})(g.verifyField.value.reduce(function(a,h){h.value.field.value in d.fieldInfos.parallelize&&a.push(d.fieldInfos.parallelize[h.value.field.value]);return a},[]))}catch(a){kb.alert(kb.error.parse(a)),k()}}};t.numbering(function(){t.prompt(function(){t.verify(function(){t.error(function(){t.duplicate(function(){w()})})})})})}else w()})["catch"](function(x){kb.alert(kb.error.parse(x));k()}):w()})(b[e])};u||kb.loadStart();v(0,function(){u||kb.loadEnd();0!=m.length?kintone.api(kintone.api.url("/k/v1/records",
-!0),"GET",{app:d.app.id,query:function(e,n){return(n?"$id!="+n+" and ("+e+")":e)+" order by $id asc limit 5 offset 0"}(m.map(function(e){return"("+e+")"}).join(" or "),"$id"in c?c.$id.value:"")}).then(function(e){0!=e.records.length?kb.confirm(function(n){e.records.each(function(w){n.append(kb.create("p").css({margin:"0"}).append(kb.create("a").attr("href",kb.record.page.detail(d.mobile,d.app.id,w.$id.value)).attr("target","_blank").html("Record No: "+w.$id.value)))});return n}(kb.create("div").append(kb.create("p").css({margin:"0"}).html(kb.constants.submit.message.duplicate[kb.operator.language]))),
-function(n){q({error:n})},!0):q({error:!1})})["catch"](function(e){kb.alert(kb.error.parse(e),function(){q({error:!1})})}):q({error:!1})})})};kintone.events.on("app.record.create.submit app.record.detail.process.proceed app.record.edit.submit mobile.app.record.create.submit mobile.app.record.detail.process.proceed mobile.app.record.edit.submit".split(" "),function(b){return new Promise(function(c,u){(function(p,q){d.mobile=p;d.type=q;kb.config[y].config.get().then(function(k){0!=Object.keys(k).length?
-kb.field.load(kb.config[y].app,!0).then(function(m){d.app={id:kb.config[y].app,fields:m.origin};d.fieldInfos=m;try{(function(v){if(0!=v.length)switch(d.type){case "create":case "edit":z(v,b.record).then(function(e){e.error&&(b.error="message"in e?e.message:kb.constants.submit.message.cancel.submit[kb.operator.language]);c(b)})["catch"](function(){b.error=kb.constants.submit.message.cancel.submit[kb.operator.language];c(b)});(function(e){if(0!=e.length)kintone.events.on((d.mobile?"mobile.":"")+"app.record."+
-d.type+".submit.success",function(n){return new Promise(function(w,g){var x=function(t){(function(l){kb.filter.scan(d.app,n.record,l.condition.value)?kb.filter.auth(l.user.value,l.organization.value,l.group.value).then(function(a){if(a){a=l.url.value;var h=n.record,f;for(f in h)a=a.replace(new RegExp("%"+f+"%","g"),kb.field.stringify(d.fieldInfos.parallelize[f],h[f].value," / "));n.url=a}t++;t<e.length&&x(t)})["catch"](function(a){t++;t<e.length&&x(t)}):(t++,t<e.length&&x(t))})(e[t])};x(0);w(n)})})})(v.filter(function(e){return e.url.value}));
-break;case "process":(function(e){0!=e.length?z(e,b.record).then(function(n){n.error&&(b.error="message"in n?n.message:kb.constants.submit.message.cancel.submit[kb.operator.language]);c(b)})["catch"](function(){b.error=kb.constants.submit.message.cancel.submit[kb.operator.language];c(b)}):c(b)})(v.filter(function(e){return e.action.value==b.action.value+":"+b.status.value+":"+b.nextStatus.value}))}else c(b)})(JSON.parse(k.tab).map(function(v,e){return kb.extend({sIndex:{value:e.toString()}},v.setting)}).reduce(function(v,
-e){(d.mobile?["both","mobile"]:["both","pc"]).includes(e.device.value)&&e.event.value.includes(d.type)&&v.push(e);return v},[]))}catch(v){kb.alert(kb.error.parse(v)),c(b)}})["catch"](function(m){return c(b)}):c(b)})["catch"](function(k){return c(b)})})("mobile"==b.type.split(".").first(),b.type.split(".").slice(-2).first())})});kintone.events.on("app.record.create.show app.record.detail.show app.record.edit.show mobile.app.record.create.show mobile.app.record.detail.show mobile.app.record.edit.show".split(" "),
-function(b){return new Promise(function(c,u){kb.config[y].config.get().then(function(p){if(0!=Object.keys(p).length)try{JSON.parse(p.tab).some(function(q){return!q.setting.duplicateCriteria})&&kb.alert(kb.error.config.update("Boost! Submit")),c(b)}catch(q){kb.alert(kb.error.parse(q)),c(b)}else c(b)})["catch"](function(p){return c(b)})})});kb.event.on("kb.submit.call",function(b){return new Promise(function(c,u){kb.config[y].config.get().then(function(p){0!=Object.keys(p).length?kb.field.load(kb.config[y].app,
-!0).then(function(q){d.app={id:kb.config[y].app,fields:q.origin};d.fieldInfos=q;try{(function(k){k.some(function(m){return!m.duplicateCriteria})&&(kb.alert(kb.error.config.update("Boost! Submit")),k=[]);0!=k.length?z(k,b.record,!0,b.numbering).then(function(m){m.error?(b.error=!0,m.message?kb.alert(m.message,function(){return c(b)}):c(b)):c(b)})["catch"](function(){b.error=!0;c(b)}):c(b)})(JSON.parse(p.tab).map(function(k,m){return kb.extend({sIndex:{value:m.toString()}},k.setting)}).reduce(function(k,
-m){(b.mobile?["both","mobile"]:["both","pc"]).includes(m.device.value)&&m.event.value.includes(b.pattern)&&k.push(m);return k},[]))}catch(k){kb.alert(kb.error.parse(k)),c(b)}})["catch"](function(q){return c(b)}):c(b)})["catch"](function(p){return c(b)})})})})(kintone.$PLUGIN_ID);
-kb.constants=kb.extend({submit:{message:{cancel:{process:{en:"The process action was canceled.",ja:"\u30d7\u30ed\u30bb\u30b9\u30a2\u30af\u30b7\u30e7\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f\u3002",zh:"\u8fdb\u7a0b\u64cd\u4f5c\u5df2\u88ab\u53d6\u6d88\u3002"},submit:{en:"The submit was canceled.",ja:"\u4fdd\u5b58\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f\u3002",zh:"\u4fdd\u5b58\u5df2\u88ab\u53d6\u6d88\u3002"}},duplicate:{en:"A similar record already exists. Would you like to proceed with the registration anyway?",
-ja:"\u985e\u4f3c\u30ec\u30b3\u30fc\u30c9\u304c\u65e2\u306b\u767b\u9332\u3055\u308c\u3066\u3044\u307e\u3059\u304c\u3001\u3053\u306e\u307e\u307e\u767b\u9332\u3057\u3066\u3082\u5b9c\u3057\u3044\u3067\u3059\u304b\uff1f",zh:"\u5df2\u7ecf\u6709\u7c7b\u4f3c\u7684\u8bb0\u5f55\u5b58\u5728\u4e86\uff0c\u60a8\u8fd8\u8981\u7ee7\u7eed\u6ce8\u518c\u5417\uff1f"}}}},kb.constants);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	var apply=(settings,record,silent=false,numbering={}) => {
+		return new Promise((resolve,reject) => {
+			var duplicateQueries=[];
+			var recurse=(index,callback) => {
+				var finish=() => {
+					index++;
+					if (index<settings.length) recurse(index,callback);
+					else callback();
+				};
+				((setting) => {
+					var result=kb.filter.scan(vars.app,record,setting.condition.value);
+					if (result)
+					{
+						kb.filter.auth(setting.user.value,setting.organization.value,setting.group.value)
+						.then((auth) => {
+							if (auth)
+							{
+								var handlers={
+									duplicate:(callback) => {
+										try
+										{
+											if (setting.duplicateCriteria.value.some((item) => !((item.value.external.value in vars.fieldInfos.parallelize) && (item.value.internal.value in vars.fieldInfos.parallelize))))
+											{
+												kb.alert('No field to lookup was found');
+												reject();
+												return;
+											}
+											((query) => {
+												if (query) duplicateQueries.push(query);
+												callback();
+											})(setting.duplicateCriteria.value.reduce((result,current) => {
+												((criteria) => {
+													result.push(kb.filter.query.create(criteria.external,criteria.operator,record[criteria.internal.code]));
+												})({
+													external:vars.fieldInfos.parallelize[current.value.external.value],
+													operator:current.value.operator.value,
+													internal:vars.fieldInfos.parallelize[current.value.internal.value]
+												});
+												return result;
+											},[]).join(' and '));
+										}
+										catch(error)
+										{
+											kb.alert(kb.error.parse(error));
+											reject();
+										}
+									},
+									error:(callback) => {
+										try
+										{
+											if (setting.errorMessage.value || setting.errorField.value.length!=0)
+											{
+												if (kb.filter.scan(vars.app,record,setting.errorFilter.value))
+												{
+													setting.errorField.value.each((field,index) => {
+														if (field.value.field.value in vars.fieldInfos.parallelize)
+															record[field.value.field.value].error=field.value.message.value;
+													});
+													if (!silent) kb.loadEnd();
+													resolve({
+														error:true,
+														message:setting.errorMessage.value
+													});
+												}
+												else callback();
+											}
+											else callback();
+										}
+										catch(error)
+										{
+											kb.alert(kb.error.parse(error));
+											reject();
+										}
+									},
+									numbering:(callback) => {
+										try
+										{
+											if (setting.numberingField.value in vars.fieldInfos.parallelize)
+											{
+												if (!record[setting.numberingField.value].value)
+												{
+													var prefix='';
+													var query=setting.numberingGroup.value.reduce((result,current) => {
+														if (current.value.field.value in vars.fieldInfos.parallelize)
+														{
+															prefix+=record[current.value.field.value].value;
+															switch (vars.fieldInfos.parallelize[current.value.field.value].type)
+															{
+																case 'DROP_DOWN':
+																case 'RADIO_BUTTON':
+																	result.push(current.value.field.value+' in ("'+record[current.value.field.value].value+'")');
+																	break;
+																default:
+																	result.push(current.value.field.value+'="'+record[current.value.field.value].value+'"');
+																	break;
+															}
+														}
+														return result;
+													},('$id' in record)?['$id!="'+record['$id'].value+'"']:[]);
+													if (prefix in numbering)
+													{
+														numbering[prefix]++;
+														record[setting.numberingField.value].value=prefix+numbering[prefix].toString().lpad('0',parseInt(setting.numberingDigits.value));
+														callback();
+													}
+													else
+													{
+														kintone.api(
+															kintone.api.url('/k/v1/records',true),
+															'GET',
+															{
+																app:vars.app.id,
+																query:query.join(' and ')+' order by '+setting.numberingField.value+' desc limit 1 offset 0'
+															}
+														)
+														.then((resp) => {
+															var increment=((records) => {
+																var res=0;
+																if (records.length!=0) res=parseInt((records.first()[setting.numberingField.value].value || ' ').replace(/[ ]+/g,'').replace(new RegExp('^'+prefix,'g'),''));
+																res++;
+																return res;
+															})(resp.records);
+															numbering[prefix]=increment;
+															record[setting.numberingField.value].value=prefix+increment.toString().lpad('0',parseInt(setting.numberingDigits.value));
+															callback();
+														})
+														.catch((error) => {
+															kb.alert(kb.error.parse(error));
+															reject();
+														});
+													}
+												}
+												else callback();
+											}
+											else callback();
+										}
+										catch(error)
+										{
+											kb.alert(kb.error.parse(error));
+											reject();
+										}
+									},
+									prompt:(callback) => {
+										try
+										{
+											((fields) => {
+												if (fields.length!=0)
+												{
+													((form) => {
+														fields.each((field,index) => {
+															form.append(kb.field.activate(kb.field.create(field).css({width:'100%'}),vars.app,false));
+														});
+														if (!silent) kb.loadEnd();
+														(new KintoneBoosterPopupform(form,600,'full',{
+															ok:() => {
+																var res=kb.record.get(form,vars.app,true);
+																fields.each((field,index) => {
+																	record[field.code].value=res.record[field.code].value;
+																});
+																if (!silent) kb.loadStart();
+																callback();
+															},
+															cancel:() => {
+																if (!silent) kb.loadStart();
+																callback();
+															}
+														})).show();
+													})(kb.create('div').addClass('kb-scope').attr('form-id','form_'+vars.app.id));
+												}
+												else callback();
+											})(setting.promptField.value.reduce((result,current) => {
+												if (current.value.field.value in vars.fieldInfos.parallelize)
+												{
+													if (setting.promptOverwrite.value.includes('overwrite')) result.push(vars.fieldInfos.parallelize[current.value.field.value]);
+													else
+													{
+														if (kb.field.isEmpty(record[current.value.field.value].value))
+															result.push(vars.fieldInfos.parallelize[current.value.field.value]);
+													}
+												}
+												return result;
+											},[]));
+										}
+										catch(error)
+										{
+											kb.alert(kb.error.parse(error));
+											reject();
+										}
+									},
+									verify:(callback) => {
+										try
+										{
+											((fields) => {
+												if (fields.length!=0)
+												{
+													((form) => {
+														fields.each((field,index) => {
+															form.append(kb.field.activate(kb.field.create(field).addClass('kb-readonly').css({width:'100%'}),vars.app,false));
+														});
+														kb.record.set(form,vars.app,record);
+														if (!silent) kb.loadEnd();
+														(new KintoneBoosterPopupform(form,600,'full',{
+															ok:() => {
+																if (!silent) kb.loadStart();
+																callback();
+															},
+															cancel:() => {
+																if (!silent) kb.loadEnd();
+																resolve({error:true});
+															}
+														})).show();
+													})(kb.create('div').addClass('kb-scope kb-verify').attr('form-id','form_'+vars.app.id).append(kb.create('p').html(setting.verifyMessage.value)));
+												}
+												else callback();
+											})(setting.verifyField.value.reduce((result,current) => {
+												if (current.value.field.value in vars.fieldInfos.parallelize)
+													result.push(vars.fieldInfos.parallelize[current.value.field.value]);
+												return result;
+											},[]));
+										}
+										catch(error)
+										{
+											kb.alert(kb.error.parse(error));
+											reject();
+										}
+									}
+								};
+								handlers.numbering(() => {
+									handlers.prompt(() => {
+										handlers.verify(() => {
+											handlers.error(() => {
+												handlers.duplicate(() => {
+													finish();
+												});
+											});
+										});
+									});
+								});
+							}
+							else finish();
+						})
+						.catch((error) => {
+							kb.alert(kb.error.parse(error));
+							reject();
+						});
+					}
+					else finish();
+				})(settings[index]);
+			};
+			if (!silent) kb.loadStart();
+			recurse(0,() => {
+				if (!silent) kb.loadEnd();
+				if (duplicateQueries.length!=0)
+				{
+					kintone.api(
+						kintone.api.url('/k/v1/records',true),
+						'GET',
+						{
+							app:vars.app.id,
+							query:((queries,id) => {
+								return ((id)?'$id!='+id+' and ('+queries+')':queries)+' order by $id asc limit 5 offset 0';
+							})(duplicateQueries.map((item) => '('+item+')').join(' or '),('$id' in record)?record['$id'].value:'')
+						}
+					)
+					.then((resp) => {
+						if (resp.records.length!=0)
+						{
+							kb.confirm(
+								((message) => {
+									resp.records.each((record) => {
+										message.append(
+											kb.create('p').css({margin:'0'}).append(
+												kb.create('a')
+												.attr('href',kb.record.page.detail(vars.mobile,vars.app.id,record['$id'].value))
+												.attr('target','_blank')
+												.html('Record No: '+record['$id'].value)
+											)
+										);
+									});
+									return message;
+								})(kb.create('div').append(kb.create('p').css({margin:'0'}).html(kb.constants.submit.message.duplicate[kb.operator.language]))),
+								(isCancel) => {
+									resolve({error:isCancel});
+								},
+								true
+							);
+						}
+						else resolve({error:false});
+					})
+					.catch((error) => {
+						kb.alert(kb.error.parse(error),() => {
+							resolve({error:false});
+						});
+					});
+				}
+				else resolve({error:false});
+			});
+		});
+	};
+	kintone.events.on([
+		'app.record.create.submit',
+		'app.record.detail.process.proceed',
+		'app.record.edit.submit',
+		'mobile.app.record.create.submit',
+		'mobile.app.record.detail.process.proceed',
+		'mobile.app.record.edit.submit'
+	],(e) => {
+		return new Promise((resolve,reject) => {
+			((mobile,type) => {
+				vars.mobile=mobile;
+				vars.type=type;
+				/* get config */
+				kb.config[PLUGIN_ID].config.get()
+				.then((config) => {
+					if (Object.keys(config).length!=0)
+					{
+						kb.field.load(kb.config[PLUGIN_ID].app,true).then((fieldInfos) => {
+							vars.app={
+								id:kb.config[PLUGIN_ID].app,
+								fields:fieldInfos.origin
+							}
+							vars.fieldInfos=fieldInfos;
+							try
+							{
+								((settings) => {
+									if (settings.length!=0)
+									{
+										switch (vars.type)
+										{
+											case 'create':
+											case 'edit':
+												apply(settings,e.record)
+												.then((resp) => {
+													if (resp.error) e.error=('message' in resp)?resp.message:kb.constants.submit.message.cancel.submit[kb.operator.language];
+													resolve(e);
+												})
+												.catch(() => {
+													e.error=kb.constants.submit.message.cancel.submit[kb.operator.language];
+													resolve(e);
+												});
+												((settings) => {
+													if (settings.length!=0)
+													{
+														kintone.events.on(((vars.mobile)?'mobile.':'')+'app.record.'+vars.type+'.submit.success',(e) => {
+															return new Promise((resolve,reject) => {
+																var assign=(target,record) => {
+																	for (var key in record)
+																		target=target.replace(new RegExp('%'+key+'%','g'),kb.field.stringify(vars.fieldInfos.parallelize[key],record[key].value,' / '));
+																	return target;
+																};
+																var recurse=(index) => {
+																	((setting) => {
+																		if (kb.filter.scan(vars.app,e.record,setting.condition.value))
+																		{
+																			kb.filter.auth(setting.user.value,setting.organization.value,setting.group.value)
+																			.then((auth) => {
+																				if (auth) e.url=assign(setting.url.value,e.record);
+																				index++;
+																				if (index<settings.length) recurse(index);
+																			})
+																			.catch((error) => {
+																				index++;
+																				if (index<settings.length) recurse(index);
+																			});
+																		}
+																		else
+																		{
+																			index++;
+																			if (index<settings.length) recurse(index);
+																		}
+																	})(settings[index]);
+																};
+																recurse(0);
+																resolve(e);
+															});
+														});
+													}
+												})(settings.filter((item) => item.url.value));
+												break;
+											case 'process':
+												((settings) => {
+													if (settings.length!=0)
+													{
+														apply(settings,e.record)
+														.then((resp) => {
+															if (resp.error) e.error=('message' in resp)?resp.message:kb.constants.submit.message.cancel.submit[kb.operator.language];
+															resolve(e);
+														})
+														.catch(() => {
+															e.error=kb.constants.submit.message.cancel.submit[kb.operator.language];
+															resolve(e);
+														});
+													}
+													else resolve(e);
+												})(settings.filter((item) => item.action.value==e.action.value+':'+e.status.value+':'+e.nextStatus.value));
+												break;
+										}
+									}
+									else resolve(e);
+								})(JSON.parse(config.tab).map((item,index) => kb.extend({sIndex:{value:index.toString()}},item.setting)).reduce((result,current) => {
+									if (((vars.mobile)?['both','mobile']:['both','pc']).includes(current.device.value) && current.event.value.includes(vars.type)) result.push(current);
+									return result;
+								},[]));
+							}
+							catch(error)
+							{
+								kb.alert(kb.error.parse(error));
+								resolve(e);
+							}
+						})
+						.catch((error) => resolve(e));
+					}
+					else resolve(e);
+				})
+				.catch((error) => resolve(e));
+			})(e.type.split('.').first()=='mobile',e.type.split('.').slice(-2).first());
+		});
+	});
+	kintone.events.on([
+		'app.record.create.show',
+		'app.record.detail.show',
+		'app.record.edit.show',
+		'mobile.app.record.create.show',
+		'mobile.app.record.detail.show',
+		'mobile.app.record.edit.show'
+	],(e) => {
+		return new Promise((resolve,reject) => {
+			/* get config */
+			kb.config[PLUGIN_ID].config.get()
+			.then((config) => {
+				if (Object.keys(config).length!=0)
+				{
+					try
+					{
+						if (JSON.parse(config.tab).some((item) => !item.setting.duplicateCriteria)) kb.alert(kb.error.config.update('Boost! Submit'));
+						resolve(e);
+					}
+					catch(error)
+					{
+						kb.alert(kb.error.parse(error));
+						resolve(e);
+					}
+				}
+				else resolve(e);
+			})
+			.catch((error) => resolve(e));
+		});
+	});
+	kb.event.on('kb.submit.call',(e) => {
+		return new Promise((resolve,reject) => {
+			/* get config */
+			kb.config[PLUGIN_ID].config.get()
+			.then((config) => {
+				if (Object.keys(config).length!=0)
+				{
+					kb.field.load(kb.config[PLUGIN_ID].app,true).then((fieldInfos) => {
+						vars.app={
+							id:kb.config[PLUGIN_ID].app,
+							fields:fieldInfos.origin
+						}
+						vars.fieldInfos=fieldInfos;
+						try
+						{
+							((settings) => {
+								if (settings.some((item) => !item.duplicateCriteria))
+								{
+									kb.alert(kb.error.config.update('Boost! Submit'));
+									settings=[];
+								}
+								if (settings.length!=0)
+								{
+									apply(settings,e.record,true,e.numbering)
+									.then((resp) => {
+										if (resp.error)
+										{
+											e.error=true;
+											if (resp.message) kb.alert(resp.message,() => resolve(e));
+											else resolve(e);
+										}
+										else resolve(e);
+									})
+									.catch(() => {
+										e.error=true;
+										resolve(e);
+									});
+								}
+								else resolve(e);
+							})(JSON.parse(config.tab).map((item,index) => kb.extend({sIndex:{value:index.toString()}},item.setting)).reduce((result,current) => {
+								if (((e.mobile)?['both','mobile']:['both','pc']).includes(current.device.value) && current.event.value.includes(e.pattern)) result.push(current);
+								return result;
+							},[]));
+						}
+						catch(error)
+						{
+							kb.alert(kb.error.parse(error));
+							resolve(e);
+						}
+					})
+					.catch((error) => resolve(e));
+				}
+				else resolve(e);
+			})
+			.catch((error) => resolve(e));
+		});
+	});
+})(kintone.$PLUGIN_ID);
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	submit:{
+		message:{
+			cancel:{
+				process:{
+					en:'The process action was canceled.',
+					ja:'プロセスアクションがキャンセルされました。',
+					zh:'进程操作已被取消。'
+				},
+				submit:{
+					en:'The submit was canceled.',
+					ja:'保存がキャンセルされました。',
+					zh:'保存已被取消。'
+				}
+			},
+			duplicate:{
+				en:'A similar record already exists. Would you like to proceed with the registration anyway?',
+				ja:'類似レコードが既に登録されていますが、このまま登録しても宜しいですか？',
+				zh:'已经有类似的记录存在了，您还要继续注册吗？'
+			}
+		}
+	}
+},kb.constants);

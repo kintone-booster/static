@@ -5,106 +5,1831 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(l){var u={};kb.field.load(kintone.app.getId()).then(function(y){kb.status.load(kintone.app.getId()).then(function(A){kb.view.load(kintone.app.getId()).then(function(B){kb.apps.load().then(function(C){kb.config[l].build({submit:function(z,v){try{var n=!1;v.tab=[];v.flat={};(function(b){kb.config[l].tabbed.tabs.some(function(d){var a=kb.record.get(d.panel,b);a.error?(kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0):(!n&&a.record.event.value.includes("change")&&
-a.record.triggers.value.some(function(e){return!e.value.field.value})&&(a.record.triggers.value=a.record.triggers.value.filter(function(e){return!e.value.field.value})),n||(a.record.event.value.includes("process")?a.record.action.value||(kb.alert(kb.constants.config.message.invalid.action[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0):a.record.action.value=""),n||(a.record.event.value.includes("detail")?(a.record.label.value||(kb.alert(kb.constants.config.message.invalid.label.detail[kb.operator.language]),
-kb.config[l].tabbed.activate(d),n=!0),a.record.message.value||(kb.alert(kb.constants.config.message.invalid.message.detail[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0)):a.record.event.value.includes("index")?(a.record.label.value||(kb.alert(kb.constants.config.message.invalid.label.index[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0),a.record.message.value||(kb.alert(kb.constants.config.message.invalid.message.index[kb.operator.language]),kb.config[l].tabbed.activate(d),
-n=!0)):(a.record.label.value="",a.record.message.value="",a.record.view.value="")),n||(a.record.fill.value.filter(function(e){return e.value.table.value}).some(function(e){return!e.value.range.value})?(kb.alert(kb.constants.config.message.invalid.fill[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0):a.record.formula.value.some(function(e){return e.value.formula.value.match(/(class |fetch\(|function\(|XMLHttpRequest\(|=>|var |let |const )/g)})?(kb.alert(kb.constants.config.message.invalid.formula[kb.operator.language]),
-kb.config[l].tabbed.activate(d),n=!0):(a.record.clear.value=a.record.clear.value.filter(function(e){return e.value.table.value}),a.record.fill.value=a.record.fill.value.filter(function(e){return e.value.table.value}),a.record.formula.value=a.record.formula.value.filter(function(e){return e.value.field.value}))),n||(a.record.lookupApp.value?function(e){var c=[],f=[],g=a.record.lookupSort.value.filter(function(m){return m.value.field.value}),k=[],p=[];a.record.lookupCriteria.value.each(function(m,x){m.value.external.value&&
-m.value.internal.value&&(c.push(m),f.push(e.internal[m.value.internal.value].tableCode))});0==c.length?(kb.alert(kb.constants.config.message.invalid.lookup.criteria[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0):(f=Array.from(new Set(f)).filter(function(m){return m}),1<f.length?(kb.alert(kb.constants.config.message.invalid.lookup.multiple[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0):(a.record.lookupMapping.value.each(function(m,x){m.value.external.value&&m.value.internal.value&&
-(k.push(m),p.push(e.internal[m.value.internal.value].tableCode))}),0==k.length?(kb.alert(kb.constants.config.message.invalid.lookup.mapping[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0):(p=Array.from(new Set(p)),1<p.length?(kb.alert(kb.constants.config.message.invalid.lookup.incompatible[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0):(p.first()?0<f.length&&p.first()!=f.first()&&(kb.alert(kb.constants.config.message.invalid.lookup.unmatch[kb.operator.language]),kb.config[l].tabbed.activate(d),
-n=!0):0!=f.length&&(kb.alert(kb.constants.config.message.invalid.lookup.table[kb.operator.language]),kb.config[l].tabbed.activate(d),n=!0),n||(a.record.lookupCriteria.value=c,a.record.lookupSort.value=g,a.record.lookupMapping.value=k)))))}({external:d.fields.external.parallelize,internal:d.fields.internal.parallelize}):(a.record.lookupCriteria.value=[],a.record.lookupSort.value=[],a.record.lookupMapping.value=[])),n||(a.record.userSource.value?(a.record.userMapping.value=a.record.userMapping.value.filter(function(e){return e.value.item.value&&
-e.value.field.value}),a.record.userCustomItem.value=a.record.userCustomItem.value.filter(function(e){return e.value.item.value&&e.value.field.value})):(a.record.userMapping.value=[],a.record.userCustomItem.value=[]),v.tab.push({label:d.label.html(),setting:a.record})));return n})})({id:u.app.id,fields:u.app.fields.tab});v.tab=JSON.stringify(v.tab);v.flat=JSON.stringify(v.flat);return n?!1:v}catch(b){return kb.alert(kb.error.parse(b)),!1}}},function(z,v){try{u.app={id:l,fields:{tab:{event:{code:"event",
-type:"CHECK_BOX",label:"",required:!0,noLabel:!0,options:[{index:0,label:"change"},{index:1,label:"create"},{index:2,label:"edit"},{index:3,label:"reuse"},{index:4,label:"process"},{index:5,label:"detail"},{index:6,label:"index"}]},triggers:{code:"triggers",type:"SUBTABLE",label:"",noLabel:!0,fields:{field:{code:"field",type:"DROP_DOWN",label:kb.constants.config.caption.triggers[kb.operator.language],required:!1,noLabel:!0,options:[]}}},action:{code:"action",type:"DROP_DOWN",label:kb.constants.config.caption.action[kb.operator.language],
-required:!1,noLabel:!1,options:[]},label:{code:"label",type:"SINGLE_LINE_TEXT",label:kb.constants.config.caption.label[kb.operator.language],required:!1,noLabel:!1,placeholder:""},message:{code:"message",type:"SINGLE_LINE_TEXT",label:kb.constants.config.caption.message[kb.operator.language],required:!1,noLabel:!1,placeholder:""},view:{code:"view",type:"DROP_DOWN",label:kb.constants.config.caption.view[kb.operator.language],required:!1,noLabel:!1,options:[]},clear:{code:"clear",type:"SUBTABLE",label:"",
-noLabel:!0,fields:{table:{code:"table",type:"DROP_DOWN",label:kb.constants.config.caption.clear.table[kb.operator.language],required:!1,noLabel:!0,options:[]}}},fill:{code:"fill",type:"SUBTABLE",label:"",noLabel:!0,fields:{table:{code:"table",type:"DROP_DOWN",label:kb.constants.config.caption.fill.table[kb.operator.language],required:!1,noLabel:!0,options:[]},range:{code:"range",type:"SINGLE_LINE_TEXT",label:kb.constants.config.caption.fill.range[kb.operator.language],required:!1,noLabel:!0}}},formula:{code:"formula",
-type:"SUBTABLE",label:"",noLabel:!0,fields:{field:{code:"field",type:"DROP_DOWN",label:kb.constants.config.caption.formula.field[kb.operator.language],required:!1,noLabel:!0,options:[]},guide:{code:"guide",type:"SPACER",label:"",required:!1,noLabel:!0,contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-left"></span>'},formula:{code:"formula",type:"SINGLE_LINE_TEXT",label:kb.constants.config.caption.formula.formula[kb.operator.language],required:!1,noLabel:!0}}},lookupApp:{code:"lookupApp",
-type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},lookupCriteria:{code:"lookupCriteria",type:"SUBTABLE",label:"",noLabel:!0,fields:{external:{code:"external",type:"DROP_DOWN",label:kb.constants.config.caption.lookup.external[kb.operator.language],required:!1,noLabel:!0,options:[]},operator:{code:"operator",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},internal:{code:"internal",type:"DROP_DOWN",label:kb.constants.config.caption.lookup.internal[kb.operator.language],required:!1,
-noLabel:!0,options:[]}}},lookupIgnore:{code:"lookupIgnore",type:"CHECK_BOX",label:"",required:!1,noLabel:!0,options:[{index:0,label:"ignore"}]},lookupFilter:{code:"lookupFilter",type:"CONDITION",label:"",required:!1,noLabel:!0,app:{id:kintone.app.getId(),fields:y.parallelize}},lookupSort:{code:"lookupSort",type:"SUBTABLE",label:"",noLabel:!0,fields:{field:{code:"field",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},order:{code:"order",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,
-options:[{index:0,label:"asc"},{index:1,label:"desc"}]}}},lookupMapping:{code:"lookupMapping",type:"SUBTABLE",label:"",noLabel:!0,fields:{external:{code:"external",type:"DROP_DOWN",label:kb.constants.config.caption.lookup.external[kb.operator.language],required:!1,noLabel:!0,options:[]},guide:{code:"guide",type:"SPACER",label:"",required:!1,noLabel:!0,contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-right"></span>'},internal:{code:"internal",type:"DROP_DOWN",label:kb.constants.config.caption.lookup.internal[kb.operator.language],
-required:!1,noLabel:!0,options:[]}}},lookupLimited:{code:"lookupLimited",type:"CHECK_BOX",label:"",required:!1,noLabel:!0,options:[{index:0,label:"limited"}]},lookupOverwrite:{code:"lookupOverwrite",type:"CHECK_BOX",label:"",required:!1,noLabel:!0,options:[{index:0,label:"overwrite"}]},lookupReset:{code:"lookupReset",type:"CHECK_BOX",label:"",required:!1,noLabel:!0,options:[{index:0,label:"reset"}]},userSource:{code:"userSource",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},userMapping:{code:"userMapping",
-type:"SUBTABLE",label:"",noLabel:!0,fields:{item:{code:"item",type:"DROP_DOWN",label:kb.constants.config.caption.user.item[kb.operator.language],required:!1,noLabel:!0,options:[{index:0,label:""},{index:1,label:"code"},{index:2,label:"name"},{index:3,label:"email"},{index:4,label:"phone"},{index:5,label:"mobilePhone"},{index:6,label:"extensionNumber"},{index:7,label:"callto"},{index:8,label:"url"},{index:9,label:"employeeNumber"},{index:10,label:"joinDate"},{index:11,label:"birthDate"},{index:12,
-label:"description"}]},guide:{code:"guide",type:"SPACER",label:"",required:!1,noLabel:!0,contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-right"></span>'},field:{code:"field",type:"DROP_DOWN",label:kb.constants.config.caption.user.field[kb.operator.language],required:!1,noLabel:!0,options:[]}}},userCustomItem:{code:"userCustomItem",type:"SUBTABLE",label:"",noLabel:!0,fields:{item:{code:"item",type:"SINGLE_LINE_TEXT",label:kb.constants.config.caption.user.item[kb.operator.language],required:!1,
-noLabel:!0},guide:{code:"guide",type:"SPACER",label:"",required:!1,noLabel:!0,contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-right"></span>'},field:{code:"field",type:"DROP_DOWN",label:kb.constants.config.caption.user.field[kb.operator.language],required:!1,noLabel:!0,options:[]}}},userPrimaryOrganization:{code:"userPrimaryOrganization",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},userOrganization:{code:"userOrganization",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,
-options:[]},userGroup:{code:"userGroup",type:"DROP_DOWN",label:"",required:!1,noLabel:!0,options:[]},userOverwrite:{code:"userOverwrite",type:"CHECK_BOX",label:"",required:!1,noLabel:!0,options:[{index:0,label:"overwrite"}]}},flat:{}}};var n=function(b,d,a){kb.record.set(b.panel,d,function(){a.event.value.includes("change")&&b.panel.elm("[field-id=triggers]").closest("section").removeClass("kb-hidden");a.event.value.includes("process")&&b.panel.elm("[field-id=action]").closest("section").removeClass("kb-hidden");
-a.event.value.includes("detail")&&b.panel.elm("[field-id=label]").closest("section").removeClass("kb-hidden");a.event.value.includes("detail")&&b.panel.elm("[field-id=message]").closest("section").removeClass("kb-hidden");a.event.value.includes("index")&&b.panel.elm("[field-id=label]").closest("section").removeClass("kb-hidden");a.event.value.includes("index")&&b.panel.elm("[field-id=message]").closest("section").removeClass("kb-hidden");a.event.value.includes("index")&&b.panel.elm("[field-id=view]").closest("section").removeClass("kb-hidden");
-b.panel.elm("[field-id=lookupApp]").elm("select").val(a.lookupApp.value).rebuild().then(function(e){b.tables.lookupCriteria.clearRows();a.lookupCriteria.value.each(function(c,f){c.value.external.value in e.criteria&&function(g){g.elm("[field-id=external]").elm("select").val(c.value.external.value).rebuild().then(function(k){c.value.internal.value in k&&(g.elm("[field-id=operator]").elm("select").val(c.value.operator.value),g.elm("[field-id=internal]").elm("select").val(c.value.internal.value))})}(b.tables.lookupCriteria.addRow())});
-0==b.tables.lookupCriteria.tr.length&&b.tables.lookupCriteria.addRow();b.tables.lookupSort.clearRows();a.lookupSort.value.each(function(c,f){if(c.value.field.value in e.sort){var g=b.tables.lookupSort.addRow();g.elm("[field-id=field]").elm("select").val(c.value.field.value);g.elm("[field-id=order]").elm("select").val(c.value.order.value)}});0==b.tables.lookupSort.tr.length&&b.tables.lookupSort.addRow();b.tables.lookupMapping.clearRows();a.lookupMapping.value.each(function(c,f){c.value.external.value in
-e.mapping&&function(g){g.elm("[field-id=external]").elm("select").val(c.value.external.value).rebuild().then(function(k){c.value.internal.value in k&&g.elm("[field-id=internal]").elm("select").val(c.value.internal.value)})}(b.tables.lookupMapping.addRow())});0==b.tables.lookupMapping.tr.length&&b.tables.lookupMapping.addRow();(function(c){c.elm(".kb-guide").empty();a.lookupFilter.value?(c.elm("input").val(a.lookupFilter.value),a.lookupFilter.value.split(" and ").each(function(f,g){return c.guide(f)})):
-c.elm("input").val("")})(b.panel.elm("[field-id=lookupFilter]").elm(".kb-field-value"))});b.panel.elm("[field-id=userSource]").elm("select").val(a.userSource.value).rebuild().then(function(e){b.tables.userMapping.clearRows();a.userMapping.value.each(function(c,f){if(c.value.field.value in e.mapping){var g=b.tables.userMapping.addRow();g.elm("[field-id=item]").elm("select").val(c.value.item.value);g.elm("[field-id=field]").elm("select").val(c.value.field.value)}});0==b.tables.userMapping.tr.length&&
-b.tables.userMapping.addRow();b.tables.userCustomItem.clearRows();a.userCustomItem.value.each(function(c,f){if(c.value.field.value in e.custom){var g=b.tables.userCustomItem.addRow();g.elm("[field-id=item]").elm("input").val(c.value.item.value);g.elm("[field-id=field]").elm("select").val(c.value.field.value)}});0==b.tables.userCustomItem.tr.length&&b.tables.userCustomItem.addRow();(function(c){a.userPrimaryOrganization.value in e.organization?c.elm("select").val(a.userPrimaryOrganization.value):c.elm("select").val("")})(b.panel.elm("[field-id=userPrimaryOrganization]").elm(".kb-field-value"));
-(function(c){a.userOrganization.value in e.organization?c.elm("select").val(a.userOrganization.value):c.elm("select").val("")})(b.panel.elm("[field-id=userOrganization]").elm(".kb-field-value"));(function(c){a.userGroup.value in e.group?c.elm("select").val(a.userGroup.value):c.elm("select").val("")})(b.panel.elm("[field-id=userGroup]").elm(".kb-field-value"))});return a}()).then(function(){b.tables.formula.tr.each(function(e,c){e.elm("select").rebuild()})})};(function(b){for(var d in b)u.app.fields.tab[d]=
-b[d]})(kb.config[l].ui.fields.conditions.get(y));(function(b){for(var d in b)u.app.fields.tab[d]=b[d]})(kb.config[l].ui.fields.users.get(y));kb.config[l].tabbed=new KintoneBoosterConfigTabbed(z,{add:function(b){(function(d){b.fields={external:{},internal:y};b.tables={triggers:kb.table.activate(kb.table.create(d.fields.triggers),d),fill:kb.table.activate(kb.table.create(d.fields.fill),d),clear:kb.table.activate(kb.table.create(d.fields.clear),d),formula:kb.table.create(d.fields.formula,!1,!1,!1).addClass("kb-mapping").spread(function(a,
-e){a.elm(".kb-table-row-add").on("click",function(c){b.tables.formula.insertRow(a)});a.elm(".kb-table-row-del").on("click",function(c){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],function(){b.tables.formula.delRow(a)})});(function(c){c.field.on("change",function(f){return f.currentTarget.rebuild()}).rebuild=function(){c.field.val()&&kb.formula.field.set(c.formula,b.fields.internal.parallelize[c.field.val()])}})({field:a.elm("[field-id=field]").elm("select"),guide:a.elm("[field-id=guide]").css({width:"100%"}).parentNode.addClass("kb-mapping-guide"),
-formula:a.elm("[field-id=formula]").css({width:"450px"}).elm(".kb-field-value")})},function(a,e){0==a.tr.length&&a.addRow()},!1),lookupCriteria:kb.table.create(d.fields.lookupCriteria,!1,!1,!1).spread(function(a,e){a.elm(".kb-table-row-add").on("click",function(c){b.tables.lookupCriteria.insertRow(a)});a.elm(".kb-table-row-del").on("click",function(c){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],function(){b.tables.lookupCriteria.delRow(a)})});(function(c){c.external.on("change",
-function(f){return f.currentTarget.rebuild()}).rebuild=function(){return new Promise(function(f,g){c.operator.empty();c.internal.empty().assignOption([{code:"",label:""}],"label","code");if(c.external.val()){var k={};c.operator.assignOption(kb.filter.query.operator(b.fields.external.parallelize[c.external.val()]),"label","code");for(var p in b.fields.internal.parallelize){var m=b.fields.internal.parallelize[p];kb.field.typing(m,b.fields.external.parallelize[c.external.val()],!0)&&(k[m.code]=m)}c.internal.assignOption(Object.values(k),
-"label","code");f(k)}else f({})})}})({external:a.elm("[field-id=external]").elm("select"),operator:a.elm("[field-id=operator]").elm("select"),internal:a.elm("[field-id=internal]").elm("select")})},function(a,e){0==a.tr.length&&a.addRow()},!1),lookupMapping:kb.table.create(d.fields.lookupMapping,!1,!1,!1).addClass("kb-mapping").spread(function(a,e){a.elm(".kb-table-row-add").on("click",function(c){b.tables.lookupMapping.insertRow(a)});a.elm(".kb-table-row-del").on("click",function(c){kb.confirm(kb.constants.common.message.confirm["delete"][kb.operator.language],
-function(){b.tables.lookupMapping.delRow(a)})});(function(c){c.external.on("change",function(f){return f.currentTarget.rebuild()}).rebuild=function(){return new Promise(function(f,g){c.internal.empty().assignOption([{code:"",label:""}],"label","code");if(c.external.val()){var k={},p;for(p in b.fields.internal.parallelize){var m=b.fields.internal.parallelize[p];b.fields.internal.disables.includes(m.code)||kb.field.typing(b.fields.external.parallelize[c.external.val()],m)&&(k[m.code]=m)}c.internal.assignOption(Object.values(k),
-"label","code");f(k)}else f({})})}})({external:a.elm("[field-id=external]").elm("select"),internal:a.elm("[field-id=internal]").elm("select")})},function(a,e){0==a.tr.length&&a.addRow()},!1),lookupSort:kb.table.activate(kb.table.create(d.fields.lookupSort),d),userMapping:kb.table.activate(kb.table.create(d.fields.userMapping).addClass("kb-mapping"),d),userCustomItem:kb.table.activate(kb.table.create(d.fields.userCustomItem).addClass("kb-mapping"),d)};b.panel.addClass("kb-scope").attr("form-id","form_"+
-d.id).append(kb.config[l].ui.fields.users.set(kb.config[l].ui.fields.conditions.set(kb.create("div").addClass("kb-config-tabbed-panel-block"),d),d).append(kb.create("h1").html(kb.constants.config.caption.event[kb.operator.language])).append(kb.create("section").append(kb.field.activate(function(a){a.elms("[type=checkbox]").each(function(e,c){e.closest("label").elm("span").html(kb.constants.config.caption.event[e.val()][kb.operator.language])});return a}(kb.field.create(d.fields.event)),d))).append(kb.create("section").addClass("kb-hidden").append(function(a){(function(e){a.template.elm("[field-id=field]").elm("select").empty().assignOption([{code:"",
-label:kb.constants.config.caption.triggers.all[kb.operator.language]}].concat(e),"label","code")})(b.fields.internal.changes.map(function(e){return{code:e,label:(e in b.fields.internal.tables?b.fields.internal.tables:b.fields.internal.parallelize)[e].label}}));return a}(b.tables.triggers)).append(kb.create("p").addClass("kb-hint").html(kb.constants.config.description.triggers[kb.operator.language]))).append(kb.create("section").addClass("kb-hidden").append(kb.field.activate(function(a){a.elm("select").empty().assignOption([{code:"",
-label:""}].concat(A.actions.map(function(e){return{code:e.key,label:e.name+"&nbsp;("+e.from+"&nbsp;&gt;&nbsp;"+e.to+")"}})),"label","code");return a}(kb.field.create(d.fields.action)),d))).append(kb.create("section").addClass("kb-hidden").append(kb.field.activate(kb.field.create(d.fields.label).css({width:"100%"}),d))).append(kb.create("section").addClass("kb-hidden").append(kb.field.activate(kb.field.create(d.fields.message).css({width:"100%"}),d))).append(kb.create("section").addClass("kb-hidden").append(kb.field.activate(function(a){a.elm("select").empty().assignOption([{code:"",
-label:kb.constants.config.caption.view.all[kb.operator.language]}].concat(B.list.map(function(e){return{code:e.id,label:e.name}})),"label","code");return a}(kb.field.create(d.fields.view)),d)))).append(kb.create("h1").html(kb.constants.config.caption.clear[kb.operator.language])).append(kb.create("section").append(function(a){a.template.elm("[field-id=table]").elm("select").empty().assignOption(kb.config[l].ui.options.fields(y,null,!0,!1),"label","code");return a}(b.tables.clear)).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.clear[kb.operator.language]))).append(kb.create("h1").html(kb.constants.config.caption.fill[kb.operator.language])).append(kb.create("section").append(function(a){a.template.elm("[field-id=table]").elm("select").empty().assignOption(kb.config[l].ui.options.fields(y,
-null,!0,!1),"label","code");a.template.elm("[field-id=range]").css({width:"450px"});return a}(b.tables.fill)).append(kb.create("p").addClass("kb-hint").html(kb.constants.config.description.fill.hint[kb.operator.language])).append(kb.create("p").addClass("kb-hint").html(kb.constants.config.description.fill.link[kb.operator.language]+"<br>"+kb.create("a").attr("href","https://kintone-booster.com/"+kb.operator.language+"/rows.html").attr("target","_blank").html("https://kintone-booster.com/"+kb.operator.language+
-"/rows.html").outerHTML))).append(kb.create("h1").html(kb.constants.config.caption.formula[kb.operator.language])).append(kb.create("section").append(function(a){var e=a.template.elm("[field-id=field]").elm("select").empty(),c=e.assignOption;var f=b.fields.internal.parallelize;var g={},k;for(k in f){var p=f[k];b.fields.internal.disables.includes(p.code)||"FILE"!=p.type&&(g[p.code]=p)}f=[{code:"",label:""}].concat(Object.values(g));c.call(e,f,"label","code");return a}(b.tables.formula)).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.formula.fixed[kb.operator.language])).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.formula.process[kb.operator.language])).append(kb.create("p").addClass("kb-hint").html(kb.constants.config.description.formula.link[kb.operator.language]+
-"<br>"+kb.create("a").attr("href","https://kintone-booster.com/"+kb.operator.language+"/functions.html").attr("target","_blank").html("https://kintone-booster.com/"+kb.operator.language+"/functions.html").outerHTML))).append(kb.create("h1").html(kb.constants.config.caption.lookup[kb.operator.language])).append(kb.create("section").append(kb.create("h1").html(kb.constants.config.caption.lookup.app[kb.operator.language])).append(kb.create("section").append(function(a){a.elm("select").empty().assignOption([{appId:"",
-name:""}].concat(C),"name","appId").on("change",function(e){return e.currentTarget.rebuild()}).rebuild=function(){return new Promise(function(e,c){(function(f,g,k,p){f.clearRows();f.template.elm("[field-id=external]").css({width:"100%"}).elm("select").empty().assignOption([{code:"",label:""}],"label","code");f.template.elm("[field-id=operator]").css({width:"100%"}).elm("select").empty();f.template.elm("[field-id=internal]").css({width:"100%"}).elm("select").empty().assignOption([{code:"",label:""}],
-"label","code");g.clearRows();g.template.elm("[field-id=field]").css({width:"100%"}).elm("select").empty().assignOption([{code:"",label:""}],"label","code");k.clearRows();k.template.elm("[field-id=external]").css({width:"100%"}).elm("select").empty().assignOption([{code:"",label:""}],"label","code");k.template.elm("[field-id=internal]").css({width:"100%"}).elm("select").empty().assignOption([{code:"",label:""}],"label","code");k.template.elm("[field-id=guide]").css({width:"100%"}).parentNode.addClass("kb-mapping-guide");
-a.elm("select").val()?kb.field.load(a.elm("select").val()).then(function(m){b.fields.external=m;e(function(x){var w={criteria:function(q){var r={},t;for(t in q){var h=q[t];h.tableCode||(r[h.code]=h)}return r}(b.fields.external.criterias),mapping:function(q){var r={},t;for(t in q){var h=q[t];h.tableCode||["CATEGORY","FILE"].includes(h.type)||(r[h.code]=h)}return r}(b.fields.external.parallelize),sort:b.fields.external.sorts};f.template.elm("[field-id=external]").elm("select").assignOption(Object.values(w.criteria),
-"label","code");k.template.elm("[field-id=external]").elm("select").assignOption(Object.values(w.mapping),"label","code");g.template.elm("[field-id=field]").elm("select").assignOption(Object.values(w.sort),"label","code");f.addRow();k.addRow();g.addRow();p.reset({id:x,fields:b.fields.external.parallelize});return w}(a.elm("select").val()))}):(f.addRow(),k.addRow(),g.addRow(),p.reset({id:null,fields:{}}),e({criteria:{},mapping:{},sort:{}}))})(b.tables.lookupCriteria,b.tables.lookupSort,b.tables.lookupMapping,
-b.panel.elm("[field-id=lookupFilter]").elm(".kb-field-value"))})};return a}(kb.field.activate(kb.field.create(d.fields.lookupApp),d)))).append(kb.create("h1").html(kb.constants.config.caption.lookup.criteria[kb.operator.language])).append(kb.create("section").append(b.tables.lookupCriteria).append(kb.field.activate(function(a){a.elm("input").closest("label").elm("span").html(kb.constants.config.caption.lookup.ignore[kb.operator.language]);return a}(kb.field.create(d.fields.lookupIgnore).css({width:"100%"})),
-d)).append(kb.create("p").html(kb.constants.config.caption.lookup.filter[kb.operator.language])).append(kb.field.activate(kb.field.create(d.fields.lookupFilter),d))).append(kb.create("h1").html(kb.constants.config.caption.lookup.sort[kb.operator.language])).append(kb.create("section").append(function(a){a.template.elm("[field-id=order]").elm("select").elms("option").each(function(e,c){e.html(kb.constants.config.caption.lookup.sort.order[kb.operator.language][c])});a.elm("thead").hide();return a}(b.tables.lookupSort))).append(kb.create("h1").html(kb.constants.config.caption.lookup.mapping[kb.operator.language])).append(kb.create("section").append(b.tables.lookupMapping).append(kb.field.activate(function(a){a.elm("input").closest("label").elm("span").html(kb.constants.config.caption.lookup.limited[kb.operator.language]);
-return a}(kb.field.create(d.fields.lookupLimited).css({width:"100%"})),d)).append(kb.field.activate(function(a){a.elm("input").closest("label").elm("span").html(kb.constants.config.caption.lookup.overwrite[kb.operator.language]);return a}(kb.field.create(d.fields.lookupOverwrite).css({width:"100%"})),d)).append(kb.field.activate(function(a){a.elm("input").closest("label").elm("span").html(kb.constants.config.caption.lookup.reset[kb.operator.language]);return a}(kb.field.create(d.fields.lookupReset).css({width:"100%"})),
-d)).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.lookup.mapping[kb.operator.language])))).append(kb.create("h1").html(kb.constants.config.caption.user[kb.operator.language])).append(kb.create("section").append(kb.create("h1").html(kb.constants.config.caption.user.source[kb.operator.language])).append(kb.create("section").append(function(a){a.elm("select").empty().assignOption(kb.config[l].ui.options.fields(y,function(e,c){switch(c.type){case "USER_SELECT":e.push({code:c.code,
-label:c.label})}return e}),"label","code").on("change",function(e){return e.currentTarget.rebuild()}).rebuild=function(){return new Promise(function(e,c){(function(f,g,k,p,m){f.clearRows();f.template.elm("[field-id=field]").css({width:"100%"}).elm("select").empty().assignOption([{code:"",label:""}],"label","code");g.clearRows();g.template.elm("[field-id=field]").css({width:"100%"}).elm("select").empty().assignOption([{code:"",label:""}],"label","code");k.elm("select").empty().assignOption([{code:"",
-label:""}],"label","code");p.elm("select").empty().assignOption([{code:"",label:""}],"label","code");m.elm("select").empty().assignOption([{code:"",label:""}],"label","code");a.elm("select").val()?e(function(x){var w={custom:function(q){var r={},t;for(t in q){var h=q[t];h.lookup||h.tableCode!=x||["SINGLE_LINE_TEXT","USER_SELECT"].includes(h.type)&&(r[h.code]=h)}return r}(b.fields.internal.parallelize),group:function(q){var r={},t;for(t in q){var h=q[t];h.lookup||h.tableCode!=x||["GROUP_SELECT"].includes(h.type)&&
-(r[h.code]=h)}return r}(b.fields.internal.parallelize),mapping:function(q){var r={},t;for(t in q){var h=q[t];h.lookup||h.tableCode!=x||["MULTI_LINE_TEXT","SINGLE_LINE_TEXT"].includes(h.type)&&(r[h.code]=h)}return r}(b.fields.internal.parallelize),organization:function(q){var r={},t;for(t in q){var h=q[t];h.lookup||h.tableCode!=x||["ORGANIZATION_SELECT"].includes(h.type)&&(r[h.code]=h)}return r}(b.fields.internal.parallelize)};f.template.elm("[field-id=field]").elm("select").assignOption(Object.values(w.mapping),
-"label","code");g.template.elm("[field-id=field]").elm("select").assignOption(Object.values(w.custom),"label","code");k.elm("select").assignOption(Object.values(w.organization),"label","code");p.elm("select").assignOption(Object.values(w.organization),"label","code");m.elm("select").assignOption(Object.values(w.group),"label","code");f.addRow();g.addRow();return w}(b.fields.internal.parallelize[a.elm("select").val()].tableCode)):(f.addRow(),g.addRow(),e({custom:{},group:{},mapping:{},organization:{}}))})(b.tables.userMapping,
-b.tables.userCustomItem,b.panel.elm("[field-id=userPrimaryOrganization]").elm(".kb-field-value"),b.panel.elm("[field-id=userOrganization]").elm(".kb-field-value"),b.panel.elm("[field-id=userGroup]").elm(".kb-field-value"))})};return a}(kb.field.activate(kb.field.create(d.fields.userSource),d)))).append(kb.create("h1").html(kb.constants.config.caption.user.mapping[kb.operator.language])).append(kb.create("section").append(function(a){a.template.elm("[field-id=item]").elm("select").elms("option").each(function(e,
-c){0<c&&e.html(kb.constants.config.caption.user.item[e.val()][kb.operator.language])});a.template.elm("[field-id=guide]").css({width:"100%"}).parentNode.addClass("kb-mapping-guide");return a}(b.tables.userMapping))).append(kb.create("h1").html(kb.constants.config.caption.user.custom[kb.operator.language])).append(kb.create("section").append(function(a){a.template.elm("[field-id=guide]").css({width:"100%"}).parentNode.addClass("kb-mapping-guide");return a}(b.tables.userCustomItem)).append(kb.create("p").addClass("kb-caution").html(kb.constants.config.description.user.custom[kb.operator.language]))).append(kb.create("h1").html(kb.constants.config.caption.user.primaryOrganization[kb.operator.language])).append(kb.create("section").append(kb.field.activate(kb.field.create(d.fields.userPrimaryOrganization),
-d))).append(kb.create("h1").html(kb.constants.config.caption.user.organization[kb.operator.language])).append(kb.create("section").append(kb.field.activate(kb.field.create(d.fields.userOrganization),d))).append(kb.create("h1").html(kb.constants.config.caption.user.group[kb.operator.language])).append(kb.create("section").append(kb.field.activate(kb.field.create(d.fields.userGroup),d))).append(kb.create("h1").html(kb.constants.config.caption.user.overwrite[kb.operator.language])).append(kb.create("section").append(kb.field.activate(function(a){a.elm("input").closest("label").elm("span").html(kb.constants.config.caption.user.overwrite.overwrite[kb.operator.language]);
-return a}(kb.field.create(d.fields.userOverwrite).css({width:"100%"})),d))));b.panel.elm("[field-id=lookupApp]").elm("select").rebuild().then(function(a){b.tables.lookupCriteria.clearRows();b.tables.lookupSort.clearRows();b.tables.lookupMapping.clearRows();b.tables.lookupCriteria.addRow();b.tables.lookupSort.addRow();b.tables.lookupMapping.addRow()});b.panel.elm("[field-id=userSource]").elm("select").rebuild().then(function(a){b.tables.userMapping.clearRows();b.tables.userCustomItem.clearRows();b.tables.userMapping.addRow();
-b.tables.userCustomItem.addRow()});b.tables.triggers.addRow();b.tables.clear.addRow();b.tables.fill.addRow();b.tables.formula.addRow();kb.event.on("kb.change.event",function(a){a.container==b.panel&&(b.panel.elm("[field-id=triggers]").closest("section").addClass("kb-hidden"),b.panel.elm("[field-id=action]").closest("section").addClass("kb-hidden"),b.panel.elm("[field-id=view]").closest("section").addClass("kb-hidden"),b.panel.elm("[field-id=label]").closest("section").addClass("kb-hidden"),b.panel.elm("[field-id=message]").closest("section").addClass("kb-hidden"),
-a.record.event.value.includes("change")&&b.panel.elm("[field-id=triggers]").closest("section").removeClass("kb-hidden"),a.record.event.value.includes("process")&&b.panel.elm("[field-id=action]").closest("section").removeClass("kb-hidden"),a.record.event.value.includes("detail")&&b.panel.elm("[field-id=label]").closest("section").removeClass("kb-hidden"),a.record.event.value.includes("detail")&&b.panel.elm("[field-id=message]").closest("section").removeClass("kb-hidden"),a.record.event.value.includes("index")&&
-b.panel.elm("[field-id=label]").closest("section").removeClass("kb-hidden"),a.record.event.value.includes("index")&&b.panel.elm("[field-id=message]").closest("section").removeClass("kb-hidden"),a.record.event.value.includes("index")&&b.panel.elm("[field-id=view]").closest("section").removeClass("kb-hidden"));return a});b.panel.elms("input,select,textarea").each(function(a,e){return a.initialize()})})({id:u.app.id,fields:u.app.fields.tab})},copy:function(b,d){var a={id:u.app.id,fields:u.app.fields.tab};
-n(d,a,kb.record.get(b.panel,a,!0).record)},del:function(b){}});z.main.append(kb.create("p").addClass("kb-hint").html(kb.constants.config.description.status[kb.operator.language]+"<br>"+function(){var b=null;switch(kb.operator.language){case "en":b=kb.create("a").attr("href","https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values").attr("target","_blank").html("https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values");break;
-case "ja":b=kb.create("a").attr("href","https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values").attr("target","_blank").html("https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values");break;case "zh":b=kb.create("a").attr("href","https://cybozudev.kf5.com/hc/kb/article/206907/#step4").attr("target","_blank").html("https://cybozudev.kf5.com/hc/kb/article/206907/#step4")}return b}().outerHTML));
-0!=Object.keys(v).length?function(b){b.each(function(d){var a={id:u.app.id,fields:u.app.fields.tab},e=kb.config[l].tabbed.add(),c=d.setting;c.lookupApp=c.lookupApp||c.app;c.lookupCriteria=c.lookupCriteria||c.criteria;c.lookupIgnore=c.lookupIgnore||c.ignore;c.lookupFilter=c.lookupFilter||c.filter;c.lookupSort=c.lookupSort||c.sort;c.lookupMapping=c.lookupMapping||c.mapping;c.lookupLimited=c.lookupLimited||c.limited;c.lookupOverwrite=c.lookupOverwrite||c.overwrite;c.lookupReset=c.lookupReset||c.reset;
-c.userSource=c.userSource||{value:""};c.userMapping=c.userMapping||{value:[]};c.userCustomItem=c.userCustomItem||{value:[]};c.userPrimaryOrganization=c.userPrimaryOrganization||{value:""};c.userOrganization=c.userOrganization||{value:""};c.userGroup=c.userGroup||{value:""};c.userOverwrite=c.userOverwrite||{value:[]};d.setting=c;n(e,a,d.setting);e.label.html(d.label)})}(JSON.parse(v.tab)):function(b){b.panel.elm("[field-id=lookupApp]").elm("select").rebuild().then(function(d){b.tables.lookupCriteria.clearRows();
-b.tables.lookupSort.clearRows();b.tables.lookupMapping.clearRows();b.tables.lookupCriteria.addRow();b.tables.lookupSort.addRow();b.tables.lookupMapping.addRow()})}(kb.config[l].tabbed.add())}catch(b){kb.alert(kb.error.parse(b))}})})})})})})(kintone.$PLUGIN_ID);
-kb.constants=kb.extend({config:{caption:{action:{en:"Action Name",ja:"\u30a2\u30af\u30b7\u30e7\u30f3\u540d",zh:"\u64cd\u4f5c\u540d\u79f0"},fill:{en:"Add table rows",ja:"\u30c6\u30fc\u30d6\u30eb\u884c\u8ffd\u52a0",zh:"\u6dfb\u52a0\u8868\u683c\u884c",table:{en:"Table",ja:"\u30c6\u30fc\u30d6\u30eb",zh:"\u8868"},range:{en:"Minimum number of rows or calculation formula",ja:"\u4e0b\u9650\u884c\u6570\u307e\u305f\u306f\u8a08\u7b97\u5f0f",zh:"\u6700\u4f4e\u884c\u6570\u6216\u8ba1\u7b97\u516c\u5f0f"}},clear:{en:"Delete table rows",
-ja:"\u30c6\u30fc\u30d6\u30eb\u884c\u524a\u9664",zh:"\u5220\u9664\u8868\u683c\u884c",table:{en:"Table",ja:"\u30c6\u30fc\u30d6\u30eb",zh:"\u8868"}},event:{en:"Action Available Event",ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8",zh:"\u53ef\u64cd\u4f5c\u4e8b\u4ef6",change:{en:"After Field Value Change",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9\u5024\u5909\u66f4",zh:"\u5b57\u6bb5\u53d8\u66f4\u540e"},create:{en:"After Record Creation Shown",ja:"\u30ec\u30b3\u30fc\u30c9\u8ffd\u52a0\u753b\u9762\u8868\u793a\u5f8c",
-zh:"\u8bb0\u5f55\u521b\u5efa\u663e\u793a\u540e"},detail:{en:"Clicking the button on the record detail page",ja:"\u30ec\u30b3\u30fc\u30c9\u8a73\u7d30\u753b\u9762\u3067\u306e\u30dc\u30bf\u30f3\u30af\u30ea\u30c3\u30af",zh:"\u5728\u8bb0\u5f55\u8be6\u7ec6\u9875\u9762\u4e0a\u70b9\u51fb\u6309\u94ae"},edit:{en:"After Record Edit Shown",ja:"\u30ec\u30b3\u30fc\u30c9\u7de8\u96c6\u753b\u9762\u8868\u793a\u5f8c",zh:"\u8bb0\u5f55\u7f16\u8f91\u663e\u793a\u540e"},index:{en:"Bulk Execution from List View",ja:"\u4e00\u89a7\u753b\u9762\u304b\u3089\u306e\u4e00\u62ec\u5b9f\u884c",
-zh:"\u4ece\u5217\u8868\u5c4f\u5e55\u7684\u6279\u91cf\u6267\u884c"},process:{en:"Process Action",ja:"\u30d7\u30ed\u30bb\u30b9\u30a2\u30af\u30b7\u30e7\u30f3",zh:"\u8fc7\u7a0b\u64cd\u4f5c"},reuse:{en:"After Record Reuse Shown",ja:"\u30ec\u30b3\u30fc\u30c9\u518d\u5229\u7528\u753b\u9762\u8868\u793a\u5f8c",zh:"\u8bb0\u5f55\u518d\u5229\u7528\u663e\u793a\u540e"}},formula:{en:"Inserting fixed values or calculation results",ja:"\u56fa\u5b9a\u5024\u3084\u8a08\u7b97\u7d50\u679c\u3092\u633f\u5165",zh:"\u63d2\u5165\u56fa\u5b9a\u503c\u6216\u8ba1\u7b97\u7ed3\u679c",
-field:{en:"Field",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u5b57\u6bb5"},formula:{en:"Fixed value or function",ja:"\u56fa\u5b9a\u5024\u307e\u305f\u306f\u95a2\u6570",zh:"\u56fa\u5b9a\u503c\u6216\u51fd\u6570"}},label:{en:"Execution Button Label",ja:"\u5b9f\u884c\u30dc\u30bf\u30f3\u306e\u30e9\u30d9\u30eb\u30c6\u30ad\u30b9\u30c8",zh:"\u6267\u884c\u6309\u94ae\u7684\u6807\u7b7e\u540d\u79f0"},lookup:{en:"Lookup",ja:"\u30eb\u30c3\u30af\u30a2\u30c3\u30d7",zh:"Lookup",app:{en:"Datasource App",ja:"\u53c2\u7167\u5143\u30a2\u30d7\u30ea",
-zh:"\u53c2\u8003\u6e90\u5e94\u7528"},criteria:{en:"Reference association",ja:"\u53c2\u7167\u3059\u308b\u30ec\u30b3\u30fc\u30c9\u306e\u95a2\u9023\u4ed8\u3051",zh:"\u53c2\u8003\u5173\u8054\u8bb0\u5f55"},external:{en:"Datasource App",ja:"\u53c2\u7167\u5143\u30a2\u30d7\u30ea\u306e\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u53c2\u8003\u6e90\u5e94\u7528\u7684\u5b57\u6bb5"},filter:{en:"Narrow it down further",ja:"\u3055\u3089\u306b\u7d5e\u308a\u8fbc\u3080",zh:"\u8fdb\u4e00\u6b65\u7f29\u5c0f"},ignore:{en:"If the linkage field of this app is empty, ignore the linkage",
-ja:"\u3053\u306e\u30a2\u30d7\u30ea\u306e\u95a2\u9023\u4ed8\u3051\u30d5\u30a3\u30fc\u30eb\u30c9\u304c\u7a7a\u3067\u3042\u308b\u5834\u5408\u306f\u3001\u305d\u306e\u95a2\u9023\u4ed8\u3051\u3092\u7121\u8996\u3059\u308b",zh:"\u5982\u679c\u6b64\u5e94\u7528\u7684\u5173\u8054\u5b57\u6bb5\u4e3a\u7a7a\uff0c\u5219\u5ffd\u7565\u8be5\u5173\u8054"},internal:{en:"This App",ja:"\u3053\u306e\u30a2\u30d7\u30ea\u306e\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u6b64\u5e94\u7528\u7684\u5b57\u6bb5"},limited:{en:"Limit the records to be retrieved to the first one in the sort order",
-ja:"\u53d6\u5f97\u3059\u308b\u30ec\u30b3\u30fc\u30c9\u3092\u4e26\u3073\u9806\u306e\u5148\u982d\u30ec\u30b3\u30fc\u30c9\u306e\u307f\u306b\u3059\u308b",zh:"\u5c06\u83b7\u53d6\u7684\u8bb0\u5f55\u9650\u5236\u4e3a\u6392\u5728\u6700\u524d\u9762\u7684\u4e00\u4e2a"},mapping:{en:"Copy Field Mappings",ja:"\u30b3\u30d4\u30fc\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u590d\u5236\u5b57\u6bb5\u6620\u5c04"},overwrite:{en:"Always overwrite with the retrieved value",ja:"\u53d6\u5f97\u3057\u305f\u5024\u3067\u5e38\u306b\u4e0a\u66f8\u304d\u3092\u3059\u308b",
-zh:"\u59cb\u7ec8\u7528\u68c0\u7d22\u5230\u7684\u503c\u8986\u76d6"},reset:{en:"If the record cannot be retrieved, clear the field",ja:"\u30ec\u30b3\u30fc\u30c9\u304c\u53d6\u5f97\u51fa\u6765\u306a\u304b\u3063\u305f\u5834\u5408\u306f\u3001\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u7a7a\u306b\u3059\u308b",zh:"\u5982\u679c\u65e0\u6cd5\u83b7\u53d6\u8bb0\u5f55\uff0c\u8bf7\u6e05\u7a7a\u5b57\u6bb5"},sort:{en:"Order of records displayed on the selection screen",ja:"\u9078\u629e\u753b\u9762\u306b\u8868\u793a\u3059\u308b\u30ec\u30b3\u30fc\u30c9\u306e\u4e26\u3073\u9806",
-zh:"\u9009\u62e9\u5c4f\u5e55\u4e0a\u663e\u793a\u7684\u8bb0\u5f55\u987a\u5e8f",order:{ja:["\u6607\u9806","\u964d\u9806"],en:["ASC","DESC"],zh:["\u5347\u5e8f","\u964d\u5e8f"]}}},message:{en:"Execution Confirmation Dialog Message",ja:"\u5b9f\u884c\u78ba\u8a8d\u30c0\u30a4\u30a2\u30ed\u30b0\u306e\u30e1\u30c3\u30bb\u30fc\u30b8",zh:"\u6267\u884c\u786e\u8ba4\u5bf9\u8bdd\u6846\u7684\u6d88\u606f"},triggers:{en:"Narrowing Down Trigger Fields",ja:"\u30c8\u30ea\u30ac\u30fc\u3068\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9\u306e\u7d5e\u308a\u8fbc\u307f",
-zh:"\u7f29\u5c0f\u89e6\u53d1\u5b57\u6bb5\u7684\u8303\u56f4",all:{en:"Trigger on changes to all field values",ja:"\u5168\u3066\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u5024\u306e\u5909\u66f4\u3092\u30c8\u30ea\u30ac\u30fc\u3068\u3059\u308b",zh:"\u89e6\u53d1\u6240\u6709\u5b57\u6bb5\u503c\u7684\u66f4\u6539"}},user:{en:"Copy User Informations",ja:"\u30e6\u30fc\u30b6\u30fc\u60c5\u5831\u306e\u30b3\u30d4\u30fc",zh:"\u590d\u5236\u7528\u6237\u4fe1\u606f",custom:{en:"Copy Customized Items",ja:"\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u9805\u76ee\u3092\u30b3\u30d4\u30fc",
-zh:"\u590d\u5236\u81ea\u5b9a\u4e49\u9879\u76ee"},field:{en:"Field",ja:"\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u5b57\u6bb5"},group:{en:"Copy the Affiliated Group",ja:"\u6240\u5c5e\u30b0\u30eb\u30fc\u30d7\u3092\u30b3\u30d4\u30fc",zh:"\u590d\u5236\u6240\u5c5e\u56e2\u961f"},item:{en:"Item",ja:"\u9805\u76ee",zh:"\u9879\u76ee",birthDate:{en:"Birthday",ja:"\u8a95\u751f\u65e5",zh:"\u751f\u65e5"},callto:{en:"Skype Name",ja:"Skype\u540d",zh:"Skype\u7528\u6237\u540d"},code:{en:"Login Name",ja:"\u30ed\u30b0\u30a4\u30f3\u540d",
-zh:"\u767b\u5f55\u540d\u79f0"},description:{en:"About Me",ja:"\u30b3\u30e1\u30f3\u30c8",zh:"\u7b80\u4ecb"},email:{en:"E-mail Address",ja:"\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9",zh:"\u90ae\u4ef6\u5730\u5740"},employeeNumber:{en:"Employee ID",ja:"\u5f93\u696d\u54e1ID",zh:"\u5458\u5de5\u7f16\u53f7"},extensionNumber:{en:"Extension",ja:"\u5185\u7dda",zh:"\u5206\u673a\u53f7"},joinDate:{en:"Hire Date",ja:"\u5165\u793e\u65e5",zh:"\u5165\u804c\u65e5\u671f"},mobilePhone:{en:"Mobile Phone",ja:"\u643a\u5e2f\u96fb\u8a71",
-zh:"\u624b\u673a"},name:{en:"Display Name",ja:"\u8868\u793a\u540d",zh:"\u663e\u793a\u540d\u79f0"},phone:{en:"Phone",ja:"\u96fb\u8a71\u756a\u53f7",zh:"\u7535\u8bdd\u53f7\u7801"},url:{en:"URL",ja:"URL",zh:"URL"}},mapping:{en:"Copy Profile Items",ja:"\u30d7\u30ed\u30d5\u30a3\u30fc\u30eb\u9805\u76ee\u3092\u30b3\u30d4\u30fc",zh:"\u590d\u5236\u914d\u7f6e\u6587\u4ef6\u9879\u76ee"},organization:{en:"Copy the Affiliated Department",ja:"\u6240\u5c5e\u7d44\u7e54\u3092\u30b3\u30d4\u30fc",zh:"\u590d\u5236\u6240\u5c5e\u7ec4\u7ec7"},
-overwrite:{en:'"Overwrite Option',ja:"\u4e0a\u66f8\u304d\u5224\u5b9a",zh:"\u8986\u76d6\u9009\u9879",overwrite:{en:"Always overwrite with the retrieved value",ja:"\u53d6\u5f97\u3057\u305f\u5024\u3067\u5e38\u306b\u4e0a\u66f8\u304d\u3092\u3059\u308b",zh:"\u59cb\u7ec8\u7528\u68c0\u7d22\u5230\u7684\u503c\u8986\u76d6"}},primaryOrganization:{en:"Copy the Primary Department",ja:"\u512a\u5148\u3059\u308b\u7d44\u7e54\u3092\u30b3\u30d4\u30fc",zh:"\u590d\u5236\u4f18\u5148\u7684\u7ec4\u7ec7"},source:{en:"Source Field",
-ja:"\u30b3\u30d4\u30fc\u5143\u30d5\u30a3\u30fc\u30eb\u30c9",zh:"\u6e90\u5b57\u6bb5"}},view:{en:"Executable List View",ja:"\u5b9f\u884c\u53ef\u80fd\u306a\u4e00\u89a7\u753b\u9762",zh:"\u53ef\u6267\u884c\u7684\u5217\u8868\u5c4f\u5e55",all:{en:"No restrictions",ja:"\u5236\u9650\u3057\u306a\u3044",zh:"\u4e0d\u9650\u5236"}}},description:{clear:{en:'If a field within the table trying to delete rows is specified in the "Conditions for operation", only the table rows that meet those conditions will be subject to deletion.',
-ja:"\u884c\u306e\u524a\u9664\u3092\u3057\u3088\u3046\u3068\u3057\u3066\u3044\u308b\u30c6\u30fc\u30d6\u30eb\u5185\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u52d5\u4f5c\u6761\u4ef6\u306b\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u305d\u306e\u6761\u4ef6\u306b\u8a72\u5f53\u3059\u308b\u30c6\u30fc\u30d6\u30eb\u884c\u306e\u307f\u304c\u524a\u9664\u306e\u5bfe\u8c61\u3068\u306a\u308a\u307e\u3059\u3002",zh:'\u5982\u679c\u5728\u5c1d\u8bd5\u5220\u9664\u884c\u7684\u8868\u4e2d\u6307\u5b9a\u4e86"\u64cd\u4f5c\u7684\u6761\u4ef6"\u7684\u5b57\u6bb5\uff0c\u90a3\u4e48\u53ea\u6709\u6ee1\u8db3\u8fd9\u4e9b\u6761\u4ef6\u7684\u8868\u884c\u5c06\u6210\u4e3a\u5220\u9664\u7684\u5bf9\u8c61\u3002'},
-fill:{hint:{en:'In the "Minimum number of rows or calculation formula" field, you can set not only a fixed value but also a function to obtain the number of days in the month to which the date in the date field belongs.',ja:"\u300c\u4e0b\u9650\u884c\u6570\u307e\u305f\u306f\u8a08\u7b97\u5f0f\u300d\u306b\u306f\u3001\u56fa\u5b9a\u5024\u306f\u3082\u3061\u308d\u3093\u3001\u65e5\u4ed8\u30d5\u30a3\u30fc\u30eb\u30c9\u306e\u65e5\u4ed8\u304c\u5c5e\u3059\u308b\u6708\u306e\u65e5\u6570\u3092\u53d6\u5f97\u3059\u308b\u95a2\u6570\u3092\u30bb\u30c3\u30c8\u3059\u308b\u3053\u3068\u3082\u53ef\u80fd\u3067\u3059\u3002",
-zh:'\u5728"\u6700\u5c0f\u884c\u6570\u6216\u8ba1\u7b97\u516c\u5f0f"\u5b57\u6bb5\u4e2d\uff0c\u60a8\u4e0d\u4ec5\u53ef\u4ee5\u8bbe\u7f6e\u56fa\u5b9a\u503c\uff0c\u8fd8\u53ef\u4ee5\u8bbe\u7f6e\u4e00\u4e2a\u51fd\u6570\uff0c\u7528\u4ee5\u83b7\u53d6\u65e5\u671f\u5b57\u6bb5\u4e2d\u7684\u65e5\u671f\u6240\u5c5e\u6708\u4efd\u7684\u5929\u6570\u3002'},link:{en:"Please check the URL below for how to specify the number of days as the count of rows and for inserting fixed values or functions into the fields of the added rows.",
-ja:"\u4e0a\u8a18\u306e\u65e5\u6570\u3092\u884c\u6570\u306b\u6307\u5b9a\u3059\u308b\u65b9\u6cd5\u3068\u8ffd\u52a0\u3057\u305f\u884c\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3078\u306e\u56fa\u5b9a\u5024\u307e\u305f\u306f\u95a2\u6570\u306e\u633f\u5165\u306f\u4ee5\u4e0b\u306eURL\u3092\u3054\u78ba\u8a8d\u4e0b\u3055\u3044\u3002",zh:"\u5173\u4e8e\u5982\u4f55\u5c06\u4e0a\u8ff0\u5929\u6570\u6307\u5b9a\u4e3a\u884c\u6570\uff0c\u4ee5\u53ca\u5728\u6dfb\u52a0\u7684\u884c\u7684\u5b57\u6bb5\u4e2d\u63d2\u5165\u56fa\u5b9a\u503c\u6216\u51fd\u6570\u7684\u65b9\u6cd5\uff0c\u8bf7\u67e5\u770b\u4e0b\u9762\u7684URL\u3002"}},
-formula:{fixed:{en:"When entering a fixed value, please enclose it in double quotes.",ja:"\u56fa\u5b9a\u5024\u3092\u5165\u529b\u3059\u308b\u5834\u5408\u306f\u3001\u30c0\u30d6\u30eb\u30af\u30a9\u30fc\u30c6\u30fc\u30b7\u30e7\u30f3\u3067\u56f2\u3046\u3088\u3046\u306b\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u5f53\u8f93\u5165\u56fa\u5b9a\u503c\u65f6\uff0c\u8bf7\u7528\u53cc\u5f15\u53f7\u62ec\u8d77\u6765\u3002"},link:{en:"You can refer to the available functions from the URL below.",ja:"\u5229\u7528\u53ef\u80fd\u306a\u95a2\u6570\u306f\u4ee5\u4e0b\u306eURL\u304b\u3089\u53c2\u7167\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u60a8\u53ef\u4ee5\u4ece\u4e0b\u9762\u7684URL\u53c2\u8003\u53ef\u7528\u7684\u529f\u80fd\u3002"},process:{en:"When executing multiple functions on fields within a table, the process starts with the functions in the upper row, processing all table rows, and then proceeds to the functions in the lower rows.",ja:"\u8907\u6570\u306e\u95a2\u6570\u3092\u30c6\u30fc\u30d6\u30eb\u5185\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u5bfe\u3057\u3066\u5b9f\u884c\u3059\u308b\u5834\u5408\u306f\u3001\u4e0a\u6bb5\u306e\u95a2\u6570\u304b\u3089\u9806\u306b\u3001\u5168\u3066\u306e\u30c6\u30fc\u30d6\u30eb\u884c\u306b\u5bfe\u3057\u3066\u51e6\u7406\u3092\u884c\u3063\u305f\u4e0a\u3067\u3001\u4e0b\u6bb5\u306e\u95a2\u6570\u3078\u3068\u9032\u3093\u3067\u3044\u304d\u307e\u3059\u3002",
-zh:"\u5f53\u5728\u8868\u5185\u5b57\u6bb5\u4e0a\u6267\u884c\u591a\u4e2a\u51fd\u6570\u65f6\uff0c\u5904\u7406\u4f1a\u4ece\u4e0a\u884c\u7684\u51fd\u6570\u5f00\u59cb\uff0c\u5904\u7406\u6240\u6709\u8868\u884c\uff0c\u7136\u540e\u7ee7\u7eed\u5230\u4e0b\u884c\u7684\u51fd\u6570\u3002"}},lookup:{mapping:{en:"When copying to a table, please note that all destination fields must be within the same table.",ja:"\u30c6\u30fc\u30d6\u30eb\u306b\u30b3\u30d4\u30fc\u3059\u308b\u5834\u5408\u306f\u3001\u30b3\u30d4\u30fc\u5148\u30d5\u30a3\u30fc\u30eb\u30c9\u304c\u5168\u3066\u540c\u4e00\u30c6\u30fc\u30d6\u30eb\u5185\u306b\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u306e\u3067\u3001\u3054\u6ce8\u610f\u304f\u3060\u3055\u3044\u3002",
-zh:"\u5f53\u60a8\u8981\u590d\u5236\u5230\u8868\u683c\u65f6\uff0c\u8bf7\u6ce8\u610f\u6240\u6709\u76ee\u6807\u5b57\u6bb5\u90fd\u5fc5\u987b\u5728\u540c\u4e00\u8868\u683c\u5185\u3002"}},status:{en:"There are fields that cannot be modified during process action execution, so please check the URL below.",ja:"\u30d7\u30ed\u30bb\u30b9\u30a2\u30af\u30b7\u30e7\u30f3\u5b9f\u884c\u6642\u306b\u306f\u66f8\u304d\u63db\u3048\u308b\u3053\u3068\u304c\u51fa\u6765\u306a\u3044\u30d5\u30a3\u30fc\u30eb\u30c9\u304c\u3042\u308a\u307e\u3059\u306e\u3067\u3001\u4e0b\u8a18URL\u3092\u3054\u78ba\u8a8d\u304f\u3060\u3055\u3044\u3002",
-zh:"\u5728\u6267\u884c\u8fc7\u7a0b\u64cd\u4f5c\u65f6\uff0c\u6709\u4e00\u4e9b\u5b57\u6bb5\u662f\u65e0\u6cd5\u4fee\u6539\u7684\uff0c\u8bf7\u67e5\u770b\u4ee5\u4e0bURL\u3002"},triggers:{en:"When using a table as a trigger, the addition or deletion of rows is targeted.",ja:"\u30c6\u30fc\u30d6\u30eb\u3092\u30c8\u30ea\u30ac\u30fc\u3068\u3059\u308b\u5834\u5408\u306f\u3001\u884c\u306e\u8ffd\u52a0\u3084\u524a\u9664\u304c\u5bfe\u8c61\u3068\u306a\u308a\u307e\u3059\u3002",zh:"\u5f53\u4f7f\u7528\u8868\u683c\u4f5c\u4e3a\u89e6\u53d1\u5668\u65f6\uff0c\u9488\u5bf9\u7684\u662f\u884c\u7684\u6dfb\u52a0\u6216\u5220\u9664\u3002"},
-user:{custom:{en:'Please enter "Field Code" in the item column.',ja:"\u9805\u76ee\u6b04\u306b\u306f\u300c\u9805\u76ee\u30b3\u30fc\u30c9\u300d\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8bf7\u5728\u9879\u76ee\u680f\u4e2d\u8f93\u5165\u201c\u9879\u76ee\u4ee3\u7801\u201d\u3002"}}},message:{invalid:{action:{en:'If you specify "Process Action" for the action event, please indicate its action name.',ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8\u306b\u300c\u30d7\u30ed\u30bb\u30b9\u30a2\u30af\u30b7\u30e7\u30f3\u300d\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u305d\u306e\u30a2\u30af\u30b7\u30e7\u30f3\u540d\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5982\u679c\u5728\u64cd\u4f5c\u4e8b\u4ef6\u4e2d\u6307\u5b9a\u4e86\u201c\u8fc7\u7a0b\u64cd\u4f5c\u201d\uff0c\u8bf7\u6307\u5b9a\u5176\u64cd\u4f5c\u540d\u79f0\u3002"},fill:{en:'Please enter the "Minimum number of rows or calculation formula".',ja:"\u300c\u4e0b\u9650\u884c\u6570\u307e\u305f\u306f\u8a08\u7b97\u5f0f\u300d\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8bf7\u8f93\u5165\u201c\u6700\u4f4e\u884c\u6570\u6216\u8ba1\u7b97\u516c\u5f0f\u201d\u3002"},formula:{en:"Contains characters that cannot be used in the formula.",
-ja:"\u8a08\u7b97\u5f0f\u306b\u4f7f\u7528\u51fa\u6765\u306a\u3044\u6587\u5b57\u304c\u542b\u307e\u308c\u3066\u3044\u307e\u3059\u3002",zh:"\u8868\u8fbe\u5f0f\u4e2d\u5305\u542b\u65e0\u6548\u5b57\u7b26\u3002"},label:{detail:{en:'If you specify "Clicking the button on the record detail page" for the action event, please input its execution button label.',ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8\u306b\u300c\u30ec\u30b3\u30fc\u30c9\u8a73\u7d30\u753b\u9762\u3067\u306e\u30dc\u30bf\u30f3\u30af\u30ea\u30c3\u30af\u300d\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u305d\u306e\u5b9f\u884c\u30dc\u30bf\u30f3\u306e\u30e9\u30d9\u30eb\u30c6\u30ad\u30b9\u30c8\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5982\u679c\u5728\u64cd\u4f5c\u4e8b\u4ef6\u4e2d\u6307\u5b9a\u4e86\u201c\u5728\u8bb0\u5f55\u8be6\u7ec6\u9875\u9762\u4e0a\u70b9\u51fb\u6309\u94ae\u201d\uff0c\u8bf7\u8f93\u5165\u5176\u6267\u884c\u6309\u94ae\u7684\u6807\u7b7e\u540d\u79f0\u3002"},index:{en:'If you specify "Bulk Execution from List View" for the action event, please input its execution button label.',ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8\u306b\u300c\u4e00\u89a7\u753b\u9762\u304b\u3089\u306e\u4e00\u62ec\u5b9f\u884c\u300d\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u305d\u306e\u5b9f\u884c\u30dc\u30bf\u30f3\u306e\u30e9\u30d9\u30eb\u30c6\u30ad\u30b9\u30c8\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5982\u679c\u5728\u64cd\u4f5c\u4e8b\u4ef6\u4e2d\u6307\u5b9a\u4e86\u201c\u4ece\u5217\u8868\u5c4f\u5e55\u7684\u6279\u91cf\u6267\u884c\u201d\uff0c\u8bf7\u8f93\u5165\u5176\u6267\u884c\u6309\u94ae\u7684\u6807\u7b7e\u540d\u79f0\u3002"}},lookup:{criteria:{en:"Please specify the Reference association.",ja:"\u53c2\u7167\u3059\u308b\u30ec\u30b3\u30fc\u30c9\u306e\u95a2\u9023\u4ed8\u3051\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8bf7\u6307\u5b9a\u53c2\u8003\u5173\u8054\u8bb0\u5f55\u3002"},
-incompatible:{en:"You cannot specify a field in a different table or a field that does not belong to any table for the Copy Field Mappings.",ja:"\u30b3\u30d4\u30fc\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u7570\u306a\u308b\u30c6\u30fc\u30d6\u30eb\u5185\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3001\u3082\u3057\u304f\u306f\u30c6\u30fc\u30d6\u30eb\u306b\u5c5e\u3055\u306a\u3044\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u6307\u5b9a\u3059\u308b\u3053\u3068\u306f\u51fa\u6765\u307e\u305b\u3093\u3002",zh:"\u5728\u590d\u5236\u5b57\u6bb5\u6620\u5c04\u4e2d\uff0c\u60a8\u4e0d\u80fd\u6307\u5b9a\u6765\u81ea\u4e0d\u540c\u8868\u7684\u5b57\u6bb5\u6216\u4e0d\u5c5e\u4e8e\u8868\u7684\u5b57\u6bb5\u3002"},
-mapping:{en:"Please specify the Copy Field Mappings.",ja:"\u30b3\u30d4\u30fc\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8bf7\u6307\u5b9a\u590d\u5236\u5b57\u6bb5\u6620\u5c04\u3002"},multiple:{en:"You cannot specify a field in a different table for the Reference association.",ja:"\u53c2\u7167\u3059\u308b\u30ec\u30b3\u30fc\u30c9\u306e\u95a2\u9023\u4ed8\u3051\u306b\u7570\u306a\u308b\u30c6\u30fc\u30d6\u30eb\u5185\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u6307\u5b9a\u3059\u308b\u3053\u3068\u306f\u51fa\u6765\u307e\u305b\u3093\u3002",
-zh:"\u60a8\u4e0d\u80fd\u4e3a\u53c2\u8003\u5173\u8054\u8bb0\u5f55\u6307\u5b9a\u4e0d\u540c\u8868\u4e2d\u7684\u5b57\u6bb5\u3002"},table:{en:"If no field within the table is specified in the Copy Field Mappings, it is not possible to specify a field within the table for the Reference association.",ja:"\u30b3\u30d4\u30fc\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u30c6\u30fc\u30d6\u30eb\u5185\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u306e\u6307\u5b9a\u304c\u306a\u3044\u5834\u5408\u306f\u3001\u53c2\u7167\u3059\u308b\u30ec\u30b3\u30fc\u30c9\u306e\u95a2\u9023\u4ed8\u3051\u306b\u30c6\u30fc\u30d6\u30eb\u5185\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u6307\u5b9a\u3059\u308b\u3053\u3068\u306f\u51fa\u6765\u307e\u305b\u3093\u3002",
-zh:"\u5982\u679c\u5728\u590d\u5236\u5b57\u6bb5\u6620\u5c04\u4e2d\u6ca1\u6709\u6307\u5b9a\u8868\u5185\u7684\u5b57\u6bb5\uff0c\u90a3\u4e48\u65e0\u6cd5\u5728\u53c2\u8003\u5173\u8054\u8bb0\u5f55\u4e2d\u6307\u5b9a\u8868\u5185\u7684\u5b57\u6bb5\u3002"},unmatch:{en:"If a field within the table is specified in the Copy Field Mappings, it is not possible to specify a field from a different table for the Reference association.",ja:"\u30b3\u30d4\u30fc\u3059\u308b\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u30c6\u30fc\u30d6\u30eb\u5185\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u53c2\u7167\u3059\u308b\u30ec\u30b3\u30fc\u30c9\u306e\u95a2\u9023\u4ed8\u3051\u306b\u7570\u306a\u308b\u30c6\u30fc\u30d6\u30eb\u5185\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u6307\u5b9a\u3059\u308b\u3053\u3068\u306f\u51fa\u6765\u307e\u305b\u3093\u3002",
-zh:"\u5982\u679c\u5728\u590d\u5236\u5b57\u6bb5\u6620\u5c04\u4e2d\u6307\u5b9a\u4e86\u8868\u5185\u7684\u5b57\u6bb5\uff0c\u90a3\u4e48\u65e0\u6cd5\u5728\u53c2\u8003\u5173\u8054\u8bb0\u5f55\u4e2d\u6307\u5b9a\u53e6\u4e00\u4e2a\u8868\u5185\u7684\u5b57\u6bb5\u3002"}},message:{detail:{en:'If you specify "Clicking the button on the record detail page" for the action event, please input its execution confirmation dialog message.',ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8\u306b\u300c\u30ec\u30b3\u30fc\u30c9\u8a73\u7d30\u753b\u9762\u3067\u306e\u30dc\u30bf\u30f3\u30af\u30ea\u30c3\u30af\u300d\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u305d\u306e\u5b9f\u884c\u78ba\u8a8d\u30c0\u30a4\u30a2\u30ed\u30b0\u306e\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5982\u679c\u5728\u64cd\u4f5c\u4e8b\u4ef6\u4e2d\u6307\u5b9a\u4e86\u201c\u5728\u8bb0\u5f55\u8be6\u7ec6\u9875\u9762\u4e0a\u70b9\u51fb\u6309\u94ae\u201d\uff0c\u8bf7\u8f93\u5165\u5176\u6267\u884c\u786e\u8ba4\u5bf9\u8bdd\u6846\u7684\u6d88\u606f\u3002"},index:{en:'If you specify "Bulk Execution from List View" for the action event, please input its execution confirmation dialog message.',ja:"\u52d5\u4f5c\u30a4\u30d9\u30f3\u30c8\u306b\u300c\u4e00\u89a7\u753b\u9762\u304b\u3089\u306e\u4e00\u62ec\u5b9f\u884c\u300d\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u306f\u3001\u305d\u306e\u5b9f\u884c\u78ba\u8a8d\u30c0\u30a4\u30a2\u30ed\u30b0\u306e\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u5165\u529b\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u5982\u679c\u5728\u64cd\u4f5c\u4e8b\u4ef6\u4e2d\u6307\u5b9a\u4e86\u201c\u4ece\u5217\u8868\u5c4f\u5e55\u7684\u6279\u91cf\u6267\u884c\u201d\uff0c\u8bf7\u8f93\u5165\u5176\u6267\u884c\u786e\u8ba4\u5bf9\u8bdd\u6846\u7684\u6d88\u606f\u3002"}}}}}},kb.constants);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	kb.field.load(kintone.app.getId()).then((fieldInfos) => {
+		kb.status.load(kintone.app.getId()).then((statusInfos) => {
+			kb.view.load(kintone.app.getId()).then((viewInfos) => {
+				kb.apps.load().then((appInfos) => {
+					kb.config[PLUGIN_ID].build(
+						{
+							submit:(container,config) => {
+								try
+								{
+									var error=false;
+									config.tab=[];
+									config.flat={};
+									((app) => {
+										kb.config[PLUGIN_ID].tabbed.tabs.some((item) => {
+											var res=kb.record.get(item.panel,app);
+											if (!res.error)
+											{
+												if (!error)
+												{
+													if (res.record.event.value.includes('change'))
+														if (res.record.triggers.value.some((item) => !item.value.field.value))
+															res.record.triggers.value=res.record.triggers.value.filter((item) => !item.value.field.value);
+												}
+												if (!error)
+												{
+													if (res.record.event.value.includes('process'))
+													{
+														if (!res.record.action.value)
+														{
+															kb.alert(kb.constants.config.message.invalid.action[kb.operator.language]);
+															kb.config[PLUGIN_ID].tabbed.activate(item);
+															error=true;
+														}
+													}
+													else res.record.action.value='';
+												}
+												if (!error)
+												{
+													if (res.record.event.value.includes('detail'))
+													{
+														if (!res.record.label.value)
+														{
+															kb.alert(kb.constants.config.message.invalid.label.detail[kb.operator.language]);
+															kb.config[PLUGIN_ID].tabbed.activate(item);
+															error=true;
+														}
+														if (!res.record.message.value)
+														{
+															kb.alert(kb.constants.config.message.invalid.message.detail[kb.operator.language]);
+															kb.config[PLUGIN_ID].tabbed.activate(item);
+															error=true;
+														}
+													}
+													else
+													{
+														if (res.record.event.value.includes('index'))
+														{
+															if (!res.record.label.value)
+															{
+																kb.alert(kb.constants.config.message.invalid.label.index[kb.operator.language]);
+																kb.config[PLUGIN_ID].tabbed.activate(item);
+																error=true;
+															}
+															if (!res.record.message.value)
+															{
+																kb.alert(kb.constants.config.message.invalid.message.index[kb.operator.language]);
+																kb.config[PLUGIN_ID].tabbed.activate(item);
+																error=true;
+															}
+														}
+														else
+														{
+															res.record.label.value='';
+															res.record.message.value='';
+															res.record.view.value='';
+														}
+													}
+												}
+												if (!error)
+												{
+													if (res.record.fill.value.filter((item) => item.value.table.value).some((item) => !item.value.range.value))
+													{
+														kb.alert(kb.constants.config.message.invalid.fill[kb.operator.language]);
+														kb.config[PLUGIN_ID].tabbed.activate(item);
+														error=true;
+													}
+													else
+													{
+														if (res.record.formula.value.some((item) => {
+															return item.value.formula.value.match(/(class |fetch\(|function\(|XMLHttpRequest\(|=>|var |let |const )/g);
+														}))
+														{
+															kb.alert(kb.constants.config.message.invalid.formula[kb.operator.language]);
+															kb.config[PLUGIN_ID].tabbed.activate(item);
+															error=true;
+														}
+														else
+														{
+															res.record.clear.value=res.record.clear.value.filter((item) => item.value.table.value);
+															res.record.fill.value=res.record.fill.value.filter((item) => item.value.table.value);
+															res.record.formula.value=res.record.formula.value.filter((item) => item.value.field.value);
+														}
+													}
+												}
+												if (!error)
+												{
+													if (res.record.lookupApp.value)
+													{
+														((fields) => {
+															var criteria={
+																config:[],
+																table:[]
+															};
+															var sort={
+																config:res.record.lookupSort.value.filter((item) => item.value.field.value)
+															};
+															var mapping={
+																config:[],
+																table:[]
+															};
+															res.record.lookupCriteria.value.each((values,index) => {
+																if (values.value.external.value && values.value.internal.value)
+																{
+																	criteria.config.push(values);
+																	criteria.table.push(fields.internal[values.value.internal.value].tableCode);
+																}
+															});
+															if (criteria.config.length==0)
+															{
+																kb.alert(kb.constants.config.message.invalid.lookup.criteria[kb.operator.language]);
+																kb.config[PLUGIN_ID].tabbed.activate(item);
+																error=true;
+															}
+															else
+															{
+																criteria.table=Array.from(new Set(criteria.table)).filter((item) => item);
+																if (criteria.table.length>1)
+																{
+																	kb.alert(kb.constants.config.message.invalid.lookup.multiple[kb.operator.language]);
+																	kb.config[PLUGIN_ID].tabbed.activate(item);
+																	error=true;
+																}
+																else
+																{
+																	res.record.lookupMapping.value.each((values,index) => {
+																		if (values.value.external.value && values.value.internal.value)
+																		{
+																			mapping.config.push(values);
+																			mapping.table.push(fields.internal[values.value.internal.value].tableCode);
+																		}
+																	});
+																	if (mapping.config.length==0)
+																	{
+																		kb.alert(kb.constants.config.message.invalid.lookup.mapping[kb.operator.language]);
+																		kb.config[PLUGIN_ID].tabbed.activate(item);
+																		error=true;
+																	}
+																	else
+																	{
+																		mapping.table=Array.from(new Set(mapping.table));
+																		if (mapping.table.length>1)
+																		{
+																			kb.alert(kb.constants.config.message.invalid.lookup.incompatible[kb.operator.language]);
+																			kb.config[PLUGIN_ID].tabbed.activate(item);
+																			error=true;
+																		}
+																		else
+																		{
+																			if (mapping.table.first())
+																			{
+																				if (criteria.table.length>0)
+																				{
+																					if (mapping.table.first()!=criteria.table.first())
+																					{
+																						kb.alert(kb.constants.config.message.invalid.lookup.unmatch[kb.operator.language]);
+																						kb.config[PLUGIN_ID].tabbed.activate(item);
+																						error=true;
+																					}
+																				}
+																			}
+																			else
+																			{
+																				if (criteria.table.length!=0)
+																				{
+																					kb.alert(kb.constants.config.message.invalid.lookup.table[kb.operator.language]);
+																					kb.config[PLUGIN_ID].tabbed.activate(item);
+																					error=true;
+																				}
+																			}
+																			if (!error)
+																			{
+																				res.record.lookupCriteria.value=criteria.config;
+																				res.record.lookupSort.value=sort.config;
+																				res.record.lookupMapping.value=mapping.config;
+																			}
+																		}
+																	}
+																}
+															}
+														})({
+															external:item.fields.external.parallelize,
+															internal:item.fields.internal.parallelize
+														});
+													}
+													else
+													{
+														res.record.lookupCriteria.value=[];
+														res.record.lookupSort.value=[];
+														res.record.lookupMapping.value=[];
+													}
+												}
+												if (!error)
+												{
+													if (res.record.userSource.value)
+													{
+														res.record.userMapping.value=res.record.userMapping.value.filter((item) => item.value.item.value && item.value.field.value);
+														res.record.userCustomItem.value=res.record.userCustomItem.value.filter((item) => item.value.item.value && item.value.field.value);
+														config.tab.push({label:item.label.html(),setting:res.record});
+													}
+													else
+													{
+														res.record.userMapping.value=[];
+														res.record.userCustomItem.value=[];
+														config.tab.push({label:item.label.html(),setting:res.record});
+													}
+												}
+											}
+											else
+											{
+												kb.alert(kb.constants.common.message.invalid.record[kb.operator.language]);
+												kb.config[PLUGIN_ID].tabbed.activate(item);
+												error=true;
+											}
+											return error;
+										});
+									})({
+										id:vars.app.id,
+										fields:vars.app.fields.tab
+									});
+									config.tab=JSON.stringify(config.tab);
+									config.flat=JSON.stringify(config.flat);
+									return !(error)?config:false;
+								}
+								catch(error)
+								{
+									kb.alert(kb.error.parse(error));
+									return false;
+								}
+							}
+						},
+						(container,config) => {
+							try
+							{
+								vars.app={
+									id:PLUGIN_ID,
+									fields:{
+										tab:{
+											event:{
+												code:'event',
+												type:'CHECK_BOX',
+												label:'',
+												required:true,
+												noLabel:true,
+												options:[
+													{index:0,label:'change'},
+													{index:1,label:'create'},
+													{index:2,label:'edit'},
+													{index:3,label:'reuse'},
+													{index:4,label:'process'},
+													{index:5,label:'detail'},
+													{index:6,label:'index'}
+												]
+											},
+											triggers:{
+												code:'triggers',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													field:{
+														code:'field',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.triggers[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													}
+												}
+											},
+											action:{
+												code:'action',
+												type:'DROP_DOWN',
+												label:kb.constants.config.caption.action[kb.operator.language],
+												required:false,
+												noLabel:false,
+												options:[]
+											},
+											label:{
+												code:'label',
+												type:'SINGLE_LINE_TEXT',
+												label:kb.constants.config.caption.label[kb.operator.language],
+												required:false,
+												noLabel:false,
+												placeholder:''
+											},
+											message:{
+												code:'message',
+												type:'SINGLE_LINE_TEXT',
+												label:kb.constants.config.caption.message[kb.operator.language],
+												required:false,
+												noLabel:false,
+												placeholder:''
+											},
+											view:{
+												code:'view',
+												type:'DROP_DOWN',
+												label:kb.constants.config.caption.view[kb.operator.language],
+												required:false,
+												noLabel:false,
+												options:[]
+											},
+											clear:{
+												code:'clear',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													table:{
+														code:'table',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.clear.table[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													}
+												}
+											},
+											fill:{
+												code:'fill',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													table:{
+														code:'table',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.fill.table[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													},
+													range:{
+														code:'range',
+														type:'SINGLE_LINE_TEXT',
+														label:kb.constants.config.caption.fill.range[kb.operator.language],
+														required:false,
+														noLabel:true
+													}
+												}
+											},
+											formula:{
+												code:'formula',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													field:{
+														code:'field',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.formula.field[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													},
+													guide:{
+														code:'guide',
+														type:'SPACER',
+														label:'',
+														required:false,
+														noLabel:true,
+														contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-left"></span>'
+													},
+													formula:{
+														code:'formula',
+														type:'SINGLE_LINE_TEXT',
+														label:kb.constants.config.caption.formula.formula[kb.operator.language],
+														required:false,
+														noLabel:true
+													}
+												}
+											},
+											lookupApp:{
+												code:'lookupApp',
+												type:'DROP_DOWN',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[]
+											},
+											lookupCriteria:{
+												code:'lookupCriteria',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													external:{
+														code:'external',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.lookup.external[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													},
+													operator:{
+														code:'operator',
+														type:'DROP_DOWN',
+														label:'',
+														required:false,
+														noLabel:true,
+														options:[]
+													},
+													internal:{
+														code:'internal',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.lookup.internal[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													}
+												}
+											},
+											lookupIgnore:{
+												code:'lookupIgnore',
+												type:'CHECK_BOX',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[
+													{index:0,label:'ignore'}
+												]
+											},
+											lookupFilter:{
+												code:'lookupFilter',
+												type:'CONDITION',
+												label:'',
+												required:false,
+												noLabel:true,
+												app:{
+													id:kintone.app.getId(),
+													fields:fieldInfos.parallelize
+												}
+											},
+											lookupSort:{
+												code:'lookupSort',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													field:{
+														code:'field',
+														type:'DROP_DOWN',
+														label:'',
+														required:false,
+														noLabel:true,
+														options:[]
+													},
+													order:{
+														code:'order',
+														type:'DROP_DOWN',
+														label:'',
+														required:false,
+														noLabel:true,
+														options:[
+															{index:0,label:'asc'},
+															{index:1,label:'desc'}
+														]
+													}
+												}
+											},
+											lookupMapping:{
+												code:'lookupMapping',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													external:{
+														code:'external',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.lookup.external[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													},
+													guide:{
+														code:'guide',
+														type:'SPACER',
+														label:'',
+														required:false,
+														noLabel:true,
+														contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-right"></span>'
+													},
+													internal:{
+														code:'internal',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.lookup.internal[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													}
+												}
+											},
+											lookupLimited:{
+												code:'lookupLimited',
+												type:'CHECK_BOX',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[
+													{index:0,label:'limited'}
+												]
+											},
+											lookupOverwrite:{
+												code:'lookupOverwrite',
+												type:'CHECK_BOX',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[
+													{index:0,label:'overwrite'}
+												]
+											},
+											lookupReset:{
+												code:'lookupReset',
+												type:'CHECK_BOX',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[
+													{index:0,label:'reset'}
+												]
+											},
+											userSource:{
+												code:'userSource',
+												type:'DROP_DOWN',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[]
+											},
+											userMapping:{
+												code:'userMapping',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													item:{
+														code:'item',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.user.item[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[
+															{index:0,label:''},
+															{index:1,label:'code'},
+															{index:2,label:'name'},
+															{index:3,label:'email'},
+															{index:4,label:'phone'},
+															{index:5,label:'mobilePhone'},
+															{index:6,label:'extensionNumber'},
+															{index:7,label:'callto'},
+															{index:8,label:'url'},
+															{index:9,label:'employeeNumber'},
+															{index:10,label:'joinDate'},
+															{index:11,label:'birthDate'},
+															{index:12,label:'description'}
+														]
+													},
+													guide:{
+														code:'guide',
+														type:'SPACER',
+														label:'',
+														required:false,
+														noLabel:true,
+														contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-right"></span>'
+													},
+													field:{
+														code:'field',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.user.field[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													}
+												}
+											},
+											userCustomItem:{
+												code:'userCustomItem',
+												type:'SUBTABLE',
+												label:'',
+												noLabel:true,
+												fields:{
+													item:{
+														code:'item',
+														type:'SINGLE_LINE_TEXT',
+														label:kb.constants.config.caption.user.item[kb.operator.language],
+														required:false,
+														noLabel:true
+													},
+													guide:{
+														code:'guide',
+														type:'SPACER',
+														label:'',
+														required:false,
+														noLabel:true,
+														contents:'<span class="kb-icon kb-icon-arrow kb-icon-arrow-right"></span>'
+													},
+													field:{
+														code:'field',
+														type:'DROP_DOWN',
+														label:kb.constants.config.caption.user.field[kb.operator.language],
+														required:false,
+														noLabel:true,
+														options:[]
+													}
+												}
+											},
+											userPrimaryOrganization:{
+												code:'userPrimaryOrganization',
+												type:'DROP_DOWN',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[]
+											},
+											userOrganization:{
+												code:'userOrganization',
+												type:'DROP_DOWN',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[]
+											},
+											userGroup:{
+												code:'userGroup',
+												type:'DROP_DOWN',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[]
+											},
+											userOverwrite:{
+												code:'userOverwrite',
+												type:'CHECK_BOX',
+												label:'',
+												required:false,
+												noLabel:true,
+												options:[
+													{index:0,label:'overwrite'}
+												]
+											}
+										},
+										flat:{
+										}
+									}
+								};
+								var setup=(tab,app,record) => {
+									kb.record.set(tab.panel,app,(() => {
+										if (record.event.value.includes('change')) tab.panel.elm('[field-id=triggers]').closest('section').removeClass('kb-hidden');
+										if (record.event.value.includes('process')) tab.panel.elm('[field-id=action]').closest('section').removeClass('kb-hidden');
+										if (record.event.value.includes('detail')) tab.panel.elm('[field-id=label]').closest('section').removeClass('kb-hidden');
+										if (record.event.value.includes('detail')) tab.panel.elm('[field-id=message]').closest('section').removeClass('kb-hidden');
+										if (record.event.value.includes('index')) tab.panel.elm('[field-id=label]').closest('section').removeClass('kb-hidden');
+										if (record.event.value.includes('index')) tab.panel.elm('[field-id=message]').closest('section').removeClass('kb-hidden');
+										if (record.event.value.includes('index')) tab.panel.elm('[field-id=view]').closest('section').removeClass('kb-hidden');
+										tab.panel.elm('[field-id=lookupApp]').elm('select').val(record.lookupApp.value).rebuild().then((fields) => {
+											tab.tables.lookupCriteria.clearRows();
+											record.lookupCriteria.value.each((values,index) => {
+												if (values.value.external.value in fields.criteria)
+													((row) => {
+														row.elm('[field-id=external]').elm('select').val(values.value.external.value).rebuild().then((fields) => {
+															if (values.value.internal.value in fields)
+															{
+																row.elm('[field-id=operator]').elm('select').val(values.value.operator.value);
+																row.elm('[field-id=internal]').elm('select').val(values.value.internal.value);
+															}
+														});
+													})(tab.tables.lookupCriteria.addRow());
+											});
+											if (tab.tables.lookupCriteria.tr.length==0) tab.tables.lookupCriteria.addRow();
+											tab.tables.lookupSort.clearRows();
+											record.lookupSort.value.each((values,index) => {
+												if (values.value.field.value in fields.sort)
+													((row) => {
+														row.elm('[field-id=field]').elm('select').val(values.value.field.value);
+														row.elm('[field-id=order]').elm('select').val(values.value.order.value);
+													})(tab.tables.lookupSort.addRow());
+											});
+											if (tab.tables.lookupSort.tr.length==0) tab.tables.lookupSort.addRow();
+											tab.tables.lookupMapping.clearRows();
+											record.lookupMapping.value.each((values,index) => {
+												if (values.value.external.value in fields.mapping)
+													((row) => {
+														row.elm('[field-id=external]').elm('select').val(values.value.external.value).rebuild().then((fields) => {
+															if (values.value.internal.value in fields) row.elm('[field-id=internal]').elm('select').val(values.value.internal.value);
+														});
+													})(tab.tables.lookupMapping.addRow());
+											});
+											if (tab.tables.lookupMapping.tr.length==0) tab.tables.lookupMapping.addRow();
+											((field) => {
+												field.elm('.kb-guide').empty();
+												if (record.lookupFilter.value)
+												{
+													field.elm('input').val(record.lookupFilter.value);
+													record.lookupFilter.value.split(' and ').each((value,index) => field.guide(value));
+												}
+												else field.elm('input').val('');
+											})(tab.panel.elm('[field-id=lookupFilter]').elm('.kb-field-value'));
+										});
+										tab.panel.elm('[field-id=userSource]').elm('select').val(record.userSource.value).rebuild().then((fields) => {
+											tab.tables.userMapping.clearRows();
+											record.userMapping.value.each((values,index) => {
+												if (values.value.field.value in fields.mapping)
+													((row) => {
+														row.elm('[field-id=item]').elm('select').val(values.value.item.value);
+														row.elm('[field-id=field]').elm('select').val(values.value.field.value);
+													})(tab.tables.userMapping.addRow());
+											});
+											if (tab.tables.userMapping.tr.length==0) tab.tables.userMapping.addRow();
+											tab.tables.userCustomItem.clearRows();
+											record.userCustomItem.value.each((values,index) => {
+												if (values.value.field.value in fields.custom)
+													((row) => {
+														row.elm('[field-id=item]').elm('input').val(values.value.item.value);
+														row.elm('[field-id=field]').elm('select').val(values.value.field.value);
+													})(tab.tables.userCustomItem.addRow());
+											});
+											if (tab.tables.userCustomItem.tr.length==0) tab.tables.userCustomItem.addRow();
+											((field) => {
+												if (record.userPrimaryOrganization.value in fields.organization) field.elm('select').val(record.userPrimaryOrganization.value);
+												else field.elm('select').val('');
+											})(tab.panel.elm('[field-id=userPrimaryOrganization]').elm('.kb-field-value'));
+											((field) => {
+												if (record.userOrganization.value in fields.organization) field.elm('select').val(record.userOrganization.value);
+												else field.elm('select').val('');
+											})(tab.panel.elm('[field-id=userOrganization]').elm('.kb-field-value'));
+											((field) => {
+												if (record.userGroup.value in fields.group) field.elm('select').val(record.userGroup.value);
+												else field.elm('select').val('');
+											})(tab.panel.elm('[field-id=userGroup]').elm('.kb-field-value'));
+										});
+										return record;
+									})())
+									.then(() => {
+										tab.tables.formula.tr.each((element,index) => {
+											element.elm('select').rebuild();
+										});
+									});
+								};
+								((fieldInfos) => {
+									for (var key in fieldInfos) vars.app.fields.tab[key]=fieldInfos[key];
+								})(kb.config[PLUGIN_ID].ui.fields.conditions.get(fieldInfos));
+								((fieldInfos) => {
+									for (var key in fieldInfos) vars.app.fields.tab[key]=fieldInfos[key];
+								})(kb.config[PLUGIN_ID].ui.fields.users.get(fieldInfos));
+								/* tabbed */
+								kb.config[PLUGIN_ID].tabbed=new KintoneBoosterConfigTabbed(
+									container,
+									{
+										add:(tab) => {
+											((app) => {
+												tab.fields={
+													external:{},
+													internal:fieldInfos
+												};
+												tab.tables={
+													triggers:kb.table.activate(kb.table.create(app.fields.triggers),app),
+													fill:kb.table.activate(kb.table.create(app.fields.fill),app),
+													clear:kb.table.activate(kb.table.create(app.fields.clear),app),
+													formula:kb.table.create(app.fields.formula,false,false,false).addClass('kb-mapping').spread((row,index) => {
+														/* event */
+														row.elm('.kb-table-row-add').on('click',(e) => {
+															tab.tables.formula.insertRow(row);
+														});
+														row.elm('.kb-table-row-del').on('click',(e) => {
+															kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+																tab.tables.formula.delRow(row);
+															});
+														});
+														/* modify elements */
+														((cells) => {
+															cells.field.on('change',(e) => e.currentTarget.rebuild()).rebuild=() => {
+																if (cells.field.val()) kb.formula.field.set(cells.formula,tab.fields.internal.parallelize[cells.field.val()]);
+															};
+														})({
+															field:row.elm('[field-id=field]').elm('select'),
+															guide:row.elm('[field-id=guide]').css({width:'100%'}).parentNode.addClass('kb-mapping-guide'),
+															formula:row.elm('[field-id=formula]').css({width:'450px'}).elm('.kb-field-value')
+														});
+													},(table,index) => {
+														if (table.tr.length==0) table.addRow();
+													},false),
+													lookupCriteria:kb.table.create(app.fields.lookupCriteria,false,false,false).spread((row,index) => {
+														/* event */
+														row.elm('.kb-table-row-add').on('click',(e) => {
+															tab.tables.lookupCriteria.insertRow(row);
+														});
+														row.elm('.kb-table-row-del').on('click',(e) => {
+															kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+																tab.tables.lookupCriteria.delRow(row);
+															});
+														});
+														/* modify elements */
+														((cells) => {
+															cells.external.on('change',(e) => e.currentTarget.rebuild()).rebuild=() => {
+																return new Promise((resolve,reject) => {
+																	cells.operator.empty();
+																	cells.internal.empty().assignOption([{code:'',label:''}],'label','code');
+																	if (cells.external.val())
+																	{
+																		resolve((() => {
+																			var res={};
+																			cells.operator.assignOption(kb.filter.query.operator(tab.fields.external.parallelize[cells.external.val()]),'label','code');
+																			for (var key in tab.fields.internal.parallelize)
+																				((fieldInfo) => {
+																					if (kb.field.typing(fieldInfo,tab.fields.external.parallelize[cells.external.val()],true)) res[fieldInfo.code]=fieldInfo;
+																				})(tab.fields.internal.parallelize[key]);
+																			cells.internal.assignOption(Object.values(res),'label','code');
+																			return res;
+																		})());
+																	}
+																	else resolve({});
+																});
+															};
+														})({
+															external:row.elm('[field-id=external]').elm('select'),
+															operator:row.elm('[field-id=operator]').elm('select'),
+															internal:row.elm('[field-id=internal]').elm('select')
+														});
+													},(table,index) => {
+														if (table.tr.length==0) table.addRow();
+													},false),
+													lookupMapping:kb.table.create(app.fields.lookupMapping,false,false,false).addClass('kb-mapping').spread((row,index) => {
+														/* event */
+														row.elm('.kb-table-row-add').on('click',(e) => {
+															tab.tables.lookupMapping.insertRow(row);
+														});
+														row.elm('.kb-table-row-del').on('click',(e) => {
+															kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+																tab.tables.lookupMapping.delRow(row);
+															});
+														});
+														/* modify elements */
+														((cells) => {
+															cells.external.on('change',(e) => e.currentTarget.rebuild()).rebuild=() => {
+																return new Promise((resolve,reject) => {
+																	cells.internal.empty().assignOption([{code:'',label:''}],'label','code');
+																	if (cells.external.val())
+																	{
+																		resolve((() => {
+																			var res={};
+																			for (var key in tab.fields.internal.parallelize)
+																				((fieldInfo) => {
+																					if (!tab.fields.internal.disables.includes(fieldInfo.code))
+																						if (kb.field.typing(tab.fields.external.parallelize[cells.external.val()],fieldInfo)) res[fieldInfo.code]=fieldInfo;
+																				})(tab.fields.internal.parallelize[key]);
+																			cells.internal.assignOption(Object.values(res),'label','code');
+																			return res;
+																		})());
+																	}
+																	else resolve({});
+																});
+															};
+														})({
+															external:row.elm('[field-id=external]').elm('select'),
+															internal:row.elm('[field-id=internal]').elm('select')
+														});
+													},(table,index) => {
+														if (table.tr.length==0) table.addRow();
+													},false),
+													lookupSort:kb.table.activate(kb.table.create(app.fields.lookupSort),app),
+													userMapping:kb.table.activate(kb.table.create(app.fields.userMapping).addClass('kb-mapping'),app),
+													userCustomItem:kb.table.activate(kb.table.create(app.fields.userCustomItem).addClass('kb-mapping'),app)
+												};
+												tab.panel.addClass('kb-scope').attr('form-id','form_'+app.id)
+												.append(
+													kb.config[PLUGIN_ID].ui.fields.users.set(kb.config[PLUGIN_ID].ui.fields.conditions.set(kb.create('div').addClass('kb-config-tabbed-panel-block'),app),app)
+													.append(kb.create('h1').html(kb.constants.config.caption.event[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(kb.field.activate(((res) => {
+															res.elms('[type=checkbox]').each((element,index) => {
+																element.closest('label').elm('span').html(kb.constants.config.caption.event[element.val()][kb.operator.language]);
+															});
+															return res;
+														})(kb.field.create(app.fields.event)),app))
+													)
+													.append(
+														kb.create('section').addClass('kb-hidden')
+														.append(((table) => {
+															((fieldInfos) => {
+																table.template.elm('[field-id=field]').elm('select').empty().assignOption(
+																	([{code:'',label:kb.constants.config.caption.triggers.all[kb.operator.language]}]).concat(fieldInfos),
+																	'label',
+																	'code'
+																);
+															})(tab.fields.internal.changes.map((item) => {
+																return {
+																	code:item,
+																	label:((item in tab.fields.internal.tables)?tab.fields.internal.tables:tab.fields.internal.parallelize)[item].label
+																};
+															}));
+															return table;
+														})(tab.tables.triggers))
+														.append(kb.create('p').addClass('kb-hint').html(kb.constants.config.description.triggers[kb.operator.language]))
+													)
+													.append(
+														kb.create('section').addClass('kb-hidden')
+														.append(kb.field.activate(((res) => {
+															res.elm('select').empty().assignOption(([{code:'',label:''}]).concat(statusInfos.actions.map((item) => {
+																return {code:item.key,label:item.name+'&nbsp;('+item.from+'&nbsp;&gt;&nbsp;'+item.to+')'};
+															})),'label','code');
+															return res;
+														})(kb.field.create(app.fields.action)),app))
+													)
+													.append(kb.create('section').addClass('kb-hidden').append(kb.field.activate(kb.field.create(app.fields.label).css({width:'100%'}),app)))
+													.append(kb.create('section').addClass('kb-hidden').append(kb.field.activate(kb.field.create(app.fields.message).css({width:'100%'}),app)))
+													.append(
+														kb.create('section').addClass('kb-hidden')
+														.append(kb.field.activate(((res) => {
+															res.elm('select').empty().assignOption(([{code:'',label:kb.constants.config.caption.view.all[kb.operator.language]}]).concat(viewInfos.list.map((item) => {
+																return {code:item.id,label:item.name};
+															})),'label','code');
+															return res;
+														})(kb.field.create(app.fields.view)),app))
+													)
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.clear[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(((table) => {
+														table.template.elm('[field-id=table]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,null,true,false),'label','code');
+														return table;
+													})(tab.tables.clear))
+													.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.clear[kb.operator.language]))
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.fill[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(((table) => {
+														table.template.elm('[field-id=table]').elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,null,true,false),'label','code');
+														table.template.elm('[field-id=range]').css({width:'450px'});
+														return table;
+													})(tab.tables.fill))
+													.append(kb.create('p').addClass('kb-hint').html(kb.constants.config.description.fill.hint[kb.operator.language]))
+													.append(
+														kb.create('p').addClass('kb-hint').html(
+															((anchor) => {
+																return kb.constants.config.description.fill.link[kb.operator.language]+'<br>'+anchor.outerHTML;
+															})(
+																kb.create('a')
+																.attr('href','https://kintone-booster.com/'+kb.operator.language+'/rows.html')
+																.attr('target','_blank')
+																.html('https://kintone-booster.com/'+kb.operator.language+'/rows.html')
+															)
+														)
+													)
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.formula[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(((table) => {
+														table.template.elm('[field-id=field]').elm('select').empty().assignOption(((fieldInfos) => {
+															var res={};
+															for (var key in fieldInfos)
+																((fieldInfo) => {
+																	if (!tab.fields.internal.disables.includes(fieldInfo.code))
+																		if (fieldInfo.type!='FILE')
+																			res[fieldInfo.code]=fieldInfo;
+																})(fieldInfos[key]);
+															return [{code:'',label:''}].concat(Object.values(res));
+														})(tab.fields.internal.parallelize),'label','code');
+														return table;
+													})(tab.tables.formula))
+													.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.formula.fixed[kb.operator.language]))
+													.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.formula.process[kb.operator.language]))
+													.append(
+														kb.create('p').addClass('kb-hint').html(
+															((anchor) => {
+																return kb.constants.config.description.formula.link[kb.operator.language]+'<br>'+anchor.outerHTML;
+															})(
+																kb.create('a')
+																.attr('href','https://kintone-booster.com/'+kb.operator.language+'/functions.html')
+																.attr('target','_blank')
+																.html('https://kintone-booster.com/'+kb.operator.language+'/functions.html')
+															)
+														)
+													)
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.lookup[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.create('h1').html(kb.constants.config.caption.lookup.app[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(((res) => {
+															res.elm('select').empty().assignOption(([{appId:'',name:''}]).concat(appInfos),'name','appId').on('change',(e) => e.currentTarget.rebuild()).rebuild=() => {
+																return new Promise((resolve,reject) => {
+																	((criteria,sort,mapping,filter) => {
+																		criteria.clearRows();
+																		criteria.template.elm('[field-id=external]').css({width:'100%'}).elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		criteria.template.elm('[field-id=operator]').css({width:'100%'}).elm('select').empty();
+																		criteria.template.elm('[field-id=internal]').css({width:'100%'}).elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		sort.clearRows();
+																		sort.template.elm('[field-id=field]').css({width:'100%'}).elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		mapping.clearRows();
+																		mapping.template.elm('[field-id=external]').css({width:'100%'}).elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		mapping.template.elm('[field-id=internal]').css({width:'100%'}).elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		mapping.template.elm('[field-id=guide]').css({width:'100%'}).parentNode.addClass('kb-mapping-guide');
+																		if (res.elm('select').val())
+																		{
+																			kb.field.load(res.elm('select').val()).then((fieldInfos) => {
+																				tab.fields.external=fieldInfos;
+																				resolve(((app) => {
+																					var res={
+																						criteria:((fieldInfos) => {
+																							var res={};
+																							for (var key in fieldInfos)
+																								((fieldInfo) => {
+																									if (!fieldInfo.tableCode) res[fieldInfo.code]=fieldInfo;
+																								})(fieldInfos[key]);
+																							return res;
+																						})(tab.fields.external.criterias),
+																						mapping:((fieldInfos) => {
+																							var res={};
+																							for (var key in fieldInfos)
+																								((fieldInfo) => {
+																									if (!fieldInfo.tableCode)
+																										if (!['CATEGORY','FILE'].includes(fieldInfo.type)) res[fieldInfo.code]=fieldInfo;
+																								})(fieldInfos[key]);
+																							return res;
+																						})(tab.fields.external.parallelize),
+																						sort:tab.fields.external.sorts
+																					};
+																					criteria.template.elm('[field-id=external]').elm('select').assignOption(Object.values(res.criteria),'label','code');
+																					mapping.template.elm('[field-id=external]').elm('select').assignOption(Object.values(res.mapping),'label','code');
+																					sort.template.elm('[field-id=field]').elm('select').assignOption(Object.values(res.sort),'label','code');
+																					criteria.addRow();
+																					mapping.addRow();
+																					sort.addRow();
+																					filter.reset({id:app,fields:tab.fields.external.parallelize});
+																					return res;
+																				})(res.elm('select').val()));
+																			});
+																		}
+																		else
+																		{
+																			criteria.addRow();
+																			mapping.addRow();
+																			sort.addRow();
+																			filter.reset({id:null,fields:{}});
+																			resolve({
+																				criteria:{},
+																				mapping:{},
+																				sort:{}
+																			});
+																		}
+																	})(tab.tables.lookupCriteria,tab.tables.lookupSort,tab.tables.lookupMapping,tab.panel.elm('[field-id=lookupFilter]').elm('.kb-field-value'));
+																});
+															};
+															return res;
+														})(kb.field.activate(kb.field.create(app.fields.lookupApp),app)))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.lookup.criteria[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(tab.tables.lookupCriteria)
+														.append(kb.field.activate(((res) => {
+															res.elm('input').closest('label').elm('span').html(kb.constants.config.caption.lookup.ignore[kb.operator.language]);
+															return res;
+														})(kb.field.create(app.fields.lookupIgnore).css({width:'100%'})),app))
+														.append(kb.create('p').html(kb.constants.config.caption.lookup.filter[kb.operator.language]))
+														.append(kb.field.activate(kb.field.create(app.fields.lookupFilter),app))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.lookup.sort[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(((table) => {
+															table.template.elm('[field-id=order]').elm('select').elms('option').each((element,index) => {
+																element.html(kb.constants.config.caption.lookup.sort.order[kb.operator.language][index]);
+															});
+															table.elm('thead').hide();
+															return table;
+														})(tab.tables.lookupSort))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.lookup.mapping[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(tab.tables.lookupMapping)
+														.append(kb.field.activate(((res) => {
+															res.elm('input').closest('label').elm('span').html(kb.constants.config.caption.lookup.limited[kb.operator.language]);
+															return res;
+														})(kb.field.create(app.fields.lookupLimited).css({width:'100%'})),app))
+														.append(kb.field.activate(((res) => {
+															res.elm('input').closest('label').elm('span').html(kb.constants.config.caption.lookup.overwrite[kb.operator.language]);
+															return res;
+														})(kb.field.create(app.fields.lookupOverwrite).css({width:'100%'})),app))
+														.append(kb.field.activate(((res) => {
+															res.elm('input').closest('label').elm('span').html(kb.constants.config.caption.lookup.reset[kb.operator.language]);
+															return res;
+														})(kb.field.create(app.fields.lookupReset).css({width:'100%'})),app))
+														.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.lookup.mapping[kb.operator.language]))
+													)
+												)
+												.append(kb.create('h1').html(kb.constants.config.caption.user[kb.operator.language]))
+												.append(
+													kb.create('section')
+													.append(kb.create('h1').html(kb.constants.config.caption.user.source[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(((res) => {
+															res.elm('select').empty().assignOption(kb.config[PLUGIN_ID].ui.options.fields(fieldInfos,(result,current) => {
+																switch (current.type)
+																{
+																	case 'USER_SELECT':
+																		result.push({code:current.code,label:current.label});
+																		break;
+																}
+																return result;
+															}),'label','code').on('change',(e) => e.currentTarget.rebuild()).rebuild=() => {
+																return new Promise((resolve,reject) => {
+																	((mapping,custom,primary,organization,group) => {
+																		mapping.clearRows();
+																		mapping.template.elm('[field-id=field]').css({width:'100%'}).elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		custom.clearRows();
+																		custom.template.elm('[field-id=field]').css({width:'100%'}).elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		primary.elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		organization.elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		group.elm('select').empty().assignOption([{code:'',label:''}],'label','code');
+																		if (res.elm('select').val())
+																		{
+																			resolve(((tableCode) => {
+																				var res={
+																					custom:((fieldInfos) => {
+																						var res={};
+																						for (var key in fieldInfos)
+																							((fieldInfo) => {
+																								if (!fieldInfo.lookup && fieldInfo.tableCode==tableCode)
+																									if (['SINGLE_LINE_TEXT','USER_SELECT'].includes(fieldInfo.type))
+																										res[fieldInfo.code]=fieldInfo;
+																							})(fieldInfos[key]);
+																						return res;
+																					})(tab.fields.internal.parallelize),
+																					group:((fieldInfos) => {
+																						var res={};
+																						for (var key in fieldInfos)
+																							((fieldInfo) => {
+																								if (!fieldInfo.lookup && fieldInfo.tableCode==tableCode)
+																									if (['GROUP_SELECT'].includes(fieldInfo.type))
+																										res[fieldInfo.code]=fieldInfo;
+																							})(fieldInfos[key]);
+																						return res;
+																					})(tab.fields.internal.parallelize),
+																					mapping:((fieldInfos) => {
+																						var res={};
+																						for (var key in fieldInfos)
+																							((fieldInfo) => {
+																								if (!fieldInfo.lookup && fieldInfo.tableCode==tableCode)
+																									if (['MULTI_LINE_TEXT','SINGLE_LINE_TEXT'].includes(fieldInfo.type))
+																										res[fieldInfo.code]=fieldInfo;
+																							})(fieldInfos[key]);
+																						return res;
+																					})(tab.fields.internal.parallelize),
+																					organization:((fieldInfos) => {
+																						var res={};
+																						for (var key in fieldInfos)
+																							((fieldInfo) => {
+																								if (!fieldInfo.lookup && fieldInfo.tableCode==tableCode)
+																									if (['ORGANIZATION_SELECT'].includes(fieldInfo.type))
+																										res[fieldInfo.code]=fieldInfo;
+																							})(fieldInfos[key]);
+																						return res;
+																					})(tab.fields.internal.parallelize)
+																				};
+																				mapping.template.elm('[field-id=field]').elm('select').assignOption(Object.values(res.mapping),'label','code');
+																				custom.template.elm('[field-id=field]').elm('select').assignOption(Object.values(res.custom),'label','code');
+																				primary.elm('select').assignOption(Object.values(res.organization),'label','code');
+																				organization.elm('select').assignOption(Object.values(res.organization),'label','code');
+																				group.elm('select').assignOption(Object.values(res.group),'label','code');
+																				mapping.addRow();
+																				custom.addRow();
+																				return res;
+																			})(tab.fields.internal.parallelize[res.elm('select').val()].tableCode));
+																		}
+																		else
+																		{
+																			mapping.addRow();
+																			custom.addRow();
+																			resolve({
+																				custom:{},
+																				group:{},
+																				mapping:{},
+																				organization:{}
+																			});
+																		}
+																	})(
+																		tab.tables.userMapping,
+																		tab.tables.userCustomItem,
+																		tab.panel.elm('[field-id=userPrimaryOrganization]').elm('.kb-field-value'),
+																		tab.panel.elm('[field-id=userOrganization]').elm('.kb-field-value'),
+																		tab.panel.elm('[field-id=userGroup]').elm('.kb-field-value')
+																	);
+																});
+															};
+															return res;
+														})(kb.field.activate(kb.field.create(app.fields.userSource),app)))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.user.mapping[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(((table) => {
+															table.template.elm('[field-id=item]').elm('select').elms('option').each((element,index) => {
+																if (index>0) element.html(kb.constants.config.caption.user.item[element.val()][kb.operator.language]);
+															});
+															table.template.elm('[field-id=guide]').css({width:'100%'}).parentNode.addClass('kb-mapping-guide');
+															return table;
+														})(tab.tables.userMapping))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.user.custom[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(((table) => {
+															table.template.elm('[field-id=guide]').css({width:'100%'}).parentNode.addClass('kb-mapping-guide');
+															return table;
+														})(tab.tables.userCustomItem))
+														.append(kb.create('p').addClass('kb-caution').html(kb.constants.config.description.user.custom[kb.operator.language]))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.user.primaryOrganization[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(kb.field.activate(kb.field.create(app.fields.userPrimaryOrganization),app))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.user.organization[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(kb.field.activate(kb.field.create(app.fields.userOrganization),app))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.user.group[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(kb.field.activate(kb.field.create(app.fields.userGroup),app))
+													)
+													.append(kb.create('h1').html(kb.constants.config.caption.user.overwrite[kb.operator.language]))
+													.append(
+														kb.create('section')
+														.append(kb.field.activate(((res) => {
+															res.elm('input').closest('label').elm('span').html(kb.constants.config.caption.user.overwrite.overwrite[kb.operator.language]);
+															return res;
+														})(kb.field.create(app.fields.userOverwrite).css({width:'100%'})),app))
+													)
+												);
+												tab.panel.elm('[field-id=lookupApp]').elm('select').rebuild().then((fields) => {
+													tab.tables.lookupCriteria.clearRows();
+													tab.tables.lookupSort.clearRows();
+													tab.tables.lookupMapping.clearRows();
+													tab.tables.lookupCriteria.addRow();
+													tab.tables.lookupSort.addRow();
+													tab.tables.lookupMapping.addRow();
+												});
+												tab.panel.elm('[field-id=userSource]').elm('select').rebuild().then((fields) => {
+													tab.tables.userMapping.clearRows();
+													tab.tables.userCustomItem.clearRows();
+													tab.tables.userMapping.addRow();
+													tab.tables.userCustomItem.addRow();
+												});
+												tab.tables.triggers.addRow();
+												tab.tables.clear.addRow();
+												tab.tables.fill.addRow();
+												tab.tables.formula.addRow();
+												/* event */
+												kb.event.on('kb.change.event',(e) => {
+													if (e.container==tab.panel)
+													{
+														tab.panel.elm('[field-id=triggers]').closest('section').addClass('kb-hidden');
+														tab.panel.elm('[field-id=action]').closest('section').addClass('kb-hidden');
+														tab.panel.elm('[field-id=view]').closest('section').addClass('kb-hidden');
+														tab.panel.elm('[field-id=label]').closest('section').addClass('kb-hidden');
+														tab.panel.elm('[field-id=message]').closest('section').addClass('kb-hidden');
+														if (e.record.event.value.includes('change')) tab.panel.elm('[field-id=triggers]').closest('section').removeClass('kb-hidden');
+														if (e.record.event.value.includes('process')) tab.panel.elm('[field-id=action]').closest('section').removeClass('kb-hidden');
+														if (e.record.event.value.includes('detail')) tab.panel.elm('[field-id=label]').closest('section').removeClass('kb-hidden');
+														if (e.record.event.value.includes('detail')) tab.panel.elm('[field-id=message]').closest('section').removeClass('kb-hidden');
+														if (e.record.event.value.includes('index')) tab.panel.elm('[field-id=label]').closest('section').removeClass('kb-hidden');
+														if (e.record.event.value.includes('index')) tab.panel.elm('[field-id=message]').closest('section').removeClass('kb-hidden');
+														if (e.record.event.value.includes('index')) tab.panel.elm('[field-id=view]').closest('section').removeClass('kb-hidden');
+													}
+													return e;
+												});
+												tab.panel.elms('input,select,textarea').each((element,index) => element.initialize());
+											})({
+												id:vars.app.id,
+												fields:vars.app.fields.tab
+											});
+										},
+										copy:(source,destination) => {
+											((app) => {
+												setup(destination,app,kb.record.get(source.panel,app,true).record);
+											})({
+												id:vars.app.id,
+												fields:vars.app.fields.tab
+											});
+										},
+										del:(index) => {}
+									}
+								);
+								/* flat */
+								container.main.append(
+									kb.create('p').addClass('kb-hint').html(
+										((anchor) => {
+											return kb.constants.config.description.status[kb.operator.language]+'<br>'+anchor.outerHTML;
+										})((() => {
+											var res=null;
+											switch (kb.operator.language)
+											{
+												case 'en':
+													res=kb.create('a')
+													.attr('href','https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values')
+													.attr('target','_blank')
+													.html('https://kintone.dev/en/docs/kintone/js-api/events/record-details-event/#overwrite-field-values')
+													break;
+												case 'ja':
+													res=kb.create('a')
+													.attr('href','https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values')
+													.attr('target','_blank')
+													.html('https://cybozu.dev/ja/kintone/docs/js-api/events/event-object-actions/#record-details-overwrite-field-values')
+													break;
+												case 'zh':
+													res=kb.create('a')
+													.attr('href','https://cybozudev.kf5.com/hc/kb/article/206907/#step4')
+													.attr('target','_blank')
+													.html('https://cybozudev.kf5.com/hc/kb/article/206907/#step4')
+													break;
+											}
+											return res;
+										})())
+									)
+								);
+								/* setup */
+								if (Object.keys(config).length!=0)
+								{
+									((settings) => {
+										settings.each((setting) => {
+											((app,tab) => {
+												setup(tab,app,setting.setting);
+												tab.label.html(setting.label);
+											})(
+												{
+													id:vars.app.id,
+													fields:vars.app.fields.tab
+												},
+												kb.config[PLUGIN_ID].tabbed.add()
+											);
+										});
+									})(JSON.parse(config.tab));
+								}
+								else
+								{
+									((tab) => {
+										tab.panel.elm('[field-id=lookupApp]').elm('select').rebuild().then((fields) => {
+											tab.tables.lookupCriteria.clearRows();
+											tab.tables.lookupSort.clearRows();
+											tab.tables.lookupMapping.clearRows();
+											tab.tables.lookupCriteria.addRow();
+											tab.tables.lookupSort.addRow();
+											tab.tables.lookupMapping.addRow();
+										});
+									})(kb.config[PLUGIN_ID].tabbed.add());
+								}
+							}
+							catch(error){kb.alert(kb.error.parse(error))}
+						}
+					);
+				});
+			});
+		});
+	});
+})(kintone.$PLUGIN_ID);
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	config:{
+		caption:{
+			action:{
+				en:'Action Name',
+				ja:'アクション名',
+				zh:'操作名称'
+			},
+			fill:{
+				en:'Add table rows',
+				ja:'テーブル行追加',
+				zh:'添加表格行',
+				table:{
+					en:'Table',
+					ja:'テーブル',
+					zh:'表'
+				},
+				range:{
+					en:'Minimum number of rows or calculation formula',
+					ja:'下限行数または計算式',
+					zh:'最低行数或计算公式'
+				}
+			},
+			clear:{
+				en:'Delete table rows',
+				ja:'テーブル行削除',
+				zh:'删除表格行',
+				table:{
+					en:'Table',
+					ja:'テーブル',
+					zh:'表'
+				}
+			},
+			event:{
+				en:'Action Available Event',
+				ja:'動作イベント',
+				zh:'可操作事件',
+				change:{
+					en:'After Field Value Change',
+					ja:'フィールド値変更',
+					zh:'字段变更后'
+				},
+				create:{
+					en:'After Record Creation Shown',
+					ja:'レコード追加画面表示後',
+					zh:'记录创建显示后'
+				},
+				detail:{
+					en:'Clicking the button on the record detail page',
+					ja:'レコード詳細画面でのボタンクリック',
+					zh:'在记录详细页面上点击按钮'
+				},
+				edit:{
+					en:'After Record Edit Shown',
+					ja:'レコード編集画面表示後',
+					zh:'记录编辑显示后'
+				},
+				index:{
+					en:'Bulk Execution from List View',
+					ja:'一覧画面からの一括実行',
+					zh:'从列表屏幕的批量执行'
+				},
+				process:{
+					en:'Process Action',
+					ja:'プロセスアクション',
+					zh:'过程操作'
+				},
+				reuse:{
+					en:'After Record Reuse Shown',
+					ja:'レコード再利用画面表示後',
+					zh:'记录再利用显示后'
+				}
+			},
+			formula:{
+				en:'Inserting fixed values or calculation results',
+				ja:'固定値や計算結果を挿入',
+				zh:'插入固定值或计算结果',
+				field:{
+					en:'Field',
+					ja:'フィールド',
+					zh:'字段'
+				},
+				formula:{
+					en:'Fixed value or function',
+					ja:'固定値または関数',
+					zh:'固定值或函数'
+				}
+			},
+			label:{
+				en:'Execution Button Label',
+				ja:'実行ボタンのラベルテキスト',
+				zh:'执行按钮的标签名称'
+			},
+			lookup:{
+				en:'Lookup',
+				ja:'ルックアップ',
+				zh:'Lookup',
+				app:{
+					en:'Datasource App',
+					ja:'参照元アプリ',
+					zh:'参考源应用'
+				},
+				criteria:{
+					en:'Reference association',
+					ja:'参照するレコードの関連付け',
+					zh:'参考关联记录'
+				},
+				external:{
+					en:'Datasource App',
+					ja:'参照元アプリのフィールド',
+					zh:'参考源应用的字段'
+				},
+				filter:{
+					en:'Narrow it down further',
+					ja:'さらに絞り込む',
+					zh:'进一步缩小'
+				},
+				ignore:{
+					en:'If the linkage field of this app is empty, ignore the linkage',
+					ja:'このアプリの関連付けフィールドが空である場合は、その関連付けを無視する',
+					zh:'如果此应用的关联字段为空，则忽略该关联'
+				},
+				internal:{
+					en:'This App',
+					ja:'このアプリのフィールド',
+					zh:'此应用的字段'
+				},
+				limited:{
+					en:'Limit the records to be retrieved to the first one in the sort order',
+					ja:'取得するレコードを並び順の先頭レコードのみにする',
+					zh:'将获取的记录限制为排在最前面的一个'
+				},
+				mapping:{
+					en:'Copy Field Mappings',
+					ja:'コピーするフィールド',
+					zh:'复制字段映射'
+				},
+				overwrite:{
+					en:'Always overwrite with the retrieved value',
+					ja:'取得した値で常に上書きをする',
+					zh:'始终用检索到的值覆盖'
+				},
+				reset:{
+					en:'If the record cannot be retrieved, clear the field',
+					ja:'レコードが取得出来なかった場合は、フィールドを空にする',
+					zh:'如果无法获取记录，请清空字段'
+				},
+				sort:{
+					en:'Order of records displayed on the selection screen',
+					ja:'選択画面に表示するレコードの並び順',
+					zh:'选择屏幕上显示的记录顺序',
+					order:{
+						ja:['昇順','降順'],
+						en:['ASC','DESC'],
+						zh:['升序','降序']
+					}
+				}
+			},
+			message:{
+				en:'Execution Confirmation Dialog Message',
+				ja:'実行確認ダイアログのメッセージ',
+				zh:'执行确认对话框的消息'
+			},
+			triggers:{
+				en:'Narrowing Down Trigger Fields',
+				ja:'トリガーとするフィールドの絞り込み',
+				zh:'缩小触发字段的范围',
+				all:{
+					en:'Trigger on changes to all field values',
+					ja:'全てのフィールド値の変更をトリガーとする',
+					zh:'触发所有字段值的更改'
+				}
+			},
+			user:{
+				en:'Copy User Informations',
+				ja:'ユーザー情報のコピー',
+				zh:'复制用户信息',
+				custom:{
+					en:'Copy Customized Items',
+					ja:'カスタマイズ項目をコピー',
+					zh:'复制自定义项目'
+				},
+				field:{
+					en:'Field',
+					ja:'フィールド',
+					zh:'字段'
+				},
+				group:{
+					en:'Copy the Affiliated Group',
+					ja:'所属グループをコピー',
+					zh:'复制所属团队'
+				},
+				item:{
+					en:'Item',
+					ja:'項目',
+					zh:'项目',
+					birthDate:{
+						en:'Birthday',
+						ja:'誕生日',
+						zh:'生日'
+					},
+					callto:{
+						en:'Skype Name',
+						ja:'Skype名',
+						zh:'Skype用户名'
+					},
+					code:{
+						en:'Login Name',
+						ja:'ログイン名',
+						zh:'登录名称'
+					},
+					description:{
+						en:'About Me',
+						ja:'コメント',
+						zh:'简介'
+					},
+					email:{
+						en:'E-mail Address',
+						ja:'メールアドレス',
+						zh:'邮件地址'
+					},
+					employeeNumber:{
+						en:'Employee ID',
+						ja:'従業員ID',
+						zh:'员工编号'
+					},
+					extensionNumber:{
+						en:'Extension',
+						ja:'内線',
+						zh:'分机号'
+					},
+					joinDate:{
+						en:'Hire Date',
+						ja:'入社日',
+						zh:'入职日期'
+					},
+					mobilePhone:{
+						en:'Mobile Phone',
+						ja:'携帯電話',
+						zh:'手机'
+					},
+					name:{
+						en:'Display Name',
+						ja:'表示名',
+						zh:'显示名称'
+					},
+					phone:{
+						en:'Phone',
+						ja:'電話番号',
+						zh:'电话号码'
+					},
+					url:{
+						en:'URL',
+						ja:'URL',
+						zh:'URL'
+					}
+				},
+				mapping:{
+					en:'Copy Profile Items',
+					ja:'プロフィール項目をコピー',
+					zh:'复制配置文件项目'
+				},
+				organization:{
+					en:'Copy the Affiliated Department',
+					ja:'所属組織をコピー',
+					zh:'复制所属组织'
+				},
+				overwrite:{
+					en:'"Overwrite Option',
+					ja:'上書き判定',
+					zh:'覆盖选项',
+					overwrite:{
+						en:'Always overwrite with the retrieved value',
+						ja:'取得した値で常に上書きをする',
+						zh:'始终用检索到的值覆盖'
+					}
+				},
+				primaryOrganization:{
+					en:'Copy the Primary Department',
+					ja:'優先する組織をコピー',
+					zh:'复制优先的组织'
+				},
+				source:{
+					en:'Source Field',
+					ja:'コピー元フィールド',
+					zh:'源字段'
+				}
+			},
+			view:{
+				en:'Executable List View',
+				ja:'実行可能な一覧画面',
+				zh:'可执行的列表屏幕',
+				all:{
+					en:'No restrictions',
+					ja:'制限しない',
+					zh:'不限制'
+				}
+			}
+		},
+		description:{
+			clear:{
+				en:'If a field within the table trying to delete rows is specified in the "Conditions for operation", only the table rows that meet those conditions will be subject to deletion.',
+				ja:'行の削除をしようとしているテーブル内のフィールドを動作条件に指定した場合は、その条件に該当するテーブル行のみが削除の対象となります。',
+				zh:'如果在尝试删除行的表中指定了"操作的条件"的字段，那么只有满足这些条件的表行将成为删除的对象。'
+			},
+			fill:{
+				hint:{
+					en:'In the "Minimum number of rows or calculation formula" field, you can set not only a fixed value but also a function to obtain the number of days in the month to which the date in the date field belongs.',
+					ja:'「下限行数または計算式」には、固定値はもちろん、日付フィールドの日付が属する月の日数を取得する関数をセットすることも可能です。',
+					zh:'在"最小行数或计算公式"字段中，您不仅可以设置固定值，还可以设置一个函数，用以获取日期字段中的日期所属月份的天数。'
+				},
+				link:{
+					en:'Please check the URL below for how to specify the number of days as the count of rows and for inserting fixed values or functions into the fields of the added rows.',
+					ja:'上記の日数を行数に指定する方法と追加した行のフィールドへの固定値または関数の挿入は以下のURLをご確認下さい。',
+					zh:'关于如何将上述天数指定为行数，以及在添加的行的字段中插入固定值或函数的方法，请查看下面的URL。'
+				}
+			},
+			formula:{
+				fixed:{
+					en:'When entering a fixed value, please enclose it in double quotes.',
+					ja:'固定値を入力する場合は、ダブルクォーテーションで囲うようにして下さい。',
+					zh:'当输入固定值时，请用双引号括起来。'
+				},
+				link:{
+					en:'You can refer to the available functions from the URL below.',
+					ja:'利用可能な関数は以下のURLから参照して下さい。',
+					zh:'您可以从下面的URL参考可用的功能。'
+				},
+				process:{
+					en:'When executing multiple functions on fields within a table, the process starts with the functions in the upper row, processing all table rows, and then proceeds to the functions in the lower rows.',
+					ja:'複数の関数をテーブル内フィールドに対して実行する場合は、上段の関数から順に、全てのテーブル行に対して処理を行った上で、下段の関数へと進んでいきます。',
+					zh:'当在表内字段上执行多个函数时，处理会从上行的函数开始，处理所有表行，然后继续到下行的函数。'
+				}
+			},
+			lookup:{
+				mapping:{
+					en:'When copying to a table, please note that all destination fields must be within the same table.',
+					ja:'テーブルにコピーする場合は、コピー先フィールドが全て同一テーブル内にある必要がありますので、ご注意ください。',
+					zh:'当您要复制到表格时，请注意所有目标字段都必须在同一表格内。'
+				}
+			},
+			status:{
+				en:'There are fields that cannot be modified during process action execution, so please check the URL below.',
+				ja:'プロセスアクション実行時には書き換えることが出来ないフィールドがありますので、下記URLをご確認ください。',
+				zh:'在执行过程操作时，有一些字段是无法修改的，请查看以下URL。'
+			},
+			triggers:{
+				en:'When using a table as a trigger, the addition or deletion of rows is targeted.',
+				ja:'テーブルをトリガーとする場合は、行の追加や削除が対象となります。',
+				zh:'当使用表格作为触发器时，针对的是行的添加或删除。'
+			},
+			user:{
+				custom:{
+					en:'Please enter "Field Code" in the item column.',
+					ja:'項目欄には「項目コード」を入力して下さい。',
+					zh:'请在项目栏中输入“项目代码”。'
+				}
+			}
+		},
+		message:{
+			invalid:{
+				action:{
+					en:'If you specify "Process Action" for the action event, please indicate its action name.',
+					ja:'動作イベントに「プロセスアクション」を指定した場合は、そのアクション名を指定して下さい。',
+					zh:'如果在操作事件中指定了“过程操作”，请指定其操作名称。'
+				},
+				fill:{
+					en:'Please enter the "Minimum number of rows or calculation formula".',
+					ja:'「下限行数または計算式」を入力して下さい。',
+					zh:'请输入“最低行数或计算公式”。'
+				},
+				formula:{
+					en:'Contains characters that cannot be used in the formula.',
+					ja:'計算式に使用出来ない文字が含まれています。',
+					zh:'表达式中包含无效字符。'
+				},
+				label:{
+					detail:{
+						en:'If you specify "Clicking the button on the record detail page" for the action event, please input its execution button label.',
+						ja:'動作イベントに「レコード詳細画面でのボタンクリック」を指定した場合は、その実行ボタンのラベルテキストを入力して下さい。',
+						zh:'如果在操作事件中指定了“在记录详细页面上点击按钮”，请输入其执行按钮的标签名称。'
+					},
+					index:{
+						en:'If you specify "Bulk Execution from List View" for the action event, please input its execution button label.',
+						ja:'動作イベントに「一覧画面からの一括実行」を指定した場合は、その実行ボタンのラベルテキストを入力して下さい。',
+						zh:'如果在操作事件中指定了“从列表屏幕的批量执行”，请输入其执行按钮的标签名称。'
+					}
+				},
+				lookup:{
+					criteria:{
+						en:'Please specify the Reference association.',
+						ja:'参照するレコードの関連付けを指定して下さい。',
+						zh:'请指定参考关联记录。'
+					},
+					incompatible:{
+						en:'You cannot specify a field in a different table or a field that does not belong to any table for the Copy Field Mappings.',
+						ja:'コピーするフィールドに異なるテーブル内のフィールド、もしくはテーブルに属さないフィールドを指定することは出来ません。',
+						zh:'在复制字段映射中，您不能指定来自不同表的字段或不属于表的字段。'
+					},
+					mapping:{
+						en:'Please specify the Copy Field Mappings.',
+						ja:'コピーするフィールドを指定して下さい。',
+						zh:'请指定复制字段映射。'
+					},
+					multiple:{
+						en:'You cannot specify a field in a different table for the Reference association.',
+						ja:'参照するレコードの関連付けに異なるテーブル内のフィールドを指定することは出来ません。',
+						zh:'您不能为参考关联记录指定不同表中的字段。'
+					},
+					table:{
+						en:'If no field within the table is specified in the Copy Field Mappings, it is not possible to specify a field within the table for the Reference association.',
+						ja:'コピーするフィールドにテーブル内のフィールドの指定がない場合は、参照するレコードの関連付けにテーブル内のフィールドを指定することは出来ません。',
+						zh:'如果在复制字段映射中没有指定表内的字段，那么无法在参考关联记录中指定表内的字段。'
+					},
+					unmatch:{
+						en:'If a field within the table is specified in the Copy Field Mappings, it is not possible to specify a field from a different table for the Reference association.',
+						ja:'コピーするフィールドにテーブル内のフィールドを指定した場合は、参照するレコードの関連付けに異なるテーブル内のフィールドを指定することは出来ません。',
+						zh:'如果在复制字段映射中指定了表内的字段，那么无法在参考关联记录中指定另一个表内的字段。'
+					}
+				},
+				message:{
+					detail:{
+						en:'If you specify "Clicking the button on the record detail page" for the action event, please input its execution confirmation dialog message.',
+						ja:'動作イベントに「レコード詳細画面でのボタンクリック」を指定した場合は、その実行確認ダイアログのメッセージを入力して下さい。',
+						zh:'如果在操作事件中指定了“在记录详细页面上点击按钮”，请输入其执行确认对话框的消息。'
+					},
+					index:{
+						en:'If you specify "Bulk Execution from List View" for the action event, please input its execution confirmation dialog message.',
+						ja:'動作イベントに「一覧画面からの一括実行」を指定した場合は、その実行確認ダイアログのメッセージを入力して下さい。',
+						zh:'如果在操作事件中指定了“从列表屏幕的批量执行”，请输入其执行确认对话框的消息。'
+					}
+				}
+			}
+		}
+	}
+},kb.constants);

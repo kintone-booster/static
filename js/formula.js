@@ -23,14 +23,14 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				{
 					case 'CHECK_BOX':
 					case 'MULTI_SELECT':
-						res=(rhs.value)?'('+rhs.value.reduce((result,current) => {
+						res=((rhs.value || []).length!=0)?'('+rhs.value.reduce((result,current) => {
 							if (current) result.push('"'+current+'"');
 							return result;
-						},[]).join(',')+')':'()';
+						},[]).join(',')+')':'("")';
 						break;
 					case 'CREATOR':
 					case 'MODIFIER':
-						res=(rhs.value)?'('+rhs.value.code+')':'()';
+						res=(rhs.value)?'("'+rhs.value.code+'")':'("")';
 						break;
 					case 'DROP_DOWN':
 					case 'RADIO_BUTTON':
@@ -41,10 +41,10 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 					case 'ORGANIZATION_SELECT':
 					case 'STATUS_ASSIGNEE':
 					case 'USER_SELECT':
-						res=(rhs.value)?'('+rhs.value.reduce((result,current) => {
+						res=((rhs.value || []).length!=0)?'('+rhs.value.reduce((result,current) => {
 							if (current.code) result.push('"'+current.code+'"');
 							return result;
-						},[]).join(',')+')':'()';
+						},[]).join(',')+')':'("")';
 						break;
 					case 'NUMBER':
 					case 'RECORD_NUMBER':
@@ -922,6 +922,29 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 			};
 			switch (fieldInfo.type)
 			{
+				case 'CALC':
+					switch (operator)
+					{
+						case 'not in':
+							operator='!=';
+							break;
+						case 'in':
+							operator='=';
+							break;
+					}
+					switch(fieldInfo.format)
+					{
+						case 'NUMBER':
+						case 'NUMBER_DIGIT':
+							formula=((rhs) => {
+								return '(kb.isNumeric(lhs.value.replace(/[,]+/,\'\'))?parseFloat(lhs.value.replace(/[,]+/,\'\')):null) '+((operator=='=')?'==':operator)+' '+((rhs!='0')?rhs.replace(/^0/g,''):rhs);
+							})((kb.isNumeric(rhs.replace(/(^["']{1}|["']{1}$)/g,'')))?rhs.replace(/(^["']{1}|["']{1}$)/g,''):'null');
+							break;
+						default:
+							formula='((lhs.value)?lhs.value:\'\') '+((operator=='=')?'==':operator)+' '+rhs;
+							break;
+					}
+					break;
 				case 'CHECK_BOX':
 				case 'MULTI_SELECT':
 					rhs=(rhs!='()')?rhs.split(',').map((item) => item.trim()).reduce((result,current) => {

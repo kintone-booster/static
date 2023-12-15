@@ -5,27 +5,565 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(r){var h={},u=function(l,c){(function(a){var n=new FullCalendar.Calendar(l.addClass("kb-calendar"),{buttonText:function(){var b={};switch(kb.operator.language){case "en":b={month:"month",week:"week",day:"day"};break;case "ja":b={month:"\u6708",week:"\u9031",day:"\u65e5"};break;case "zh":b={month:"\u6708",week:"\u5468",day:"\u65e5"}}return b}(),customButtons:{pickup:{text:"",click:function(b){kb.pickupDate(n.getDate().format("Y-m-d"),function(d){n.gotoDate(new Date(d))})}}},editable:a.editable,
-eventDurationEditable:!a.singleDay,firstDay:parseInt((c.first||{value:"0"}).value),headerToolbar:{left:"prev,next,pickup,title",right:Object.values(a.type).join(",")},initialDate:a.session.date,initialView:function(b){switch(b){case "day":b=a.type.day;break;case "month":b=a.type.month;break;case "week":b=a.type.week}return b}(a.session.initial),navLinks:!0,nowIndicator:a.singleDay?!1:a.time.start||a.time.end,selectable:a.editable,timeZone:"local",datesSet:function(b){sessionStorage.setItem("kb-calendar-"+
-c.view.value,JSON.stringify({date:n.getDate().toISOString(),initial:b.view.type}));window.scrollTo(0,0)},eventChange:function(b){kb.view.records.set(h.app.id,{put:function(){var d={id:b.event.extendedProps.recordId,record:{}};(function(g){a.tableCode?d.record[a.tableCode]={value:h.records[b.event.extendedProps.recordId][a.tableCode].value.map(function(e){e.id==b.event.extendedProps.rowId&&(e.value[c.start.value]={value:a.time.start?g.start.toISOString():g.start.format("Y-m-d")});return e})}:d.record[c.start.value]=
-{value:a.time.start?g.start.toISOString():g.start.format("Y-m-d")};a.singleDay||(a.tableCode?d.record[a.tableCode]={value:h.records[b.event.extendedProps.recordId][a.tableCode].value.map(function(e){e.id==b.event.extendedProps.rowId&&(e.value[c.end.value]={value:a.time.end?g.end.toISOString():g.end.format("Y-m-d")});return e})}:d.record[c.end.value]={value:a.time.end?g.end.toISOString():g.end.format("Y-m-d")})})({start:b.event.start,end:function(){var g=null;a.singleDay||(g=a.time.end?b.event.end:
-a.time.start?0==b.event.end.getHours()+b.event.end.getMinutes()?b.event.end.calc("-1 day"):b.event.end:b.event.end.calc((b.event.allDay?"-1":"0")+" day"));return g}()});return[d]}()}).then(function(d){})["catch"](function(d){return kb.alert(kb.error.parse(d))})},eventDidMount:function(b){b.el.elms(".fc-event-time,.fc-event-title").each(function(d,g){d.on("touchstart,mousedown",function(e){e.stopPropagation()}).on("click",function(e){kb.confirm(kb.constants.calendar.message.confirm.edit[kb.operator.language],
-function(){(c.page||{value:[]}).value.includes("detail")||sessionStorage.setItem("kb-calendar-edit",JSON.stringify({href:window.location.href}));window.location.href=b.event.extendedProps.url});e.stopPropagation();e.preventDefault()})})},events:function(b,d,g){kb.view.records.get(h.app.id,function(e){var p=[],m=function(f,k,q){return a.timeStamp[f]?((a.time[f]?k.calc(q+" second").getTime():k.calc(q+" day").getTime())/1E3).toString():'"'+(a.time[f]?k.calc(q+" second").toISOString():k.calc(q+" day").format("Y-m-d"))+
-'"'};p.push(function(){var f=[];f.push(c.start.value+(a.tableCode?' not in ("")':'!=""'));f.push(c.start.value+">"+m("start",b.start,"-1"));f.push(c.start.value+"<"+m("start",b.end,"1"));return"("+f.join(" and ")+")"}());a.singleDay||(p.push(function(){var f=[];f.push(c.end.value+(a.tableCode?' not in ("")':'!=""'));f.push(c.end.value+">"+m("end",b.start,"-1"));f.push(c.end.value+"<"+m("end",b.end,"1"));return"("+f.join(" and ")+")"}()),p.push(function(){var f=[];f.push(c.start.value+"<"+m("start",
-b.start,"0"));f.push(c.end.value+">"+m("end",b.end,"0"));return"("+f.join(" and ")+")"}()));return(e?"("+e+") and ":"")+"("+p.join(" or ")+")"}((h.mobile?kintone.mobile.app:kintone.app).getQueryCondition())).then(function(e){var p=function(m,f){var k=function(){m++;m<e.length?p(m,f):f()};kb.event.call("kb.style.call",{container:kb.elm("body"),record:e[m],mobile:h.mobile,pattern:"detail",workplace:"view"}).then(function(q){return k()})["catch"](function(q){return k()})};h.records={};0!=e.length?p(0,
-function(){d(function(m){return m.map(function(f){return{title:kb.field.stringify(h.fieldInfos.parallelize[c.title.value],f[c.title.value].value," / "),start:function(k){a.singleDay||a.time.start||a.time.end&&(k=(new Date(k)).calc(kb.timezoneOffset()+" hour").toISOString());return k}(f[c.start.value].value),end:function(k){a.singleDay||(a.time.start?a.time.end||(k=(new Date(k)).calc("1 day").calc(kb.timezoneOffset()+" hour").toISOString()):a.time.end||(k=(new Date(k)).calc("1 day").format("Y-m-d")));
-return k}(a.singleDay?null:f[c.end.value].value),backgroundColor:f[c.title.value].backcolor,borderColor:f[c.title.value].backcolor,textColor:f[c.title.value].forecolor,extendedProps:{recordId:f.$id.value,rowId:"$rowId"in f?f.$rowId:-1,url:function(k,q,t){return k?kb.record.page.detail(h.mobile,q,t):kb.record.page.edit(h.mobile,q,t)}((c.page||{value:[]}).value.includes("detail"),kb.config[r].app,f.$id.value)}}})}(e.reduce(function(m,f){h.records[f.$id.value]=f;a.tableCode?m=m.concat(f[a.tableCode].value.map(function(k){k.value.$id=
-f.$id;k.value.$rowId=k.id;return k.value})):m.push(f);return m},[])))}):d([])})["catch"](function(e){return kb.alert(kb.error.parse(e))})},select:function(b){(function(d){a.singleDay?d.start.format("Y-m-d")==d.end.format("Y-m-d")&&kb.confirm(function(){var g=kb.constants.calendar.message.confirm.create.single[kb.operator.language];return g=g.replace(/%date%/,d.start.format(a.time.start?"Y-m-d H:i":"Y-m-d"))}(),function(){sessionStorage.setItem("kb-calendar-create",JSON.stringify({href:window.location.href,
-start:{code:c.start.value,tableCode:a.tableCode,value:a.time.start?d.start.toISOString():d.start.format("Y-m-d")}}));window.location.href=kb.record.page.add(h.mobile,kb.config[r].app)}):kb.confirm(function(){var g=kb.constants.calendar.message.confirm.create.multi[kb.operator.language];g=g.replace(/%start%/,d.start.format(a.time.start?"Y-m-d H:i":"Y-m-d"));return g=g.replace(/%end%/,d.end.format(a.time.end?"Y-m-d H:i":"Y-m-d"))}(),function(){sessionStorage.setItem("kb-calendar-create",JSON.stringify({href:window.location.href,
-start:{code:c.start.value,tableCode:a.tableCode,value:a.time.start?d.start.toISOString():d.start.format("Y-m-d")},end:{code:c.end.value,tableCode:a.tableCode,value:a.time.end?d.end.toISOString():d.end.format("Y-m-d")}}));window.location.href=kb.record.page.add(h.mobile,kb.config[r].app)})})({start:b.start,end:a.time.end?b.end:b.end.calc((b.allDay?"-1":"0")+" day")});n.unselect()}});n.setOption("locale",kb.operator.language);n.render()})(function(a){var n=a.start.isEditable&&a.end.isEditable,b=!c.end.value;
-var d=(d=sessionStorage.getItem("kb-calendar-"+c.view.value))?JSON.parse(d):{date:(new Date).format("Y-m-d"),initial:c.initial.value};return{editable:n,singleDay:b,session:d,tableCode:h.fieldInfos.parallelize[c.title.value].tableCode,time:{start:a.start.isDateTime,end:a.end.isDateTime},timeStamp:{start:a.start.isTimeStamp,end:a.end.isTimeStamp},type:{month:"dayGridMonth",week:c.end.value?a.start.isDateTime||a.end.isDateTime?"timeGridWeek":"dayGridWeek":"dayGridWeek",day:c.end.value?a.start.isDateTime||
-a.end.isDateTime?"timeGridDay":"dayGridDay":"dayGridDay"}}}({start:function(a){switch(a.type){case "CALC":switch(a.format){case "DATE":a.isDateTime=!1;a.isEditable=!1;break;case "DATETIME":a.isDateTime=!0,a.isEditable=!1}a.isTimeStamp=!0;break;case "CREATED_TIME":case "UPDATED_TIME":a.isDateTime=!0;a.isEditable=!1;a.isTimeStamp=!1;break;case "DATE":a.isDateTime=!1;a.isEditable=!0;a.isTimeStamp=!1;break;case "DATETIME":a.isDateTime=!0,a.isEditable=!0,a.isTimeStamp=!1}return a}(h.fieldInfos.parallelize[c.start.value]),
-end:function(a){switch(a.type){case "CALC":switch(a.format){case "DATE":a.isDateTime=!1;a.isEditable=!1;break;case "DATETIME":a.isDateTime=!0,a.isEditable=!1}a.isTimeStamp=!0;break;case "CREATED_TIME":case "UPDATED_TIME":a.isDateTime=!0;a.isEditable=!1;a.isTimeStamp=!1;break;case "DATE":a.isDateTime=!1;a.isEditable=!0;a.isTimeStamp=!1;break;case "DATETIME":a.isDateTime=!0;a.isEditable=!0;a.isTimeStamp=!1;break;default:a.isDateTime=!1,a.isEditable=!0,a.isTimeStamp=!1}return a}(c.end.value?h.fieldInfos.parallelize[c.end.value]:
-{type:""})}))};kintone.events.on(["app.record.index.show","mobile.app.record.index.show"],function(l){return new Promise(function(c,a){(function(n,b){h.mobile=n;h.type=b;kb.config[r].config.get().then(function(d){0!=Object.keys(d).length?kb.field.load(kb.config[r].app,!0).then(function(g){h.app={id:kb.config[r].app,fields:g.origin};h.fieldInfos=g;h.records={};try{(function(e){if(e){e.title.value&&(e.title.value in h.fieldInfos.parallelize||c(l));e.start.value&&(e.start.value in h.fieldInfos.parallelize||
-c(l));e.end.value&&(e.end.value in h.fieldInfos.parallelize||c(l));var p=kb.elm("#kb-calendar");p&&u(p,e)}c(l)})(JSON.parse(d.tab).map(function(e,p){return kb.extend({sIndex:{value:p.toString()}},e.setting)}).reduce(function(e,p){p.view.value==l.viewId.toString()&&(e=p);return e},null))}catch(e){kb.alert(kb.error.parse(e)),c(l)}})["catch"](function(g){return c(l)}):c(l)})["catch"](function(d){return c(l)})})("mobile"==l.type.split(".").first(),l.type.split(".").slice(-2).first())})});kintone.events.on(["app.record.create.show",
-"mobile.app.record.create.show"],function(l){return new Promise(function(c,a){(function(n){n&&(function(b){b.start&&((b.start.tableCode?l.record[b.start.tableCode].value.first().value[b.start.code]:l.record[b.start.code]).value=b.start.value);b.end&&((b.end.tableCode?l.record[b.end.tableCode].value.first().value[b.end.code]:l.record[b.end.code]).value=b.end.value);kintone.events.on(["app.record.create.submit.success","mobile.app.record.create.submit.success"],function(d){return new Promise(function(g,
-e){d.url=b.href;g(d)})})}(JSON.parse(n)),sessionStorage.removeItem("kb-calendar-create"));c(l)})(sessionStorage.getItem("kb-calendar-create"))})});kintone.events.on(["app.record.edit.show","mobile.app.record.edit.show"],function(l){return new Promise(function(c,a){(function(n){n&&(function(b){(function(d){d.parentNode.insertBefore(d.clone().removeAttr("disabled").on("click",function(g){window.location.href=b.href}),d.hide().nextElementSibling)})(kb.elm("mobile"==l.type.split(".").first()?".gaia-mobile-v2-app-record-edittoolbar-cancel":
-".gaia-ui-actionmenu-cancel"));kintone.events.on(["app.record.edit.submit.success","mobile.app.record.edit.submit.success"],function(d){return new Promise(function(g,e){d.url=b.href;g(d)})})}(JSON.parse(n)),sessionStorage.removeItem("kb-calendar-edit"));c(l)})(sessionStorage.getItem("kb-calendar-edit"))})})})(kintone.$PLUGIN_ID);
-kb.constants=kb.extend({calendar:{message:{confirm:{create:{multi:{en:"Start Date: %start%<br>End Date: %end%<br>Would you like to add a record with the above details?",ja:"\u958b\u59cb\u65e5\u4ed8: %start%<br>\u7d42\u4e86\u65e5\u4ed8: %end%<br>\u4e0a\u8a18\u5185\u5bb9\u3067\u30ec\u30b3\u30fc\u30c9\u3092\u8ffd\u52a0\u3057\u307e\u3059\u304b\uff1f",zh:"\u5f00\u59cb\u65e5\u671f: %start%<br>\u7ed3\u675f\u65e5\u671f: %end%<br>\u60a8\u60f3\u6839\u636e\u4e0a\u8ff0\u5185\u5bb9\u6dfb\u52a0\u8bb0\u5f55\u5417\uff1f"},
-single:{en:"Date: %date%<br>Would you like to add a record with the above content?",ja:"\u65e5\u4ed8: %date%<br>\u4e0a\u8a18\u5185\u5bb9\u3067\u30ec\u30b3\u30fc\u30c9\u3092\u8ffd\u52a0\u3057\u307e\u3059\u304b\uff1f",zh:"\u65e5\u671f: %date%<br>\u60a8\u60f3\u6dfb\u52a0\u4e0a\u8ff0\u5185\u5bb9\u7684\u8bb0\u5f55\u5417\uff1f"}},edit:{en:"Do you want to edit the record?",ja:"\u30ec\u30b3\u30fc\u30c9\u3092\u7de8\u96c6\u3057\u307e\u3059\u304b\uff1f",zh:"\u60a8\u60f3\u7f16\u8f91\u8fd9\u6761\u8bb0\u5f55\u5417\uff1f"}}}}},
-kb.constants);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	var apply=(container,setting) => {
+		((viewInfo) => {
+			var calendar=new FullCalendar.Calendar(container.addClass('kb-calendar'),{
+				buttonText:(() => {
+					var res={};
+					switch (kb.operator.language)
+					{
+						case 'en':
+							res={month:'month',week:'week',day:'day'};
+							break;
+						case 'ja':
+							res={month:'月',week:'週',day:'日'};
+							break;
+						case 'zh':
+							res={month:'月',week:'周',day:'日'};
+							break;
+					}
+					return res;
+				})(),
+				customButtons:{
+					pickup:{
+						text:'',
+						click:(e) => {
+							kb.pickupDate(calendar.getDate().format('Y-m-d'),(date) => {
+								calendar.gotoDate(new Date(date));
+							});
+						}
+					}
+				},
+				editable:viewInfo.editable,
+				eventDurationEditable:(!viewInfo.singleDay),
+				firstDay:parseInt((setting.first || {value:'0'}).value),
+				headerToolbar:{
+					left:'prev,next,pickup,title',
+					right:Object.values(viewInfo.type).join(',')
+				},
+				initialDate:viewInfo.session.date,
+				initialView:((initial) => {
+					var res='';
+					switch (initial)
+					{
+						case 'day':
+							res=viewInfo.type.day;
+							break;
+						case 'month':
+							res=viewInfo.type.month;
+							break;
+						case 'week':
+							res=viewInfo.type.week;
+							break;
+						default:
+							res=initial;
+							break;
+					}
+					return res;
+				})(viewInfo.session.initial),
+				navLinks:true,
+				nowIndicator:((!viewInfo.singleDay)?(viewInfo.time.start || viewInfo.time.end):false),
+				selectable:viewInfo.editable,
+				timeZone:'local',
+				datesSet:(info) => {
+					sessionStorage.setItem('kb-calendar-'+setting.view.value,JSON.stringify({date:calendar.getDate().toISOString(),initial:info.view.type}));
+					window.scrollTo(0,0);
+				},
+				eventChange:(info) => {
+					kb.view.records.set(
+						vars.app.id,
+						{
+							put:(() => {
+								var res={id:info.event.extendedProps.recordId,record:{}};
+								((changed) => {
+									if (!viewInfo.tableCode) res.record[setting.start.value]={value:(viewInfo.time.start)?changed.start.toISOString():changed.start.format('Y-m-d')};
+									else
+									{
+										res.record[viewInfo.tableCode]={value:vars.records[info.event.extendedProps.recordId][viewInfo.tableCode].value.map((item) => {
+											if (item.id==info.event.extendedProps.rowId) item.value[setting.start.value]={value:(viewInfo.time.start)?changed.start.toISOString():changed.start.format('Y-m-d')};
+											return item;
+										})};
+									}
+									if (!viewInfo.singleDay)
+									{
+										if (!viewInfo.tableCode) res.record[setting.end.value]={value:(viewInfo.time.end)?changed.end.toISOString():changed.end.format('Y-m-d')};
+										else
+										{
+											res.record[viewInfo.tableCode]={value:vars.records[info.event.extendedProps.recordId][viewInfo.tableCode].value.map((item) => {
+												if (item.id==info.event.extendedProps.rowId) item.value[setting.end.value]={value:(viewInfo.time.end)?changed.end.toISOString():changed.end.format('Y-m-d')};
+												return item;
+											})};
+										}
+									}
+								})({
+									start:info.event.start,
+									end:(() => {
+										var res=null;
+										if (!viewInfo.singleDay)
+										{
+											if (viewInfo.time.end) res=info.event.end;
+											else
+											{
+												if (viewInfo.time.start)
+												{
+													if (info.event.end.getHours()+info.event.end.getMinutes()==0) res=info.event.end.calc('-1 day');
+													else res=info.event.end;
+												}
+												else res=info.event.end.calc(((info.event.allDay)?'-1':'0')+' day');
+											}
+										}
+										return res;
+									})()
+								});
+								return [res];
+							})()
+						}
+					)
+					.then((resp) => {})
+					.catch((error) => kb.alert(kb.error.parse(error)))
+				},
+				eventDidMount:(info) => {
+					info.el.elms('.fc-event-time,.fc-event-title').each((element,index) => {
+						element
+						.on('touchstart,mousedown',(e) => {
+							e.stopPropagation();
+						})
+						.on('click',(e) => {
+							kb.confirm(kb.constants.calendar.message.confirm.edit[kb.operator.language],() => {
+								((isDetail) => {
+									if (!isDetail) sessionStorage.setItem('kb-calendar-edit',JSON.stringify({href:window.location.href}));
+									window.location.href=info.event.extendedProps.url;
+								})((setting.page || {value:[]}).value.includes('detail'));
+							});
+							e.stopPropagation();
+							e.preventDefault();
+						})
+					});
+				},
+				events:(info,success,failure) => {
+					kb.view.records.get(
+						vars.app.id,
+						((query) => {
+							var res=[];
+							var stringify=(type,date,pattern) => {
+								var res='';
+								if (viewInfo.timeStamp[type]) res=(((viewInfo.time[type])?date.calc(pattern+' second').getTime():date.calc(pattern+' day').getTime())/1000).toString();
+								else res='"'+((viewInfo.time[type])?date.calc(pattern+' second').toISOString():date.calc(pattern+' day').format('Y-m-d'))+'"';
+								return res;
+							};
+							res.push((() => {
+								var res=[];
+								res.push(setting.start.value+((viewInfo.tableCode)?' not in ("")':'!=""'));
+								res.push(setting.start.value+'>'+stringify('start',info.start,'-1'));
+								res.push(setting.start.value+'<'+stringify('start',info.end,'1'));
+								return '('+res.join(' and ')+')';
+							})());
+							if (!viewInfo.singleDay)
+							{
+								res.push((() => {
+									var res=[];
+									res.push(setting.end.value+((viewInfo.tableCode)?' not in ("")':'!=""'));
+									res.push(setting.end.value+'>'+stringify('end',info.start,'-1'));
+									res.push(setting.end.value+'<'+stringify('end',info.end,'1'));
+									return '('+res.join(' and ')+')';
+								})());
+								res.push((() => {
+									var res=[];
+									res.push(setting.start.value+'<'+stringify('start',info.start,'0'));
+									res.push(setting.end.value+'>'+stringify('end',info.end,'0'));
+									return '('+res.join(' and ')+')';
+								})());
+							}
+							return ((query)?'('+query+') and ':'')+'('+res.join(' or ')+')';
+						})(((vars.mobile)?kintone.mobile.app:kintone.app).getQueryCondition())
+					)
+					.then((records) => {
+						var recurse=(index,callback) => {
+							var finish=() => {
+								index++;
+								if (index<records.length) recurse(index,callback);
+								else callback();
+							};
+							kb.event.call('kb.style.call',{container:kb.elm('body'),record:records[index],mobile:vars.mobile,pattern:'detail',workplace:'view'})
+							.then((param) => finish())
+							.catch((error) => finish());
+						};
+						vars.records={};
+						if (records.length!=0)
+						{
+							recurse(0,() => {
+								success(((records) => {
+									return records.map((item) => {
+										return {
+											title:kb.field.stringify(vars.fieldInfos.parallelize[setting.title.value],item[setting.title.value].value,' / '),
+											start:((value) => {
+												var res=value;
+												if (!viewInfo.singleDay)
+													if (!viewInfo.time.start)
+														if (viewInfo.time.end) res=new Date(res).calc(kb.timezoneOffset()+' hour').toISOString();
+												return res;
+											})(item[setting.start.value].value),
+											end:((value) => {
+												var res=value;
+												if (!viewInfo.singleDay)
+													if (viewInfo.time.start)
+													{
+														if (!viewInfo.time.end) res=new Date(res).calc('1 day').calc(kb.timezoneOffset()+' hour').toISOString();
+													}
+													else
+													{
+														if (!viewInfo.time.end) res=new Date(res).calc('1 day').format('Y-m-d');
+													}
+												return res;
+											})((!viewInfo.singleDay)?item[setting.end.value].value:null),
+											backgroundColor:item[setting.title.value].backcolor,
+											borderColor:item[setting.title.value].backcolor,
+											textColor:item[setting.title.value].forecolor,
+											extendedProps:{
+												recordId:item['$id'].value,
+												rowId:(('$rowId' in item)?item['$rowId']:-1),
+												url:((isDetail,addId,recordId) => {
+													return (isDetail)?kb.record.page.detail(vars.mobile,addId,recordId):kb.record.page.edit(vars.mobile,addId,recordId);
+												})((setting.page || {value:[]}).value.includes('detail'),kb.config[PLUGIN_ID].app,item['$id'].value),
+											}
+										};
+									});
+								})(records.reduce((result,current) => {
+									vars.records[current['$id'].value]=current;
+									if (viewInfo.tableCode)
+									{
+										result=result.concat(current[viewInfo.tableCode].value.map((item) => {
+											item.value['$id']=current['$id'];
+											item.value['$rowId']=item.id;
+											return item.value;
+										}));
+									}
+									else result.push(current);
+									return result;
+								},[])));
+							});
+						}
+						else success([]);
+					})
+					.catch((error) => kb.alert(kb.error.parse(error)))
+				},
+				select:(info) => {
+					((selected) => {
+						if (viewInfo.singleDay)
+						{
+							if (selected.start.format('Y-m-d')==selected.end.format('Y-m-d'))
+							{
+								kb.confirm(
+									(() => {
+										var res=kb.constants.calendar.message.confirm.create.single[kb.operator.language];
+										res=res.replace(/%date%/,selected.start.format((viewInfo.time.start)?'Y-m-d H:i':'Y-m-d'));
+										return res;
+									})(),
+									() => {
+										sessionStorage.setItem('kb-calendar-create',JSON.stringify({
+											href:window.location.href,
+											start:{
+												code:setting.start.value,
+												tableCode:viewInfo.tableCode,
+												value:(viewInfo.time.start)?selected.start.toISOString():selected.start.format('Y-m-d')
+											}
+										}));
+										window.location.href=kb.record.page.add(vars.mobile,kb.config[PLUGIN_ID].app);
+									}
+								);
+							}
+						}
+						else
+						{
+							kb.confirm(
+								(() => {
+									var res=kb.constants.calendar.message.confirm.create.multi[kb.operator.language];
+									res=res.replace(/%start%/,selected.start.format((viewInfo.time.start)?'Y-m-d H:i':'Y-m-d'));
+									res=res.replace(/%end%/,selected.end.format((viewInfo.time.end)?'Y-m-d H:i':'Y-m-d'));
+									return res;
+								})(),
+								() => {
+									sessionStorage.setItem('kb-calendar-create',JSON.stringify({
+										href:window.location.href,
+										start:{
+											code:setting.start.value,
+											tableCode:viewInfo.tableCode,
+											value:(viewInfo.time.start)?selected.start.toISOString():selected.start.format('Y-m-d')
+										},
+										end:{
+											code:setting.end.value,
+											tableCode:viewInfo.tableCode,
+											value:(viewInfo.time.end)?selected.end.toISOString():selected.end.format('Y-m-d')
+										}
+									}));
+									window.location.href=kb.record.page.add(vars.mobile,kb.config[PLUGIN_ID].app);
+								}
+							);
+						}
+					})({
+						start:info.start,
+						end:(viewInfo.time.end)?info.end:info.end.calc(((info.allDay)?'-1':'0')+' day')
+					});
+					calendar.unselect();
+				}
+			});
+			calendar.setOption('locale',kb.operator.language);
+			calendar.render();
+		})(((timeInfos) => {
+			return {
+				editable:(timeInfos.start.isEditable && timeInfos.end.isEditable),
+				singleDay:(!setting.end.value),
+				session:((session) => {
+					return (session)?JSON.parse(session):{date:new Date().format('Y-m-d'),initial:setting.initial.value};
+				})(sessionStorage.getItem('kb-calendar-'+setting.view.value)),
+				tableCode:vars.fieldInfos.parallelize[setting.title.value].tableCode,
+				time:{
+					start:timeInfos.start.isDateTime,
+					end:timeInfos.end.isDateTime
+				},
+				timeStamp:{
+					start:timeInfos.start.isTimeStamp,
+					end:timeInfos.end.isTimeStamp
+				},
+				type:{
+					month:'dayGridMonth',
+					week:((setting.end.value)?((timeInfos.start.isDateTime || timeInfos.end.isDateTime)?'timeGridWeek':'dayGridWeek'):'dayGridWeek'),
+					day:((setting.end.value)?((timeInfos.start.isDateTime || timeInfos.end.isDateTime)?'timeGridDay':'dayGridDay'):'dayGridDay')
+				}
+			};
+		})({
+			start:((fieldInfo) => {
+				switch (fieldInfo.type)
+				{
+					case 'CALC':
+						switch (fieldInfo.format)
+						{
+							case 'DATE':
+								fieldInfo.isDateTime=false;
+								fieldInfo.isEditable=false;
+								break;
+							case 'DATETIME':
+								fieldInfo.isDateTime=true;
+								fieldInfo.isEditable=false;
+								break;
+						}
+						fieldInfo.isTimeStamp=true;
+						break;
+					case 'CREATED_TIME':
+					case 'UPDATED_TIME':
+						fieldInfo.isDateTime=true;
+						fieldInfo.isEditable=false;
+						fieldInfo.isTimeStamp=false;
+						break;
+					case 'DATE':
+						fieldInfo.isDateTime=false;
+						fieldInfo.isEditable=true;
+						fieldInfo.isTimeStamp=false;
+						break;
+					case 'DATETIME':
+						fieldInfo.isDateTime=true;
+						fieldInfo.isEditable=true;
+						fieldInfo.isTimeStamp=false;
+						break;
+				}
+				return fieldInfo;
+			})(vars.fieldInfos.parallelize[setting.start.value]),
+			end:((fieldInfo) => {
+				switch (fieldInfo.type)
+				{
+					case 'CALC':
+						switch (fieldInfo.format)
+						{
+							case 'DATE':
+								fieldInfo.isDateTime=false;
+								fieldInfo.isEditable=false;
+								break;
+							case 'DATETIME':
+								fieldInfo.isDateTime=true;
+								fieldInfo.isEditable=false;
+								break;
+						}
+						fieldInfo.isTimeStamp=true;
+						break;
+					case 'CREATED_TIME':
+					case 'UPDATED_TIME':
+						fieldInfo.isDateTime=true;
+						fieldInfo.isEditable=false;
+						fieldInfo.isTimeStamp=false;
+						break;
+					case 'DATE':
+						fieldInfo.isDateTime=false;
+						fieldInfo.isEditable=true;
+						fieldInfo.isTimeStamp=false;
+						break;
+					case 'DATETIME':
+						fieldInfo.isDateTime=true;
+						fieldInfo.isEditable=true;
+						fieldInfo.isTimeStamp=false;
+						break;
+					default:
+						fieldInfo.isDateTime=false;
+						fieldInfo.isEditable=true;
+						fieldInfo.isTimeStamp=false;
+						break;
+				}
+				return fieldInfo;
+			})((setting.end.value)?vars.fieldInfos.parallelize[setting.end.value]:{type:''})
+		}));
+	};
+	kintone.events.on([
+		'app.record.index.show',
+		'mobile.app.record.index.show'
+	],(e) => {
+		return new Promise((resolve,reject) => {
+			((mobile,type) => {
+				vars.mobile=mobile;
+				vars.type=type;
+				/* get config */
+				kb.config[PLUGIN_ID].config.get()
+				.then((config) => {
+					if (Object.keys(config).length!=0)
+					{
+						kb.field.load(kb.config[PLUGIN_ID].app,true).then((fieldInfos) => {
+							vars.app={
+								id:kb.config[PLUGIN_ID].app,
+								fields:fieldInfos.origin
+							}
+							vars.fieldInfos=fieldInfos;
+							vars.records={};
+							try
+							{
+								((setting) => {
+									if (setting)
+									{
+										if (setting.title.value)
+											if (!(setting.title.value in vars.fieldInfos.parallelize))
+											{
+												resolve(e);
+											}
+										if (setting.start.value)
+											if (!(setting.start.value in vars.fieldInfos.parallelize))
+											{
+												resolve(e);
+											}
+										if (setting.end.value)
+											if (!(setting.end.value in vars.fieldInfos.parallelize))
+											{
+												resolve(e);
+											}
+										((container) => {
+											if (container) apply(container,setting);
+										})(kb.elm('#kb-calendar'));
+										resolve(e);
+									}
+									else resolve(e);
+								})(JSON.parse(config.tab).map((item,index) => kb.extend({sIndex:{value:index.toString()}},item.setting)).reduce((result,current) => {
+									if (current.view.value==e.viewId.toString()) result=current;
+									return result;
+								},null));
+							}
+							catch(error)
+							{
+								kb.alert(kb.error.parse(error));
+								resolve(e);
+							}
+						})
+						.catch((error) => resolve(e));
+					}
+					else resolve(e);
+				})
+				.catch((error) => resolve(e));
+			})(e.type.split('.').first()=='mobile',e.type.split('.').slice(-2).first());
+		});
+	});
+	kintone.events.on([
+		'app.record.create.show',
+		'mobile.app.record.create.show'
+	],(e) => {
+		return new Promise((resolve,reject) => {
+			((param) => {
+				if (param)
+				{
+					((param) => {
+						if (param.start) ((param.start.tableCode)?e.record[param.start.tableCode].value.first().value[param.start.code]:e.record[param.start.code]).value=param.start.value;
+						if (param.end) ((param.end.tableCode)?e.record[param.end.tableCode].value.first().value[param.end.code]:e.record[param.end.code]).value=param.end.value;
+						kintone.events.on([
+							'app.record.create.submit.success',
+							'mobile.app.record.create.submit.success'
+						],(e) => {
+							return new Promise((resolve,reject) => {
+								e.url=param.href;
+								resolve(e);
+							});
+						});
+					})(JSON.parse(param));
+					sessionStorage.removeItem('kb-calendar-create');
+					resolve(e);
+				}
+				else resolve(e);
+			})(sessionStorage.getItem('kb-calendar-create'));
+		});
+	});
+	kintone.events.on([
+		'app.record.edit.show',
+		'mobile.app.record.edit.show'
+	],(e) => {
+		return new Promise((resolve,reject) => {
+			((param) => {
+				if (param)
+				{
+					((param) => {
+						((button) => {
+							button.parentNode.insertBefore(button.clone().removeAttr('disabled').on('click',(e) => {
+								window.location.href=param.href;
+							}),button.hide().nextElementSibling);
+						})(kb.elm((e.type.split('.').first()=='mobile')?'.gaia-mobile-v2-app-record-edittoolbar-cancel':'.gaia-ui-actionmenu-cancel'));
+						kintone.events.on([
+							'app.record.edit.submit.success',
+							'mobile.app.record.edit.submit.success'
+						],(e) => {
+							return new Promise((resolve,reject) => {
+								e.url=param.href;
+								resolve(e);
+							});
+						});
+					})(JSON.parse(param));
+					sessionStorage.removeItem('kb-calendar-edit');
+					resolve(e);
+				}
+				else resolve(e);
+			})(sessionStorage.getItem('kb-calendar-edit'));
+		});
+	});
+})(kintone.$PLUGIN_ID);
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	calendar:{
+		message:{
+			confirm:{
+				create:{
+					multi:{
+						en:'Start Date: %start%<br>End Date: %end%<br>Would you like to add a record with the above details?',
+						ja:'開始日付: %start%<br>終了日付: %end%<br>上記内容でレコードを追加しますか？',
+						zh:'开始日期: %start%<br>结束日期: %end%<br>您想根据上述内容添加记录吗？'
+					},
+					single:{
+						en:'Date: %date%<br>Would you like to add a record with the above content?',
+						ja:'日付: %date%<br>上記内容でレコードを追加しますか？',
+						zh:'日期: %date%<br>您想添加上述内容的记录吗？'
+					}
+				},
+				edit:{
+					en:'Do you want to edit the record?',
+					ja:'レコードを編集しますか？',
+					zh:'您想编辑这条记录吗？'
+				}
+			}
+		}
+	}
+},kb.constants);

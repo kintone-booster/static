@@ -5,22 +5,548 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-(function(J){var p={},L=function(e,l,B){B=void 0===B?!1:B;return new Promise(function(A,w){var r=function(u,m){var n=function(){u++;u<e.length?r(u,m):m()};(function(c){var f=kb.filter.scan(p.app,l,c.condition.value);f?kb.filter.auth(c.user.value,c.organization.value,c.group.value).then(function(C){C?kb.field.load(c.app.value).then(function(z){var E={id:c.app.value,fields:z.origin};(function(q){var G=[],M=[],P=[],H={},D=1,N=1,F=0,K=0,O=function(){var k=[],x={field:function(a,d){var v=a.tableCode?f[a.tableCode].value.length>
-d?f[a.tableCode].value[d].value[a.code]:kb.record.create({fields:{empty:mapping.internal}}).empty:f[a.code];return kb.extend({type:a.type},v)},record:function(a){N.each(function(d){var v=function(b){var h=kb.filter.scan(E,a,b.query);if(!h&&"upsert"==c.pattern.value){for(var g in b.rows)0==kb.filter.result[g].value.length&&(a[g].value.push({value:kb.extend({},b.rows[g])}),kb.filter.result[g]={value:[a[g].value.last()]});h=kb.filter.result}return h}(function(){var b={rows:{},query:[]};K=d;G.each(function(h,
-g){h.external.tableCode&&(h.external.tableCode in b.rows||(b.rows[h.external.tableCode]=kb.record.create(E.fields[h.external.tableCode],!1)),b.rows[h.external.tableCode][h.external.code]=t(h.external,x.field(h.internal,K)),b.query.push(kb.filter.query.create(h.external,h.operator,x.field(h.internal,K))))});M.each(function(h,g){h.field.tableCode&&b.query.push(h.field.code+" "+h.operator+" "+h.value)});b.query=b.query.join(" and ");return b}());v&&P.each(function(b,h){b.external.tableCode?b.external.tableCode in
-H?(a[b.external.tableCode]={value:H[b.external.tableCode]},H[b.external.tableCode].each(function(g,I){g.value[b.external.code]=t(b.external,x.field(b.internal,I));"FILE"==b.external.type&&g.value[b.external.code].value&&Array.prototype.push.apply(k,g.value[b.external.code].value)})):v[b.external.tableCode].value.each(function(g,I){g.value[b.external.code]=t(b.external,x.field(b.internal,K));"FILE"==b.external.type&&g.value[b.external.code].value&&Array.prototype.push.apply(k,g.value[b.external.code].value)}):
-(a[b.external.code]=t(b.external,x.field(b.internal,F)),"FILE"==b.external.type&&a[b.external.code].value&&Array.prototype.push.apply(k,a[b.external.code].value))})});return a}},t=function(a,d){switch(a.type){case "CHECK_BOX":case "FILE":case "GROUP_SELECT":case "MULTI_SELECT":case "ORGANIZATION_SELECT":case "USER_SELECT":Array.isArray(d.value)||(d.value=[d.value])}d.type=a.type;return a.lookup?kb.extend({lookup:!0},d):d},y=function(a){a.each(function(d,v){c.formula.value.each(function(b,h){b.value.field.value in
-q.external&&function(g){g.tableCode?d[g.tableCode].value.each(function(I,Q){I.value[g.code].value=kb.formula.calculate(b.value,I.value,d,d,q.external);g.lookup&&(I.value[g.code].lookup=!0)}):(d[g.code].value=kb.formula.calculate(b.value,d,d,d,q.external),g.lookup&&(d[g.code].lookup=!0))}(q.external[b.value.field.value])})});return a};"insert"==c.pattern.value?function(a){kb.file.clone(k,!0).then(function(){kb.view.records.set(c.app.value,{post:a},B).then(function(d){F++;F<D?O():n()})["catch"](function(d){kb.alert(kb.error.parse(d));
-w()})})}(y([x.record(kb.record.create(E))])):kb.view.records.get(c.app.value,function(){var a=[];G.each(function(d,v){d.external.tableCode||a.push(kb.filter.query.create(d.external,d.operator,x.field(d.internal,F)))});M.each(function(d,v){d.field.tableCode||a.push(d.field.code+" "+d.operator+" "+d.value)});return a.join(" and ")}()).then(function(a){a=function(d){var v=[];0!=d.length?v=d.map(function(b){return x.record(b)}):"upsert"==c.pattern.value&&function(b){v.push(x.record(function(){var h=kb.record.create(E);
-b.each(function(g,I){g.external.tableCode?h[g.external.tableCode]={value:[]}:h[g.external.code]=t(g.external,x.field(g.internal,F))});return h}()))}(G.filter(function(b){return!kb.field.reserved.includes(b.external.type)}));return y(v)}(a);kb.file.clone(k,!0).then(function(){kb.view.records.set(c.app.value,{post:a.filter(function(d){return!d.$id.value}),put:a.reduce(function(d,v){v.$id.value&&d.push(kb.view.records.transform(v));return d},[])},B).then(function(d){F++;F<D?O():n()})["catch"](function(d){kb.alert(kb.error.parse(d));
-w()})})})["catch"](function(a){kb.alert(kb.error.parse(a));w()})};c.mapping.value.some(function(k){return!(k.value.external.value in q.external&&k.value.internal.value in q.internal)})?(kb.alert("No field to transfer was found"),w()):c.criteria.value.some(function(k){return!(k.value.external.value in q.external&&k.value.internal.value in q.internal)})?(kb.alert("No field to transfer was found"),w()):(c.mapping.value.each(function(k,x){(function(t,y){t.tableCode?H[t.tableCode]=function(a){a=a?a.length:
-1;y.tableCode&&(a=a<f[y.tableCode].value.length?f[y.tableCode].value.length:a);return Array(a).fill().map(function(){return{value:kb.record.create(E.fields[t.tableCode],!1)}})}(H[t.tableCode]):y.tableCode&&(D=0==f[y.tableCode].value.length?0:D<f[y.tableCode].value.length?f[y.tableCode].value.length:D);P.push({external:t,internal:y})})(q.external[k.value.external.value],q.internal[k.value.internal.value])}),c.criteria.value.each(function(k,x){var t=q.external[k.value.external.value],y=k.value.operator.value,
-a=q.internal[k.value.internal.value];t.tableCode?(t.tableCode in H&&delete H[t.tableCode],a.tableCode&&(N=N<f[a.tableCode].value.length?f[a.tableCode].value.length:N)):a.tableCode&&(D=0==f[a.tableCode].value.length?0:D<f[a.tableCode].value.length?f[a.tableCode].value.length:D);G.push({external:t,operator:y,internal:a})}),kb.filter.query.parse(c.filter.value).each(function(k,x){M.push({field:q.external[k.field],operator:k.operator,value:k.value})}),0!=D?(K=F=0,O()):n())})({external:z.parallelize,internal:p.fieldInfos.parallelize})})["catch"](function(z){kb.alert(kb.error.parse(z));
-w()}):n()})["catch"](function(C){kb.alert(kb.error.parse(C));w()}):n()})(e[u])};B||kb.loadStart();r(0,function(){B||kb.loadEnd();A()})})};kintone.events.on("app.record.create.submit.success app.record.detail.process.proceed app.record.detail.show app.record.edit.submit.success app.record.index.show mobile.app.record.create.submit.success mobile.app.record.detail.process.proceed mobile.app.record.detail.show mobile.app.record.edit.submit.success mobile.app.record.index.show".split(" "),function(e){return new Promise(function(l,
-B){(function(A,w){p.mobile=A;p.type=w;kb.config[J].config.get().then(function(r){0!=Object.keys(r).length?kb.field.load(kb.config[J].app,!0).then(function(u){p.app={id:kb.config[J].app,fields:u.origin};p.fieldInfos=u;try{(function(m){if(0!=m.length)switch(p.type){case "create":case "edit":L(m,e.record).then(function(c){return l(e)})["catch"](function(){});break;case "process":(function(c){0!=c.length?L(c,e.record).then(function(f){return l(e)})["catch"](function(){}):l(e)})(m.filter(function(c){return c.action.value==
-e.action.value+":"+e.status.value+":"+e.nextStatus.value}));break;case "detail":var n=function(c){(function(f){kb.filter.scan(p.app,e.record,f.condition.value)?kb.filter.auth(f.user.value,f.organization.value,f.group.value).then(function(C){C&&kb.button.create(p.mobile,p.type,"kb-upsert-button"+c.toString(),f.label.value,f.message.value,function(){return L([f],e.record).then(function(z){return kb.alert("Done!")})["catch"](function(){})});c++;c<m.length&&n(c)})["catch"](function(C){c++;c<m.length&&
-n(c)}):(c++,c<m.length&&n(c))})(m[c])};n(0);l(e);break;case "index":n=function(c){(function(f){kb.filter.auth(f.user.value,f.organization.value,f.group.value).then(function(C){C&&(f.view.value&&f.view.value!=e.viewId.toString()||kb.button.create(p.mobile,p.type,"kb-upsert-button"+c.toString(),f.label.value,f.message.value,function(){kb.view.records.get(p.app.id,(p.mobile?kintone.mobile.app:kintone.app).getQueryCondition()).then(function(z){var E=function(q,G){L([f],z[q],!0).then(function(M){kb.progressUpdate();
-q++;q<z.length?E(q,G):G()})["catch"](function(){})};0!=z.length?(kb.progressStart(z.length),E(0,function(){return kb.alert("Done!")})):kb.alert("There are no records.")})["catch"](function(z){return kb.alert(kb.error.parse(z))})}));c++;c<m.length&&n(c)})["catch"](function(C){c++;c<m.length&&n(c)})})(m[c])},n(0),l(e)}else l(e)})(JSON.parse(r.tab).map(function(m,n){return kb.extend({sIndex:{value:n.toString()}},m.setting)}).reduce(function(m,n){(p.mobile?["both","mobile"]:["both","pc"]).includes(n.device.value)&&
-n.event.value.includes(p.type)&&m.push(n);return m},[]))}catch(m){kb.alert(kb.error.parse(m)),l(e)}})["catch"](function(u){return l(e)}):l(e)})["catch"](function(r){return l(e)})})("mobile"==e.type.split(".").first(),function(A){switch(A){case "submit":A=e.type.split(".").slice(-3).first()}return A}(e.type.split(".").slice(-2).first()))})});kb.event.on("kb.upsert.call",function(e){return new Promise(function(l,B){kb.config[J].config.get().then(function(A){0!=Object.keys(A).length?kb.field.load(kb.config[J].app,
-!0).then(function(w){p.app={id:kb.config[J].app,fields:w.origin};p.fieldInfos=w;try{(function(r){0!=r.length?L(r,e.record,!0).then(function(u){return l(e)})["catch"](function(){return l(e)}):l(e)})(JSON.parse(A.tab).map(function(r,u){return kb.extend({sIndex:{value:u.toString()}},r.setting)}).reduce(function(r,u){(e.mobile?["both","mobile"]:["both","pc"]).includes(u.device.value)&&u.event.value.includes(e.pattern)&&r.push(u);return r},[]))}catch(r){kb.alert(kb.error.parse(r)),l(e)}})["catch"](function(w){return l(e)}):
-l(e)})["catch"](function(A){return l(e)})})})})(kintone.$PLUGIN_ID);
+"use strict";
+((PLUGIN_ID) => {
+	var vars={};
+	var apply=(settings,record,silent=false) => {
+		return new Promise((resolve,reject) => {
+			var recurse=(index,callback) => {
+				var finish=() => {
+					index++;
+					if (index<settings.length) recurse(index,callback);
+					else callback();
+				};
+				((setting) => {
+					var result=kb.filter.scan(vars.app,record,setting.condition.value);
+					if (result)
+					{
+						kb.filter.auth(setting.user.value,setting.organization.value,setting.group.value)
+						.then((auth) => {
+							if (auth)
+							{
+								kb.field.load(setting.app.value).then((fieldInfos) => {
+									var target={
+										id:setting.app.value,
+										fields:fieldInfos.origin
+									};
+									((fields) => {
+										var criterias=[];
+										var filters=[];
+										var mappings=[];
+										var tables={};
+										var increments={
+											record:1,
+											row:1,
+											progress:{
+												record:0,
+												row:0
+											}
+										};
+										var deepRecurse=() => {
+											var files=[];
+											var create={
+												field:(fieldInfo,index) => {
+													var res=null;
+													if (fieldInfo.tableCode)
+													{
+														if (result[fieldInfo.tableCode].value.length>index) res=result[fieldInfo.tableCode].value[index].value[fieldInfo.code];
+														else res=kb.record.create({fields:{empty:mapping.internal}}).empty;
+													}
+													else res=result[fieldInfo.code];
+													return kb.extend({type:fieldInfo.type},res);
+												},
+												record:(origin) => {
+													increments.row.each((index) => {
+														var record=((param) => {
+															var res=kb.filter.scan(target,origin,param.query);
+															if (!res)
+																if (setting.pattern.value=='upsert')
+																{
+																	for (var key in param.rows)
+																		if (kb.filter.result[key].value.length==0)
+																		{
+																			origin[key].value.push({value:kb.extend({},param.rows[key])});
+																			kb.filter.result[key]={value:[origin[key].value.last()]};
+																		}
+																	res=kb.filter.result;
+																}
+															return res;
+														})((() => {
+															var res={
+																rows:{},
+																query:[]
+															};
+															increments.progress.row=index;
+															criterias.each((criteria,index) => {
+																if (criteria.external.tableCode)
+																{
+																	if (!(criteria.external.tableCode in res.rows)) res.rows[criteria.external.tableCode]=kb.record.create(target.fields[criteria.external.tableCode],false);
+																	res.rows[criteria.external.tableCode][criteria.external.code]=cast(criteria.external,create.field(criteria.internal,increments.progress.row));
+																	res.query.push(kb.filter.query.create(criteria.external,criteria.operator,create.field(criteria.internal,increments.progress.row)));
+																}
+															});
+															filters.each((filter,index) => {
+																if (filter.field.tableCode) res.query.push(filter.field.code+' '+filter.operator+' '+filter.value);
+															});
+															res.query=res.query.join(' and ');
+															return res;
+														})());
+														if (record)
+														{
+															mappings.each((mapping,index) => {
+																if (mapping.external.tableCode)
+																{
+																	if (mapping.external.tableCode in tables)
+																	{
+																		origin[mapping.external.tableCode]={value:tables[mapping.external.tableCode]};
+																		tables[mapping.external.tableCode].each((row,index) => {
+																			row.value[mapping.external.code]=cast(mapping.external,create.field(mapping.internal,index));
+																			if (mapping.external.type=='FILE')
+																				if (row.value[mapping.external.code].value)
+																					Array.prototype.push.apply(files,row.value[mapping.external.code].value);
+																		});
+																	}
+																	else
+																	{
+																		record[mapping.external.tableCode].value.each((row,index) => {
+																			row.value[mapping.external.code]=cast(mapping.external,create.field(mapping.internal,increments.progress.row));
+																			if (mapping.external.type=='FILE')
+																				if (row.value[mapping.external.code].value)
+																					Array.prototype.push.apply(files,row.value[mapping.external.code].value);
+																		});
+																	}
+																}
+																else
+																{
+																	origin[mapping.external.code]=cast(mapping.external,create.field(mapping.internal,increments.progress.record));
+																	if (mapping.external.type=='FILE')
+																		if (origin[mapping.external.code].value)
+																			Array.prototype.push.apply(files,origin[mapping.external.code].value);
+																}
+															});
+														}
+													});
+													return origin;
+												}
+											};
+											var cast=(fieldInfo,value) => {
+												switch (fieldInfo.type)
+												{
+													case 'CHECK_BOX':
+													case 'FILE':
+													case 'GROUP_SELECT':
+													case 'MULTI_SELECT':
+													case 'ORGANIZATION_SELECT':
+													case 'USER_SELECT':
+														if (!Array.isArray(value.value)) value.value=[value.value];
+														break;
+												}
+												value.type=fieldInfo.type;
+												return (fieldInfo.lookup)?kb.extend({lookup:true},value):value;
+											};
+											var formula=(records) => {
+												records.each((record,index) => {
+													setting.formula.value.each((formula,index) => {
+														if (formula.value.field.value in fields.external)
+															((fieldInfo) => {
+																if (fieldInfo.tableCode)
+																{
+																	record[fieldInfo.tableCode].value.each((row,index) => {
+																		row.value[fieldInfo.code].value=kb.formula.calculate(formula.value,row.value,record,record,fields.external);
+																		if (fieldInfo.lookup) row.value[fieldInfo.code].lookup=true;
+																	});
+																}
+																else
+																{
+																	record[fieldInfo.code].value=kb.formula.calculate(formula.value,record,record,record,fields.external);
+																	if (fieldInfo.lookup) record[fieldInfo.code].lookup=true;
+																}
+															})(fields.external[formula.value.field.value]);
+													});
+												});
+												return records;
+											};
+											if (setting.pattern.value=='insert')
+											{
+												((records) => {
+													kb.file.clone(files,true).then(() => {
+														kb.view.records.set(setting.app.value,{post:records},silent)
+														.then((resp) => {
+															increments.progress.record++;
+															if (increments.progress.record<increments.record) deepRecurse();
+															else finish();
+														})
+														.catch((error) => {
+															kb.alert(kb.error.parse(error));
+															reject();
+														});
+													});
+												})(formula([create.record(kb.record.create(target))]));
+											}
+											else
+											{
+												kb.view.records.get(
+													setting.app.value,
+													(() => {
+														var res=[];
+														criterias.each((criteria,index) => {
+															if (!criteria.external.tableCode) res.push(kb.filter.query.create(criteria.external,criteria.operator,create.field(criteria.internal,increments.progress.record)));
+														});
+														filters.each((filter,index) => {
+															if (!filter.field.tableCode) res.push(filter.field.code+' '+filter.operator+' '+filter.value);
+														})
+														return res.join(' and ');
+													})()
+												)
+												.then((records) => {
+													records=((records) => {
+														var res=[];
+														if (records.length!=0) res=records.map((item) => create.record(item));
+														else
+														{
+															if (setting.pattern.value=='upsert')
+																((criterias) => {
+																	res.push(create.record((() => {
+																		var res=kb.record.create(target);
+																		criterias.each((criteria,index) => {
+																			if (criteria.external.tableCode) res[criteria.external.tableCode]={value:[]};
+																			else res[criteria.external.code]=cast(criteria.external,create.field(criteria.internal,increments.progress.record));
+																		});
+																		return res;
+																	})()));
+																})(criterias.filter((item) => !kb.field.reserved.includes(item.external.type)));
+														}
+														return formula(res);
+													})(records);
+													kb.file.clone(files,true).then(() => {
+														kb.view.records.set(
+															setting.app.value,
+															{
+																post:records.filter((item) => !item['$id'].value),
+																put:records.reduce((result,current) => {
+																	if (current['$id'].value) result.push(kb.view.records.transform(current));
+																	return result;
+																},[])
+															},
+															silent
+														)
+														.then((resp) => {
+															increments.progress.record++;
+															if (increments.progress.record<increments.record) deepRecurse();
+															else finish();
+														})
+														.catch((error) => {
+															kb.alert(kb.error.parse(error));
+															reject();
+														});
+													});
+												})
+												.catch((error) => {
+													kb.alert(kb.error.parse(error));
+													reject();
+												})
+											}
+										};
+										if (setting.mapping.value.some((item) => !((item.value.external.value in fields.external) && (item.value.internal.value in fields.internal))))
+										{
+											kb.alert('No field to transfer was found');
+											reject();
+											return;
+										}
+										if (setting.criteria.value.some((item) => !((item.value.external.value in fields.external) && (item.value.internal.value in fields.internal))))
+										{
+											kb.alert('No field to transfer was found');
+											reject();
+											return;
+										}
+										setting.mapping.value.each((mapping,index) => {
+											((external,internal) => {
+												if (external.tableCode)
+												{
+													tables[external.tableCode]=((rows) => {
+														var range=(rows)?rows.length:1;
+														if (internal.tableCode)
+															range=(range<result[internal.tableCode].value.length)?result[internal.tableCode].value.length:range;
+														return new Array(range).fill().map(() => ({value:kb.record.create(target.fields[external.tableCode],false)}));
+													})(tables[external.tableCode]);
+												}
+												else
+												{
+													if (internal.tableCode)
+													{
+														if (result[internal.tableCode].value.length==0) increments.record=0;
+														else increments.record=(increments.record<result[internal.tableCode].value.length)?result[internal.tableCode].value.length:increments.record;
+													}
+												}
+												mappings.push({
+													external:external,
+													internal:internal
+												});
+											})(fields.external[mapping.value.external.value],fields.internal[mapping.value.internal.value]);
+										});
+										setting.criteria.value.each((criteria,index) => {
+											((external,operator,internal) => {
+												if (external.tableCode)
+												{
+													if (external.tableCode in tables) delete tables[external.tableCode];
+													if (internal.tableCode)
+														increments.row=(increments.row<result[internal.tableCode].value.length)?result[internal.tableCode].value.length:increments.row;
+												}
+												else
+												{
+													if (internal.tableCode)
+													{
+														if (result[internal.tableCode].value.length==0) increments.record=0;
+														else increments.record=(increments.record<result[internal.tableCode].value.length)?result[internal.tableCode].value.length:increments.record;
+													}
+												}
+												criterias.push({
+													external:external,
+													operator:operator,
+													internal:internal
+												});
+											})(fields.external[criteria.value.external.value],criteria.value.operator.value,fields.internal[criteria.value.internal.value]);
+										});
+										kb.filter.query.parse(setting.filter.value).each((query,index) => {
+											filters.push({
+												field:fields.external[query.field],
+												operator:query.operator,
+												value:query.value
+											});
+										});
+										if (increments.record!=0)
+										{
+											increments.progress.record=0;
+											increments.progress.row=0;
+											deepRecurse();
+										}
+										else finish();
+									})({
+										external:fieldInfos.parallelize,
+										internal:vars.fieldInfos.parallelize
+									});
+								})
+								.catch((error) => {
+									kb.alert(kb.error.parse(error));
+									reject();
+								});
+							}
+							else finish();
+						})
+						.catch((error) => {
+							kb.alert(kb.error.parse(error));
+							reject();
+						});
+					}
+					else finish();
+				})(settings[index]);
+			};
+			if (!silent) kb.loadStart();
+			recurse(0,() => {
+				if (!silent) kb.loadEnd();
+				resolve();
+			});
+		});
+	};
+	kintone.events.on([
+		'app.record.create.submit.success',
+		'app.record.detail.process.proceed',
+		'app.record.detail.show',
+		'app.record.edit.submit.success',
+		'app.record.index.show',
+		'mobile.app.record.create.submit.success',
+		'mobile.app.record.detail.process.proceed',
+		'mobile.app.record.detail.show',
+		'mobile.app.record.edit.submit.success',
+		'mobile.app.record.index.show'
+	],(e) => {
+		return new Promise((resolve,reject) => {
+			((mobile,type) => {
+				vars.mobile=mobile;
+				vars.type=type;
+				/* get config */
+				kb.config[PLUGIN_ID].config.get()
+				.then((config) => {
+					if (Object.keys(config).length!=0)
+					{
+						kb.field.load(kb.config[PLUGIN_ID].app,true).then((fieldInfos) => {
+							vars.app={
+								id:kb.config[PLUGIN_ID].app,
+								fields:fieldInfos.origin
+							}
+							vars.fieldInfos=fieldInfos;
+							try
+							{
+								((settings) => {
+									if (settings.length!=0)
+									{
+										switch (vars.type)
+										{
+											case 'create':
+											case 'edit':
+												apply(settings,e.record).then((resp) => resolve(e)).catch(() => {});
+												break;
+											case 'process':
+												((settings) => {
+													if (settings.length!=0) apply(settings,e.record).then((resp) => resolve(e)).catch(() => {});
+													else resolve(e);
+												})(settings.filter((item) => item.action.value==e.action.value+':'+e.status.value+':'+e.nextStatus.value));
+												break;
+											case 'detail':
+												var recurse=(index) => {
+													((setting) => {
+														if (kb.filter.scan(vars.app,e.record,setting.condition.value))
+														{
+															kb.filter.auth(setting.user.value,setting.organization.value,setting.group.value)
+															.then((auth) => {
+																if (auth)
+																{
+																	kb.button.create(
+																		vars.mobile,
+																		vars.type,
+																		'kb-upsert-button'+index.toString(),
+																		setting.label.value,
+																		setting.message.value,
+																		() => apply([setting],e.record).then((resp) => kb.alert('Done!')).catch(() => {})
+																	);
+																}
+																index++;
+																if (index<settings.length) recurse(index);
+															})
+															.catch((error) => {
+																index++;
+																if (index<settings.length) recurse(index);
+															});
+														}
+														else
+														{
+															index++;
+															if (index<settings.length) recurse(index);
+														}
+													})(settings[index]);
+												};
+												recurse(0);
+												resolve(e);
+												break;
+											case 'index':
+												var recurse=(index) => {
+													((setting) => {
+														kb.filter.auth(setting.user.value,setting.organization.value,setting.group.value)
+														.then((auth) => {
+															if (auth)
+															{
+																if (!setting.view.value || setting.view.value==e.viewId.toString())
+																	kb.button.create(
+																		vars.mobile,
+																		vars.type,
+																		'kb-upsert-button'+index.toString(),
+																		setting.label.value,
+																		setting.message.value,
+																		() => {
+																			kb.view.records.get(
+																				vars.app.id,
+																				((vars.mobile)?kintone.mobile.app:kintone.app).getQueryCondition()
+																			)
+																			.then((records) => {
+																				let deepRecurse=(index,callback) => {
+																					apply([setting],records[index],true)
+																					.then((resp) => {
+																						kb.progressUpdate();
+																						index++;
+																						if (index<records.length) deepRecurse(index,callback);
+																						else callback();
+																					})
+																					.catch(() => {});
+																				};
+																				if (records.length!=0)
+																				{
+																					kb.progressStart(records.length);
+																					deepRecurse(0,() => kb.alert('Done!'));
+																				}
+																				else kb.alert('There are no records.');
+																			})
+																			.catch((error) => kb.alert(kb.error.parse(error)))
+																		});
+															}
+															index++;
+															if (index<settings.length) recurse(index);
+														})
+														.catch((error) => {
+															index++;
+															if (index<settings.length) recurse(index);
+														});
+													})(settings[index]);
+												};
+												recurse(0);
+												resolve(e);
+												break;
+										}
+									}
+									else resolve(e);
+								})(JSON.parse(config.tab).map((item,index) => kb.extend({sIndex:{value:index.toString()}},item.setting)).reduce((result,current) => {
+									if (((vars.mobile)?['both','mobile']:['both','pc']).includes(current.device.value) && current.event.value.includes(vars.type)) result.push(current);
+									return result;
+								},[]));
+							}
+							catch(error)
+							{
+								kb.alert(kb.error.parse(error));
+								resolve(e);
+							}
+						})
+						.catch((error) => resolve(e));
+					}
+					else resolve(e);
+				})
+				.catch((error) => resolve(e));
+			})(
+				e.type.split('.').first()=='mobile',
+				((type) => {
+					switch (type)
+					{
+						case 'submit':
+							type=e.type.split('.').slice(-3).first();
+							break;
+					}
+					return type;
+				})(e.type.split('.').slice(-2).first())
+			);
+		});
+	});
+	kb.event.on('kb.upsert.call',(e) => {
+		return new Promise((resolve,reject) => {
+			/* get config */
+			kb.config[PLUGIN_ID].config.get()
+			.then((config) => {
+				if (Object.keys(config).length!=0)
+				{
+					kb.field.load(kb.config[PLUGIN_ID].app,true).then((fieldInfos) => {
+						vars.app={
+							id:kb.config[PLUGIN_ID].app,
+							fields:fieldInfos.origin
+						}
+						vars.fieldInfos=fieldInfos;
+						try
+						{
+							((settings) => {
+								if (settings.length!=0) apply(settings,e.record,true).then((resp) => resolve(e)).catch(() => resolve(e));
+								else resolve(e);
+							})(JSON.parse(config.tab).map((item,index) => kb.extend({sIndex:{value:index.toString()}},item.setting)).reduce((result,current) => {
+								if (((e.mobile)?['both','mobile']:['both','pc']).includes(current.device.value) && current.event.value.includes(e.pattern)) result.push(current);
+								return result;
+							},[]));
+						}
+						catch(error)
+						{
+							kb.alert(kb.error.parse(error));
+							resolve(e);
+						}
+					})
+					.catch((error) => resolve(e));
+				}
+				else resolve(e);
+			})
+			.catch((error) => resolve(e));
+		});
+	});
+})(kintone.$PLUGIN_ID);
