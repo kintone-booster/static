@@ -1,0 +1,36 @@
+@charset "utf-8";
+/*
+* FileName "linkage.css"
+* Version: 1.0.0
+* Copyright (c) 2023 Pandafirm LLC
+* Distributed under the terms of the GNU Lesser General Public License.
+* https://opensource.org/licenses/LGPL-2.1
+*/
+.kb-linkage-container .kb-view thead :is(td,th){
+	background-color:var(--emphasis-color);
+}
+.kb-linkage-container .kb-view thead :is(td,th):before{
+	border:none;
+}
+.kb-linkage-container .kb-view thead :is(td,th) *{
+	color:var(--bg-color);
+}
+.kb-linkage-container .kb-linkage-container-footer *{
+	padding:0.25em 0;
+	position:relative;
+	vertical-align:middle;
+}
+.kb-linkage-container .kb-linkage-container-footer .kb-linkage-container-button{
+	background-color:transparent;
+	border:none;
+	color:var(--emphasis-color);
+	cursor:pointer;
+	display:inline-block;
+	line-height:2em;
+	outline:none;
+	text-align:center;
+	-webkit-appearance:button;
+}
+.kb-linkage-container .kb-linkage-container-footer .kb-linkage-container-monitor{
+	line-height:2em;
+}
