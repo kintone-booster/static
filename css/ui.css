@@ -696,7 +696,16 @@ body.kb-mobile :is(.kb-table,.kb-view) td:before{
 }
 body.kb-mobile :is(.kb-table,.kb-view) .kb-field{
 	display:block !important;
+	padding:0.25em 1em;
 	width:100% !important;
+}
+body.kb-mobile :is(.kb-table,.kb-view) .kb-field .kb-field-caption{
+	font-weight:bold;
+}
+body.kb-mobile :is(.kb-table,.kb-view) .kb-field .kb-field-value .kb-guide{
+	background-color:var(--field-bg-color);
+	border-radius:0.25em;
+	padding:0.5em;
 }
 body.kb-mobile .kb-view > tbody > tr > td:last-of-type{
 	border-bottom:5px solid var(--border-color);
