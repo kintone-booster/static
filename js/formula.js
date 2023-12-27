@@ -1464,7 +1464,7 @@ window.KintoneBoosterFormula=class{
 				})(TO_STRING(code),(bool)?record:origin);
 			};
 			var MIN=(code,bool=false) => {
-				return ((record) => {
+				return ((code,record) => {
 					var res=null;
 					if (code in fieldInfos)
 						((fieldInfo) => {
