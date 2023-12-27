@@ -1409,6 +1409,14 @@ window.KintoneBoosterFormula=class{
 			var RPAD=(value,len,pad) => {
 				return TO_STRING(value).padEnd(len,pad);
 			};
+			var LOOP=(code,formula,bool=false) => {
+				return ((code,record,scaned) => {
+					var res=[];
+					if (code in record)
+						res=record[code].value.map((item) => this.calculate({field:{value:param.field.value},formula:{value:formula}},item.value,scaned,origin,fieldInfos));
+					return (fieldInfos[param.field.value].type=='RICH_TEXT')?res.join('<br>'):res.join('\n');
+				})(TO_STRING(code),(bool)?record:origin,record);
+			};
 			var MAX=(code,bool=false) => {
 				return ((code,record) => {
 					var res=null;
@@ -1623,25 +1631,25 @@ window.KintoneBoosterFormula=class{
 												res=(value)?value:'null';
 												break;
 											default:
-												res='"'+((value || value==0)?value:'')+'"';
+												res='`'+((value || value==0)?value:'')+'`';
 												break;
 										}
 										break;
 									case 'CATEGORY':
 									case 'CHECK_BOX':
 									case 'MULTI_SELECT':
-										res='"'+value.join(',')+'"';
+										res='`'+value.join(',')+'`';
 										break;
 									case 'CREATOR':
 									case 'MODIFIER':
-										res='"'+((value.name)?value.name:'')+'"';
+										res='`'+((value.name)?value.name:'')+'`';
 										break;
 									case 'FILE':
 									case 'GROUP_SELECT':
 									case 'ORGANIZATION_SELECT':
 									case 'STATUS_ASSIGNEE':
 									case 'USER_SELECT':
-										res='"'+value.map((item) => item.name).join(',')+'"';
+										res='`'+value.map((item) => item.name).join(',')+'`';
 										break;
 									case 'NUMBER':
 									case 'RECORD_NUMBER':
@@ -1679,6 +1687,14 @@ window.KintoneBoosterFormula=class{
 							})
 							.replace(new RegExp('(ROWS)\\([ ]*(%'+fieldInfo.tableCode+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
 								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'",'+bool+')');
+								return 'calculate_'+reserved.length.toString();
+							})
+							.replace(new RegExp('(LOOP)\\([ ]*(%'+fieldInfo.tableCode+'%)[ ]*,[ ]*\\/\\*(.*?)\\*\\/[ ]*\\)','g'),(match,functions,field,formula) => {
+								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'","'+formula.replace(/"/g,'\\"')+'")');
+								return 'calculate_'+reserved.length.toString();
+							})
+							.replace(new RegExp('(LOOP)\\([ ]*(%'+fieldInfo.tableCode+'%)[ ]*,[ ]*\\/\\*(.*?)\\*\\/[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,formula,bool) => {
+								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'","'+formula.replace(/"/g,'\\"')+'",'+bool+')');
 								return 'calculate_'+reserved.length.toString();
 							})
 						);
