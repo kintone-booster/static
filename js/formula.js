@@ -1145,6 +1145,7 @@ window.KintoneBoosterFormula=class{
 	constructor(){
 		this.field={
 			set:(field,fieldInfo) => {
+				field.elm('input').val('');
 				switch (fieldInfo.type)
 				{
 					case 'CHECK_BOX':
@@ -1207,6 +1208,10 @@ window.KintoneBoosterFormula=class{
 							}
 							return res;
 						})());
+						break;
+					default:
+						field.removeClass('kb-assist');
+						if (field.elm('.kb-search')) field.removeChild(field.elm('.kb-search'));
 						break;
 				}
 			}
