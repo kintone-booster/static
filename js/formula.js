@@ -1144,8 +1144,8 @@ window.KintoneBoosterFormula=class{
 	/* constructor */
 	constructor(){
 		this.field={
-			set:(field,fieldInfo) => {
-				field.elm('input').val('');
+			set:(field,fieldInfo,clear=false) => {
+				if (clear) field.elm('input').val('');
 				switch (fieldInfo.type)
 				{
 					case 'CHECK_BOX':
