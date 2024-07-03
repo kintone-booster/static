@@ -19,30 +19,33 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 		this.query={
 			create:(lhs,operator,rhs) => {
 				var res='';
+				var escape=(str) => {
+					return str.replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+				};
 				switch (rhs.type)
 				{
 					case 'CHECK_BOX':
 					case 'MULTI_SELECT':
 						res=((rhs.value || []).length!=0)?'('+rhs.value.reduce((result,current) => {
-							if (current) result.push('"'+current+'"');
+							if (current) result.push('"'+escape(current)+'"');
 							return result;
 						},[]).join(',')+')':'("")';
 						break;
 					case 'CREATOR':
 					case 'MODIFIER':
-						res=(rhs.value)?'("'+rhs.value.code+'")':'("")';
+						res=(rhs.value)?'("'+escape(rhs.value.code)+'")':'("")';
 						break;
 					case 'DROP_DOWN':
 					case 'RADIO_BUTTON':
 					case 'STATUS':
-						res='("'+((rhs.value)?rhs.value:'')+'")';
+						res='("'+((rhs.value)?escape(rhs.value):'')+'")';
 						break;
 					case 'GROUP_SELECT':
 					case 'ORGANIZATION_SELECT':
 					case 'STATUS_ASSIGNEE':
 					case 'USER_SELECT':
 						res=((rhs.value || []).length!=0)?'('+rhs.value.reduce((result,current) => {
-							if (current.code) result.push('"'+current.code+'"');
+							if (current.code) result.push('"'+escape(current.code)+'"');
 							return result;
 						},[]).join(',')+')':'("")';
 						break;
@@ -52,8 +55,8 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						else res=((kb.isNumeric(rhs.value))?rhs.value:'null');
 						break;
 					default:
-						if (operator.match(/in/)) res='("'+((rhs.value)?rhs.value:'')+'")';
-						else res='"'+((rhs.value)?rhs.value:'')+'"';
+						if (operator.match(/in/)) res='("'+((rhs.value)?escape(rhs.value):'')+'")';
+						else res='"'+((rhs.value)?escape(rhs.value):'')+'"';
 						break;
 				}
 				return lhs.code+' '+operator+' '+res;
