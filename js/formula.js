@@ -51,8 +51,8 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						break;
 					case 'NUMBER':
 					case 'RECORD_NUMBER':
-						if (operator.match(/in/)) res='('+((kb.isNumeric(rhs.value))?rhs.value:'')+')';
-						else res=((kb.isNumeric(rhs.value))?rhs.value:'null');
+						if (operator.match(/in/)) res='('+((kb.isNumeric(rhs.value))?rhs.value:'""')+')';
+						else res=((kb.isNumeric(rhs.value))?rhs.value:'""');
 						break;
 					default:
 						if (operator.match(/in/)) res='("'+((rhs.value)?escape(rhs.value):'')+'")';
