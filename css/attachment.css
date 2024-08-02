@@ -26,8 +26,9 @@
 	position:relative;
 }
 .kb-attachment-search-operation:not(.kb-mobile){
-	display:flex;
+	display:inline-flex;
 	margin:0 8px 0 0;
+	vertical-align:top;
 }
 .kb-attachment-search-operation:not(.kb-mobile) *{
 	line-height:48px;
