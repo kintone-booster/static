@@ -60,3 +60,7 @@
 .kb-attachment-subtable-operation .subtable-operation-gaia+td{
 	border-left-width:1px !important;
 }
+.kb-attachment-subtable-multi .kb-attachment-subtable-multi-cell:not(.hidden-subtable-field){
+	align-items:center;
+	display:flex;
+}
