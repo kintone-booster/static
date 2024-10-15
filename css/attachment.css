@@ -54,10 +54,10 @@
 .kb-attachment-search-operation.kb-mobile .kb-icon{
 	margin:0.25em;
 }
-.kb-attachment-subtable-operation .subtable-operation-gaia button{
+.kb-attachment-subtable-operation [class^="subtable-operation-gaia"] button{
 	margin:0 12px 0 0 !important;
 }
-.kb-attachment-subtable-operation .subtable-operation-gaia+td{
+.kb-attachment-subtable-operation [class^="subtable-operation-gaia"]+td{
 	border-left-width:1px !important;
 }
 .kb-attachment-subtable-multi .kb-attachment-subtable-multi-cell:not(.hidden-subtable-field){
