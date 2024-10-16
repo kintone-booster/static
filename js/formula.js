@@ -142,6 +142,117 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				return res;
 			}
 		};
+		this.query.parse.expand=(app,query,parallelize=true) => {
+			var queries=this.query.parse(query);
+			var comparison=(fieldInfo,query) => {
+				var TODAY=(type='date',adddays='0') => {
+					var date=new Date(new Date().format('Y-m-d'));
+					return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
+				};
+				var FROM_TODAY=(interval,unit,type='date',adddays='0') => {
+					var date=new Date(new Date().format('Y-m-d')).calc(interval+' '+unit);
+					return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
+				};
+				var FROM_THISWEEK=(interval,unit,type='date',adddays='0') => {
+					var date=new Date(new Date().format('Y-m-d')).calc('-'+new Date().getDay().toString()+' day,'+interval+' '+unit);
+					return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
+				};
+				var FROM_THISMONTH=(interval,unit,type='date',adddays='0') => {
+					var date=new Date(new Date().format('Y-m-01')).calc(interval+' '+unit);
+					return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
+				};
+				var FROM_THISYEAR=(interval,unit,type='date',adddays='0') => {
+					var date=new Date(new Date().format('Y-01-01')).calc(interval+' '+unit);
+					return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
+				};
+				return ((value) => {
+					var res='';
+					switch (fieldInfo.type)
+					{
+						case 'CREATED_TIME':
+						case 'DATETIME':
+						case 'UPDATED_TIME':
+							if (value.toLowerCase().match(/^from_/g))
+							{
+								switch (operator)
+								{
+									case '>':
+										((value) => {
+											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
+										break;
+									case '>=':
+										((value) => {
+											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
+										break;
+									case '<':
+										((value) => {
+											res=query.field+' < '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
+										break;
+									case '<=':
+										((value) => {
+											res=query.field+' < '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
+										break;
+									case '!=':
+									case 'not in':
+										((value) => {
+											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
+										res+=' or ';
+										((value) => {
+											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
+										res='('+res+')';
+										break;
+									case '=':
+									case 'in':
+										((value) => {
+											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
+										res+=' and ';
+										((value) => {
+											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
+										res='('+res+')';
+										break;
+								}
+							}
+							else res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+							break;
+						case 'DATE':
+							((value) => {
+								res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value+'"")':'"'+value+'"');
+							})((value.toLowerCase().match(/^from_/g))?eval(value):value);
+							break;
+					}
+					return res;
+				})(query.value.replace(/^(\()(.+)(\))$/,'$2'));
+			};
+			queries=((fieldInfos) => {
+				return queries.reduce((result,current) => {
+					if (current.field in fieldInfos)
+						((fieldInfo) => {
+							switch (fieldInfo.type)
+							{
+								case 'CREATED_TIME':
+								case 'DATE':
+								case 'DATETIME':
+								case 'UPDATED_TIME':
+									result.push(comparison(fieldInfo,current));
+									break;
+								default:
+									result.push(current.field+' '+current.operator+' '+current.value);
+									break;
+							}
+						})(fieldInfos[current.field]);
+					return result;
+				},[]);
+			})((parallelize)?kb.field.parallelize(app.fields):kb.extend({},app.fields));
+			return this.query.parse(queries.join(' and '));
+		};
 		/* modify elements */
 		this.container.css({
 			height:'calc(100% - 1em)',
@@ -737,118 +848,6 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 		};
 		if (kb.roleSet.user.length==0) kb.roleSet.load().then(() => setup());
 		else setup();
-	}
-	/* expand */
-	expand(app,query,parallelize=true){
-		var queries=this.query.parse(query);
-		var comparison=(fieldInfo,query) => {
-			var TODAY=(type='date',adddays='0') => {
-				var date=new Date(new Date().format('Y-m-d'));
-				return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
-			};
-			var FROM_TODAY=(interval,unit,type='date',adddays='0') => {
-				var date=new Date(new Date().format('Y-m-d')).calc(interval+' '+unit);
-				return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
-			};
-			var FROM_THISWEEK=(interval,unit,type='date',adddays='0') => {
-				var date=new Date(new Date().format('Y-m-d')).calc('-'+new Date().getDay().toString()+' day,'+interval+' '+unit);
-				return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
-			};
-			var FROM_THISMONTH=(interval,unit,type='date',adddays='0') => {
-				var date=new Date(new Date().format('Y-m-01')).calc(interval+' '+unit);
-				return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
-			};
-			var FROM_THISYEAR=(interval,unit,type='date',adddays='0') => {
-				var date=new Date(new Date().format('Y-01-01')).calc(interval+' '+unit);
-				return (type!='date')?date.calc(adddays+' day,'+date.getTimezoneOffset().toString()+' minute').format('ISO'):date.format('Y-m-d');
-			};
-			return ((value) => {
-				var res='';
-				switch (fieldInfo.type)
-				{
-					case 'CREATED_TIME':
-					case 'DATETIME':
-					case 'UPDATED_TIME':
-						if (value.toLowerCase().match(/^from_/g))
-						{
-							switch (operator)
-							{
-								case '>':
-									((value) => {
-										res=query.field+' >= '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
-									break;
-								case '>=':
-									((value) => {
-										res=query.field+' >= '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime")'));
-									break;
-								case '<':
-									((value) => {
-										res=query.field+' < '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime")'));
-									break;
-								case '<=':
-									((value) => {
-										res=query.field+' < '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
-									break;
-								case '!=':
-								case 'not in':
-									((value) => {
-										res+=query.field+' < '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime")'));
-									res+=' or ';
-									((value) => {
-										res+=query.field+' >= '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
-									res='('+res+')';
-									break;
-								case '=':
-								case 'in':
-									((value) => {
-										res+=query.field+' >= '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime")'));
-									res+=' and ';
-									((value) => {
-										res+=query.field+' < '+((query.operator.match(/in/))?'('+value+')':value);
-									})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
-									res='('+res+')';
-									break;
-							}
-						}
-						else res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'('+value+')':value);
-						break;
-					case 'DATE':
-						((value) => {
-							res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'('+value+')':value);
-						})((value.toLowerCase().match(/^from_/g))?eval(value):value);
-						break;
-				}
-				return res;
-			})(query.value.replace(/^(\()(.+)(\))$/,'$2'));
-		};
-		((fieldInfos) => {
-			queries.reduce((result,current) => {
-				if (current.field in fieldInfos)
-					((fieldInfo) => {
-						switch (fieldInfo.type)
-						{
-							case 'CREATED_TIME':
-							case 'DATE':
-							case 'DATETIME':
-							case 'UPDATED_TIME':
-								result.push(comparison(fieldInfo,current));
-								break;
-							default:
-								result.push(current.field+' '+current.operator+' '+current.value);
-								break;
-						}
-					})(fieldInfos[current.field]);
-				return result;
-			},[]);
-		})((parallelize)?kb.field.parallelize(app.fields):kb.extend({},app.fields));
-		return queries.join(' and ');
 	}
 	/* scanning */
 	scan(app,record,query,parallelize=true){
