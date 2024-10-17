@@ -178,53 +178,53 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 								{
 									case '>':
 										((value) => {
-											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
 										break;
 									case '>=':
 										((value) => {
-											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
 										break;
 									case '<':
 										((value) => {
-											res=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' < '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
 										break;
 									case '<=':
 										((value) => {
-											res=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' < '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
 										break;
 									case '!=':
 									case 'not in':
 										((value) => {
-											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
 										res+=' or ';
 										((value) => {
-											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
 										res='('+res+')';
 										break;
 									case '=':
 									case 'in':
 										((value) => {
-											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
 										res+=' and ';
 										((value) => {
-											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
 										res='('+res+')';
 										break;
 								}
 							}
-							else res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+							else res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 							break;
 						case 'DATE':
 							((value) => {
-								res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+								res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value.replace(/^\"\"$/g,'')+'")':'"'+value.replace(/^\"\"$/g,'')+'"');
 							})((value.toLowerCase().match(/^from_/g))?eval(value):value);
 							break;
 					}
