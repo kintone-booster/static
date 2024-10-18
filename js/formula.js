@@ -174,49 +174,48 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						case 'UPDATED_TIME':
 							if (value.toLowerCase().match(/^from_/g))
 							{
-								switch (operator)
+								switch (query.operator)
 								{
 									case '>':
 										((value) => {
-											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' >= "'+value+'"';
 										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
 										break;
 									case '>=':
 										((value) => {
-											res=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' >= "'+value+'"';
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
 										break;
 									case '<':
 										((value) => {
-											res=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' < "'+value+'"';
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
 										break;
 									case '<=':
 										((value) => {
-											res=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res=query.field+' < "'+value+'"';
 										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
 										break;
 									case '!=':
 									case 'not in':
+										res=[];
 										((value) => {
-											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											(60*24).each((index) => {
+												res.push(query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"'));
+												value=new Date(value).calc('1 minute').format('ISO');
+											});
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
-										res+=' or ';
-										((value) => {
-											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
-										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
-										res='('+res+')';
+										res=res.join(' and ');
 										break;
 									case '=':
 									case 'in':
 										((value) => {
-											res+=query.field+' >= '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res+=query.field+' >= "'+value+'"';
 										})(eval(value.replace(/\)$/g,'')+',"datetime")'));
 										res+=' and ';
 										((value) => {
-											res+=query.field+' < '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
+											res+=query.field+' < "'+value+'"';
 										})(eval(value.replace(/\)$/g,'')+',"datetime","1")'));
-										res='('+res+')';
 										break;
 								}
 							}
