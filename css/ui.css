@@ -877,6 +877,9 @@ body .kb-injector .kb-dropdown::after{
 	border-bottom:solid 2px var(--injector-fr-color);
 	border-right:solid 2px var(--injector-fr-color);
 }
+body .kb-injector .kb-field .kb-field-caption{
+	white-space:normal;
+}
 body .kb-injector .kb-field .kb-field-value :is(input:not([type=checkbox]):not([type=radio]),select,textarea){
 	border:1px solid var(--injector-field-border-color) !important;
 }
