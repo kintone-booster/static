@@ -219,12 +219,62 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 										break;
 								}
 							}
-							else res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'('+value+')':value);
+							else
+							{
+								if (value.toLowerCase().match(/^today/g))
+								{
+									switch (query.operator)
+									{
+										case '>':
+											((value) => {
+												res=query.field+' >= "'+value+'"';
+											})(eval(value.replace(/\)$/g,'')+'"datetime","1")'));
+											break;
+										case '>=':
+											((value) => {
+												res=query.field+' >= "'+value+'"';
+											})(eval(value.replace(/\)$/g,'')+'"datetime")'));
+											break;
+										case '<':
+											((value) => {
+												res=query.field+' < "'+value+'"';
+											})(eval(value.replace(/\)$/g,'')+'"datetime")'));
+											break;
+										case '<=':
+											((value) => {
+												res=query.field+' < "'+value+'"';
+											})(eval(value.replace(/\)$/g,'')+'"datetime","1")'));
+											break;
+										case '!=':
+										case 'not in':
+											res=[];
+											((value) => {
+												(60*24).each((index) => {
+													res.push(query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"'));
+													value=new Date(value).calc('1 minute').format('ISO');
+												});
+											})(eval(value.replace(/\)$/g,'')+'"datetime")'));
+											res=res.join(' and ');
+											break;
+										case '=':
+										case 'in':
+											((value) => {
+												res+=query.field+' >= "'+value+'"';
+											})(eval(value.replace(/\)$/g,'')+'"datetime")'));
+											res+=' and ';
+											((value) => {
+												res+=query.field+' < "'+value+'"';
+											})(eval(value.replace(/\)$/g,'')+'"datetime","1")'));
+											break;
+									}
+								}
+								else res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'('+value+')':value);
+							}
 							break;
 						case 'DATE':
 							((value) => {
 								res=query.field+' '+query.operator+' '+((query.operator.match(/in/))?'("'+value+'")':'"'+value+'"');
-							})((value.toLowerCase().match(/^from_/g))?eval(value):value.replace(/^\"/g,'').replace(/\"$/g,''));
+							})((value.toLowerCase().match(/^from_/g) || value.toLowerCase().match(/^today/g))?eval(value):value.replace(/^\"/g,'').replace(/\"$/g,''));
 							break;
 					}
 					return res;
