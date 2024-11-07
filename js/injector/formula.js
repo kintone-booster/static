@@ -1658,7 +1658,7 @@ window.KintoneBoosterFormula=class{
 										{
 											case 'NUMBER':
 											case 'NUMBER_DIGIT':
-												res=(value)?value:'null';
+												res=(value || value==0)?((value.toString()!='0')?value.toString().replace(/^0+/,''):value):'null';
 												break;
 											default:
 												res='`'+((value || value==0)?value:'')+'`';
@@ -1683,7 +1683,7 @@ window.KintoneBoosterFormula=class{
 										break;
 									case 'NUMBER':
 									case 'RECORD_NUMBER':
-										res=(value || value==0)?value:'null';
+										res=(value || value==0)?((value.toString()!='0')?value.toString().replace(/^0+/,''):value):'null';
 										break;
 									default:
 										res='`'+((value || value==0)?value.replace(/[`\\^$.*+?()[\]{}|]/g,'\\$&'):'')+'`';
