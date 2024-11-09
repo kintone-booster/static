@@ -64,3 +64,7 @@
 	align-items:center;
 	display:flex;
 }
+.kb-attachment-subtable-multi .kb-attachment-subtable-multi-cell:not(.hidden-subtable-field) .control-gaia{
+	box-sizing:border-box;
+	min-width:100%;
+}
