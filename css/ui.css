@@ -1024,6 +1024,11 @@ body .kb-echo .kb-echo-main{
 	min-width:100% !important;
 	padding:0;
 	white-space:nowrap;
+}
+body .kb-echo .kb-echo-main.kb-echo-main-calendar{
+	width:100% !important;
+}
+body .kb-echo .kb-echo-main.kb-echo-main-list{
 	width:max-content !important;
 }
 body .kb-echo .kb-echo-main .kb-echo-body{
