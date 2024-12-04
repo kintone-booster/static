@@ -11,7 +11,10 @@
 	--submit-fr-color:rgba(255,255,255,1);
 }
 .kb-spread-toolbar{
+	display:inline-block;
+	left:0;
 	padding:0.5em 0.25em;
+	position:sticky;
 }
 .kb-spread-toolbar .kb-spread-toolbar-button{
 	background-color:transparent;

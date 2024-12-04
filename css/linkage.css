@@ -6,6 +6,9 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
+.kb-linkage-container .kb-view tbody :is(td,th,.kb-field){
+	background-color:transparent;
+}
 .kb-linkage-container .kb-view thead :is(td,th){
 	background-color:var(--emphasis-color);
 }
