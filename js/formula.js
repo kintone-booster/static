@@ -1777,101 +1777,119 @@ kb.constants=kb.extend({
 	filter:{
 		caption:{
 			filter:{
-				en:'Filter',
-				ja:'条件',
-				zh:'条件'
+				'en':'Filter',
+				'ja':'条件',
+				'zh':'条件',
+				'zh-TW':'條件'
 			},
 			sort:{
-				en:'Sort by',
-				ja:'並び順',
-				zh:'排序'
+				'en':'Sort by',
+				'ja':'並び順',
+				'zh':'排序',
+				'zh-TW':'排序'
 			}
 		},
 		pattern:{
 			from:{
 				today:{
-					en:'from today',
-					ja:'今日から',
-					zh:'从今天开始'
+					'en':'from today',
+					'ja':'今日から',
+					'zh':'从今天开始',
+					'zh-TW':'從今天開始'
 				},
 				thisweek:{
-					en:'from thisweek',
-					ja:'今週から',
-					zh:'从本周开始'
+					'en':'from thisweek',
+					'ja':'今週から',
+					'zh':'从本周开始',
+					'zh-TW':'從本週開始'
 				},
 				thismonth:{
-					en:'from thismonth',
-					ja:'今月から',
-					zh:'从本月开始'
+					'en':'from thismonth',
+					'ja':'今月から',
+					'zh':'从本月开始',
+					'zh-TW':'從本月開始'
 				},
 				thisyear:{
-					en:'from thisyear',
-					ja:'今年から',
-					zh:'从今年开始'
+					'en':'from thisyear',
+					'ja':'今年から',
+					'zh':'从今年开始',
+					'zh-TW':'從今年開始'
 				}
 			},
 			manually:{
-				en:'manually',
-				ja:'日付を指定',
-				zh:'指定日期'
+				'en':'manually',
+				'ja':'日付を指定',
+				'zh':'指定日期',
+				'zh-TW':'指定日期'
 			},
 			today:{
-				en:'today',
-				ja:'今日',
-				zh:'今天'
+				'en':'today',
+				'ja':'今日',
+				'zh':'今天',
+				'zh-TW':'今天'
 			}
 		},
 		operator:{
 			equal:{
-				en:'equal',
-				ja:'等しい',
-				zh:'相等'
+				'en':'equal',
+				'ja':'等しい',
+				'zh':'相等',
+				'zh-TW':'相等'
 			},
 			notequal:{
-				en:'not equal',
-				ja:'等しくない',
-				zh:'不相等'
+				'en':'not equal',
+				'ja':'等しくない',
+				'zh':'不相等',
+				'zh-TW':'不相等'
 			},
 			greater:{
-				en:'greater than',
-				ja:'より後',
-				zh:'之后',
+				'en':'greater than',
+				'ja':'より後',
+				'zh':'之后',
+				'zh-TW':'之後',
 				equal:{
-					en:'greater than or equal',
-					ja:'以降',
-					zh:'以后'
+					'en':'greater than or equal',
+					'ja':'以降',
+					'zh':'以后',
+					'zh-TW':'以後'
 				}
 			},
 			in:{
-				en:'any of',
-				ja:'いずれかを含む',
-				zh:'包含任一'
+				'en':'any of',
+				'ja':'いずれかを含む',
+				'zh':'包含任一',
+				'zh-TW':'包含任一'
 			},
 			notin:{
-				en:'not any of',
-				ja:'いずれも含まない',
-				zh:'都不包含'
+				'en':'not any of',
+				'ja':'いずれも含まない',
+				'zh':'都不包含',
+				'zh-TW':'都不包含'
 			},
 			like:{
-				en:'like',
-				ja:'キーワードを含む',
-				zh:'包含关键字'
+				'en':'like',
+				'ja':'キーワードを含む',
+				'zh':'包含关键字',
+				'zh-TW':'包含關鍵字'
 			},
 			notlike:{
-				en:'not like',
-				ja:'キーワードを含まない',
-				zh:'不包含关键字'
+				'en':'not like',
+				'ja':'キーワードを含まない',
+				'zh':'不包含关键字',
+				'zh-TW':'不包含關鍵字'
 			},
 			less:{
-				en:'less than',
-				ja:'より前',
-				zh:'之前',
+				'en':'less than',
+				'ja':'より前',
+				'zh':'之前',
+				'zh-TW':'之前',
 				equal:{
-					en:'less than or equal',
-					ja:'以前',
-					zh:'以前'
+					'en':'less than or equal',
+					'ja':'以前',
+					'zh':'以前',
+					'zh-TW':'以前'
 				}
 			}
 		}
 	}
-},kb.constants);
+}, kb.constants);
