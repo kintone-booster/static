@@ -783,7 +783,7 @@
 .kb-view .kb-view-row .kb-view-row-cell{
 	display:table-cell;
 }
-.kb-view .kb-view-row .kb-view-row-cell.kb-hidden{
+.kb-view .kb-view-row .kb-view-row-cell.kb-hidden:not(.kb-unuse){
 	display:table-cell !important;
 }
 .kb-view .kb-view-row.kb-unsaved:after{
