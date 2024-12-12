@@ -1145,6 +1145,9 @@ body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead :is(td,th):after{
 	width:100%;
 	z-index:3;
 }
+body .kb-echo .kb-echo-main .kb-echo-body .kb-view :is(td,th,.kb-field){
+	background-color:var(--echo-bg-color);
+}
 body .kb-echo .kb-echo-main .kb-echo-body .kb-view thead :is(td,th){
 	background-color:var(--echo-bg-color);
 	text-align:center;
