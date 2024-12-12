@@ -783,6 +783,9 @@
 .kb-view .kb-view-row .kb-view-row-cell{
 	display:table-cell;
 }
+.kb-view .kb-view-row .kb-view-row-cell.kb-hidden{
+	display:table-cell !important;
+}
 .kb-view .kb-view-row.kb-unsaved:after{
 	background-color:var(--emphasis-color);
 }
