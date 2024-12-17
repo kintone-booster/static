@@ -458,7 +458,10 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																					if (!elements.minute.val()) elements.minute.val('00');
 																				}
 																				if (elements.date.val() && elements.hour.val() && elements.minute.val())
+																				{
 																					res='"'+(elements.date.val()+' '+elements.hour.val()+':'+elements.minute.val()+':00').parseDateTime().format('ISO')+'"';
+																				}
+																				else res='""';
 																				break;
 																		}
 																		break;
@@ -545,10 +548,21 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																			case 'CREATED_TIME':
 																			case 'DATETIME':
 																			case 'UPDATED_TIME':
-																				var date=value.replace(/(^["']{1}|["']{1}$)/g,'').parseDateTime();
-																				elements.date.val(date.format('Y-m-d'));
-																				elements.hour.val(date.format('H'));
-																				elements.minute.val(date.format('i'));
+																				((value) => {
+																					if (value)
+																					{
+																						var date=value.parseDateTime();
+																						elements.date.val(date.format('Y-m-d'));
+																						elements.hour.val(date.format('H'));
+																						elements.minute.val(date.format('i'));
+																					}
+																					else
+																					{
+																						elements.date.val("");
+																						elements.hour.val("");
+																						elements.minute.val("");
+																					}
+																				})(value.replace(/(^["']{1}|["']{1}$)/g,''));
 																				break;
 																		}
 																	}
