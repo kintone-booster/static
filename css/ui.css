@@ -1150,6 +1150,9 @@ body .kb-echo .kb-echo-main .kb-echo-body .kb-view :is(td,th){
 body .kb-echo .kb-echo-main .kb-echo-body .kb-view thead :is(td,th){
 	text-align:center;
 }
+body .kb-echo .kb-echo-main .kb-echo-body .kb-view .kb-view-row .kb-view-row-cell{
+	background-color:transparent;
+}
 body .kb-echo .kb-echo-main .kb-echo-body.kb-view-container{
 	background-color:var(--echo-bg-color);
 	padding-right:0.5em;
