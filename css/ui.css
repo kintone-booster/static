@@ -630,6 +630,7 @@
 	z-index:2;
 }
 .kb-view :is(td,th){
+	background-color:var(--bg-color);
 	border:none;
 	font-weight:normal;
 	padding-bottom:1px;
@@ -645,9 +646,6 @@
 	bottom:0;
 	width:100%;
 	z-index:1000;
-}
-.kb-view :is(td,th,.kb-field){
-	background-color:var(--bg-color);
 }
 .kb-view thead tr:first-of-type :is(td,th){
 	padding-top:1px;
@@ -781,6 +779,7 @@
 	width:5px;
 }
 .kb-view .kb-view-row .kb-view-row-cell{
+	background-color:var(--bg-color);
 	display:table-cell;
 }
 .kb-view .kb-view-row .kb-view-row-cell.kb-hidden:not(.kb-unuse){
@@ -1145,11 +1144,10 @@ body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead :is(td,th):after{
 	width:100%;
 	z-index:3;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-view :is(td,th,.kb-field){
+body .kb-echo .kb-echo-main .kb-echo-body .kb-view :is(td,th){
 	background-color:var(--echo-bg-color);
 }
 body .kb-echo .kb-echo-main .kb-echo-body .kb-view thead :is(td,th){
-	background-color:var(--echo-bg-color);
 	text-align:center;
 }
 body .kb-echo .kb-echo-main .kb-echo-body.kb-view-container{
