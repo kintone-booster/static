@@ -84,3 +84,13 @@
 	line-height:1.5em;
 	padding:0 0.5em;
 }
+.fc .fc-dayGridMonth-view .fc-scrollgrid-sync-table{
+	border-bottom:1px solid var(--fc-border-color);
+	height:auto !important;
+}
+.fc .fc-dayGridMonth-view .fc-scrollgrid-sync-table .fc-day{
+	padding-bottom:2em;
+}
+.fc .fc-dayGridMonth-view .fc-scrollgrid-sync-table .fc-day .fc-daygrid-day-frame{
+	min-height:10em;
+}
