@@ -61,12 +61,12 @@
 .fc .fc-day.fc-day-today{
 	background-color:var(--day-color-today) !important;
 }
-.fc .fc-daygrid-day-frame{
-	min-height:10em;
-}
 .fc .fc-daygrid-dot-event .fc-event-title{
 	flex-grow:0 !important;
 	flex-shrink:0 !important;
+}
+.fc .fc-dayGridMonth-view .fc-daygrid-body > table .fc-day .fc-daygrid-day-frame{
+	min-height:10em;
 }
 .fc .fc-timegrid-body.fc-liquid{
 	background-color:var(--calendar-bg-color);
