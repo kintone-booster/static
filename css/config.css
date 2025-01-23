@@ -54,6 +54,20 @@
 .kb-config-main .kb-config-tabbed-panels .kb-config-tabbed-panel{
 	padding:0.5em;
 }
+.kb-config-main .kb-config-tabbed-panels .kb-config-tabbed-panel .kb-config-borderd-block{
+	border:1px solid var(--border-color);
+	border-radius:0.25em;
+	padding:0.5em;
+}
+.kb-config-main .kb-config-tabbed-panels .kb-config-tabbed-panel .kb-config-flex-columns{
+	display:flex;
+	flex-direction:row;
+}
+.kb-config-main .kb-config-tabbed-panels .kb-config-tabbed-panel .kb-config-flex-columns .kb-config-flex-column{
+	display:flex;
+	flex:1;
+	flex-direction:column;
+}
 .kb-config-main .kb-config-tabbed-panels .kb-config-tabbed-panel .kb-config-tabbed-panel-block{
 	border:3px solid var(--border-color);
 	border-radius:0.25em;
