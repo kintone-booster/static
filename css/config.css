@@ -17,6 +17,22 @@
 	-webkit-overflow-scrolling:touch;
 	-webkit-text-size-adjust:100%;
 }
+.kb-config-button{
+	background-color:transparent;
+	border:1px solid var(--border-color);
+	border-radius:0.25em;
+	cursor:pointer;
+	display:inline-block;
+	margin:0 0.25em;
+	outline:none;
+	padding:0.25em 0.5em;
+	text-align:center;
+	user-select:none;
+	-webkit-appearance:button;
+}
+.kb-config-button:hover{
+	background-color:var(--field-focus-color);
+}
 .kb-config-footer{
 	padding:0.5em 0.25em;
 }
