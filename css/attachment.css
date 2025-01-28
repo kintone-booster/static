@@ -68,3 +68,35 @@
 	box-sizing:border-box;
 	min-width:100%;
 }
+.kb-attachment-subtable-sort-asc{
+	position:relative;
+}
+.kb-attachment-subtable-sort-asc:after{
+	border-left:solid 2px white;
+	border-top:solid 2px white;
+	content:'';
+	height:0.5em;
+	margin-top:0.095em;
+	pointer-events:none;
+	position:absolute;
+	right:1em;
+	top:50%;
+	transform:translate(-50%,-50%) rotate(45deg);
+	width:0.5em;
+}
+.kb-attachment-subtable-sort-desc{
+	position:relative;
+}
+.kb-attachment-subtable-sort-desc:after{
+	border-bottom:solid 2px white;
+	border-right:solid 2px white;
+	content:'';
+	height:0.5em;
+	margin-top:-0.095em;
+	pointer-events:none;
+	position:absolute;
+	right:1em;
+	top:50%;
+	transform:translate(-50%,-50%) rotate(45deg);
+	width:0.5em;
+}
