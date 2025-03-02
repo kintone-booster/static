@@ -807,7 +807,7 @@ body.kb-mobile :is(.kb-table,.kb-view) td{
 body.kb-mobile :is(.kb-table,.kb-view) td:before{
 	border-top:none;
 }
-body.kb-mobile :is(.kb-table,.kb-view) .kb-field{
+body.kb-mobile :is(.kb-table,.kb-view) .kb-field:not(.kb-hidden,.kb-unuse){
 	display:block !important;
 	padding:0.25em 1em;
 	width:100% !important;
