@@ -725,7 +725,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 													)
 													.append(
 														((fieldInfo) => {
-															if (['createdtime','modifiedtime'].includes(fieldInfo.type)) fieldInfo.type='datetime';
+															if (['CREATED_TIME','UPDATED_TIME'].includes(fieldInfo.type)) fieldInfo.type='DATETIME';
 															return kb.field.activate(kb.field.create(fieldInfo),((app) => {
 																app.fields[fieldInfo.code]=fieldInfo;
 																return app;
