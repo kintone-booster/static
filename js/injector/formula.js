@@ -1250,6 +1250,14 @@ window.KintoneBoosterFormula=class{
 				}
 			}
 		};
+		this.report={
+			DATE_FORMAT:(value,format) => {
+				return (!isNaN(Date.parse(value)))?new Date(value).format(format):'';
+			},
+			TODAY:(format) => {
+				return new Date().format((format)?format:'Y-m-d');
+			}
+		};
 	}
 	calculate(param,row,record,origin,fieldInfos){
 		if (param.field.value in fieldInfos)
