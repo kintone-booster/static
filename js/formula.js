@@ -1487,6 +1487,15 @@ window.KintoneBoosterFormula=class{
 			var RPAD=(value,len,pad) => {
 				return TO_STRING(value).padEnd(len,pad);
 			};
+			var LOGINUSER=() => {
+				return kb.operator.code+':'+kb.operator.name;
+			};
+			var LOGINUSER_CODE=() => {
+				return kb.operator.code;
+			};
+			var LOGINUSER_NAME=() => {
+				return kb.operator.name;
+			};
 			var LOOP=(code,formula,bool=false) => {
 				return ((code,record,scaned) => {
 					var res=[];
@@ -1738,6 +1747,35 @@ window.KintoneBoosterFormula=class{
 										break;
 								}
 								return res;
+							}
+							var flat=(fieldInfo,value) => {
+								var res='';
+								switch (fieldInfo.type)
+								{
+									case 'CREATOR':
+									case 'MODIFIER':
+										res='`'+((value.code && value.name)?value.code+':'+value.name:'')+'`';
+										break;
+									case 'GROUP_SELECT':
+									case 'ORGANIZATION_SELECT':
+									case 'STATUS_ASSIGNEE':
+									case 'USER_SELECT':
+										res='`'+value.map((item) => item.code+':'+item.name).join(',')+'`';
+										break;
+									default:
+										res=adjust(fieldInfo,value);
+										break;
+								}
+								return res;
+							}
+							if (formula.match(new RegExp('FLAT\\([ ]*%'+fieldInfo.code+'%[ ]*\\)')))
+							{
+								if (fieldInfo.tableCode)
+								{
+									if (fieldInfo.code in row)
+										formula=formula.replace(new RegExp('FLAT\\([ ]*%'+fieldInfo.code+'%[ ]*\\)','g'),flat(fieldInfo,row[fieldInfo.code].value));
+								}
+								else formula=formula.replace(new RegExp('FLAT\\([ ]*%'+fieldInfo.code+'%[ ]*\\)','g'),flat(fieldInfo,record[fieldInfo.code].value));
 							}
 							if (formula.match(new RegExp('%'+fieldInfo.code+'%')))
 							{
