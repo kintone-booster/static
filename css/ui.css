@@ -1061,14 +1061,22 @@ body .kb-echo .kb-echo-main .kb-echo-body{
 	padding:0;
 	z-index:1;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main{
+	background-color:var(--echo-bg-color);
+	margin:0;
+	padding:0;
+}
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar{
 	margin:0 0.25em !important;
 	width:calc(100% - 0.5em) !important;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar :is(td,th){
+	background-color:var(--echo-bg-color);
+}
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody{
 	z-index:1;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td:after{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td:after{
 	content:'';
 	border-left:1px solid var(--main-shadow-color);
 	display:block;
@@ -1078,21 +1086,21 @@ body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td:after{
 	top:0.25em;
 	width:1px;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td .kb-calendar-cell{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td .kb-calendar-cell{
 	min-height:6.75em;
 	padding-top:2.5em;
 	padding-bottom:2.25em;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td .kb-calendar-cell *{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td .kb-calendar-cell *{
 	user-select:none;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-button{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-button{
 	bottom:0;
 	display:none;
 	right:0.25em;
 	position:absolute;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-guide{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-guide{
 	border-radius:1em;
 	line-height:2em;
 	position:absolute;
@@ -1101,28 +1109,27 @@ body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td .kb-calendar-cel
 	top:0.25em;
 	width:2em;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-item{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-item{
 	cursor:pointer;
 	margin-left:2px;
 	width:calc(100% - 2px);
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-item *{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td .kb-calendar-cell .kb-calendar-cell-item *{
 	pointer-events:none;
 	text-align:left;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar tbody td *:hover .kb-calendar-cell-button{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar tbody td *:hover .kb-calendar-cell-button{
 	display:inline-block;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar thead{
 	position:sticky;
 	top:0;
 	z-index:2;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead :is(td,th){
-	background-color:var(--echo-bg-color);
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar thead :is(td,th){
 	padding:0.5em 0.25em !important;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead :is(td,th):before{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar thead :is(td,th):before{
 	border-top:1px solid var(--main-shadow-color);
 	bottom:0;
 	content:'';
@@ -1133,7 +1140,7 @@ body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead :is(td,th):before{
 	width:100%;
 	z-index:2;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead :is(td,th):after{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-calendar thead :is(td,th):after{
 	border-bottom:1px solid var(--main-shadow-color);
 	content:'';
 	display:block;
@@ -1144,17 +1151,16 @@ body .kb-echo .kb-echo-main .kb-echo-body .kb-calendar thead :is(td,th):after{
 	width:100%;
 	z-index:3;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-view :is(td,th){
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-view :is(td,th){
 	background-color:var(--echo-bg-color);
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-view thead :is(td,th){
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-view thead :is(td,th){
 	text-align:center;
 }
-body .kb-echo .kb-echo-main .kb-echo-body .kb-view .kb-view-row .kb-view-row-cell{
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main .kb-view .kb-view-row .kb-view-row-cell{
 	background-color:transparent;
 }
-body .kb-echo .kb-echo-main .kb-echo-body.kb-view-container{
-	background-color:var(--echo-bg-color);
+body .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main.kb-view-container{
 	padding-right:0.5em;
 	width:max-content;
 }
@@ -1162,34 +1168,94 @@ body .kb-echo .kb-echo-main .kb-echo-header{
 	background-color:var(--echo-bg-color);
 	left:0;
 	margin:0;
-	padding:0.5em;
 	position:sticky;
+}
+body .kb-echo .kb-echo-main .kb-echo-header:has(.kb-echo-header-action){
+	padding:0.5em;
 	top:0;
+	z-index:3;
+}
+body .kb-echo .kb-echo-main .kb-echo-header:has(.kb-echo-header-info){
+	padding:0.5em 0.5em 0 0.5em;
+	top:auto;
 	z-index:2;
 }
-body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-description{
-	line-height:1.5em;
-	padding:0.25em 0;
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-action{
+	background-color:var(--echo-bg-color);
 }
-body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-title{
-	font-size:1.5em;
-}
-body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-filter .kb-icon:not(.kb-icon-arrow){
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-action .kb-echo-header-filter .kb-icon:not(.kb-icon-arrow){
 	background-position:center center;
 	background-size:1.5em 1.5em;
 }
-body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-filter .kb-echo-header-filter-monitor{
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-action .kb-echo-header-filter .kb-echo-header-filter-monitor{
 	display:inline-block;
 	padding:0.25em;
 }
-body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-filter .kb-echo-header-filter-cases{
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-action .kb-echo-header-filter .kb-echo-header-filter-cases{
 	display:inline-block;
 	padding:0.25em 0;
 }
-body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-filter .kb-echo-header-filter-cases select{
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-action .kb-echo-header-filter .kb-echo-header-filter-cases select{
 	background-color:var(--echo-bg-color);
 	border:none;
 	outline:none;
+}
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-info{
+	background-color:var(--echo-bg-color);
+}
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-info .kb-echo-header-description{
+	line-height:1.5em;
+	padding:0.25em 0 0 0;
+	white-space:normal;
+}
+body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-info .kb-echo-header-title{
+	font-size:1.5em;
+	white-space:normal;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask{
+	display:none;
+	height:100%;
+	pointer-events:none;
+	position:absolute;
+	top:0;
+	width:3em;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask .kb-echo-mask-border{
+	display:block;
+	height:100%;
+	pointer-events:none;
+	position:absolute;
+	top:0;
+	width:1.5em;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask.kb-echo-mask-left .kb-echo-mask-border{
+	left:0;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask.kb-echo-mask-right .kb-echo-mask-border{
+	right:0;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask .kb-echo-mask-corner{
+	display:block;
+	height:1.5em;
+	pointer-events:none;
+	position:absolute;
+	width:1.5em;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask.kb-echo-mask-left .kb-echo-mask-corner.kb-echo-mask-corner-top{
+	left:1.5em;
+	top:0;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask.kb-echo-mask-left .kb-echo-mask-corner.kb-echo-mask-corner-bottom{
+	bottom:0;
+	left:1.5em;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask.kb-echo-mask-right .kb-echo-mask-corner.kb-echo-mask-corner-top{
+	right:1.5em;
+	top:0;
+}
+body .kb-echo .kb-echo-main .kb-echo-mask.kb-echo-mask-right .kb-echo-mask-corner.kb-echo-mask-corner-bottom{
+	bottom:0;
+	right:1.5em;
 }
 .kb-echo-popup:before{
 	content:'Please wait a moment';
@@ -1206,4 +1272,33 @@ body .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-filter .kb-echo-head
 	outline:none;
 	overflow:auto;
 	width:100%;
+}
+/* Pop Mode Echo definition */
+body.pop .kb-echo .kb-echo-main .kb-echo-body{
+	padding:0 1.5em 1.5em 1.5em;
+}
+body.pop .kb-echo .kb-echo-main .kb-echo-body .kb-echo-body-main{
+	border-radius:1em;
+	min-width:100%;
+	padding:0 1em;
+}
+body.pop .kb-echo .kb-echo-main .kb-echo-header:has(.kb-echo-header-action){
+	margin-bottom:-1px;
+	padding:1.5em;
+}
+body.pop .kb-echo .kb-echo-main .kb-echo-header:has(.kb-echo-header-info){
+	padding:1.5em 1.5em 0 1.5em;
+}
+body.pop .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-action{
+	border-radius:1em;
+	padding:1em;
+}
+body.pop .kb-echo .kb-echo-main .kb-echo-header .kb-echo-header-info{
+	border-radius:1em;
+	padding:1em;
+}
+body.pop .kb-echo .kb-echo-main .kb-echo-mask{
+	display:block;
+	height:calc(100% - 1.5em);
+	z-index:2;
 }
