@@ -125,6 +125,7 @@
 }
 .kb-attachment-tab-operation .kb-icon.kb-icon-arrow{
 	border-bottom:1px solid #c7cbcb;
+	display:flex;
 	height:auto !important;
 }
 .kb-attachment-tab-operation .kb-icon.kb-icon-arrow[disabled=disabled]{
