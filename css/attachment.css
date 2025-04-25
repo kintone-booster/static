@@ -60,6 +60,13 @@
 .kb-attachment-subtable-operation [class^="subtable-operation-gaia"]+td{
 	border-left-width:1px !important;
 }
+.kb-attachment-subtable-copy{
+	background-size:24px 24px !important;
+	height:24px !important;
+	margin-left:4px !important;
+	margin-right:8px !important;
+	width:24px !important;
+}
 .kb-attachment-subtable-multi .kb-attachment-subtable-multi-cell:not(.hidden-subtable-field){
 	align-items:center;
 	display:flex;
