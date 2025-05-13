@@ -14,10 +14,20 @@
 	display:none;
 }
 .kb-attachment-lookup-operation{
+	flex-shrink:0;
 	margin:0 8px;
 }
-.kb-attachment-lookup-operation+.input-lookup-gaia{
+.kb-attachment-lookup-operation~.input-lookup-gaia{
 	margin-left:0;
+}
+.kb-attachment-lookup-operation.kb-mobile{
+	background-position:center;
+	height:2.5em;
+	vertical-align:middle;
+}
+.kb-attachment-lookup-operation-input.kb-mobile{
+	vertical-align:middle;
+	width:calc((100% - 2em) - 16px);
 }
 .kb-attachment-search-operation *{
 	box-sizing:border-box;
