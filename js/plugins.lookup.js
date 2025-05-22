@@ -1,3 +1,10 @@
+/*
+* FileName "plugins.lookup.js"
+* Version: 1.0.0
+* Copyright (c) 2023 Pandafirm LLC
+* Distributed under the terms of the GNU Lesser General Public License.
+* https://opensource.org/licenses/LGPL-2.1
+*/
 'use strict';(C=>{var a={handlers:{},intervals:[],observers:[]},E=x=>new Promise((B,F)=>{var D=(m,q)=>(c=>{let z=null,v=null;const k=(h=>(t=>{t.addEventListener("change",e=>{e.target==t&&(a.mobile?q.value:q.value.elm("input")).val(e.detail.value)});(e=>{(new MutationObserver(d=>{for(const b of d)"attributes"===b.type&&"placeholder"===b.attributeName&&t.elm("input").attr("placeholder",e.attr("placeholder"))})).observe(e,{attributes:!0,attributeFilter:["placeholder"]})})(a.mobile?q.value:q.value.elm("input"));return t})(a.mobile?
 new Kuc.MobileText(h):(new Kuc.Text(h)).css({boxSizing:"border-box",width:c.tableCode?"auto":q.css("width")})))({buttons:{clear:kb.create("button").css({whiteSpace:"nowrap"}).on("click",h=>{kb.confirm(kb.constants.lookup.message.confirm.clear[kb.operator.language],()=>{if(0!=m.tableCopy.value.length)k.lookupAction="CLEAR",k.lookupRecord=null,(a.mobile?q.value:q.value.elm("input")).val("");else{var t=kb.field.get(c,a.mobile,a.type),e=a.mobile?kintone.mobile.app.record:kintone.app.record,d=e.set,b=
 (a.mobile?kintone.mobile.app.record:kintone.app.record).get().record,g={};c.tableCode?(g[c.tableCode]=b[c.tableCode],g[c.tableCode].value[t.indexOf(q)].value[c.code]={lookup:"CLEAR",type:c.type,value:""}):g[c.code]={lookup:"CLEAR",type:c.type,value:""};k.lookupAction="CLEAR";k.lookupRecord=null;d.call(e,{record:g})}})}).html((()=>{var h="";switch(kb.operator.language){case "en":h="Clear";break;case "ja":h="\u30af\u30ea\u30a2";break;case "zh":h="\u6e05\u9664";break;case "zh-TW":h="\u6e05\u9664"}return h})()),
