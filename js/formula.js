@@ -1344,6 +1344,30 @@ window.KintoneBoosterFormula=class{
 				.replace(/[\u3041-\u3096]/g,(s) => String.fromCharCode(s.charCodeAt(0)+0x60))
 				.replace(new RegExp('('+Object.keys(map).join('|')+')','g'),(s) => map[s]);
 			};
+			var AVG=(code,bool=false) => {
+				return ((code,record) => {
+					var res=null;
+					if (code in fieldInfos)
+						((fieldInfo) => {
+							if (fieldInfo.tableCode)
+							{
+								switch (fieldInfo.type)
+								{
+									case 'NUMBER':
+										var rows=record[fieldInfo.tableCode].value.filter((item) => kb.isNumeric(item.value[code].value));
+										if (rows.length!=0)
+										{
+											res=0;
+											rows.each((row,index) => res+=parseFloat(row.value[code].value));
+											res=res/rows.length;
+										}
+										break;
+								}
+							}
+						})(fieldInfos[code]);
+					return res;
+				})(TO_STRING(code),(bool)?record:origin);
+			};
 			var DATE_CALC=(value,pattern) => {
 				var value=TO_STRING(value);
 				var type=value.match(/^[0-9]{1,2}:[0-9]{1,2}$/g)?'TIME':((value.replace(/[^0-9]+/g,'').length>8)?'DATETIME':'DATE');
@@ -1634,6 +1658,29 @@ window.KintoneBoosterFormula=class{
 					return res;
 				})(TO_STRING(code),(bool)?record:origin);
 			};
+			var SUM=(code,bool=false) => {
+				return ((code,record) => {
+					var res=null;
+					if (code in fieldInfos)
+						((fieldInfo) => {
+							if (fieldInfo.tableCode)
+							{
+								switch (fieldInfo.type)
+								{
+									case 'NUMBER':
+										var rows=record[fieldInfo.tableCode].value.filter((item) => kb.isNumeric(item.value[code].value));
+										if (rows.length!=0)
+										{
+											res=0;
+											rows.each((row,index) => res+=parseFloat(row.value[code].value));
+										}
+										break;
+								}
+							}
+						})(fieldInfos[code]);
+					return res;
+				})(TO_STRING(code),(bool)?record:origin);
+			};
 			var TODAY=() => {
 				return new Date().format('Y-m-d');
 			};
@@ -1789,11 +1836,11 @@ window.KintoneBoosterFormula=class{
 							return formula;
 						})(
 							formula
-							.replace(new RegExp('(MIN|MAX)\\([ ]*(%'+fieldInfo.code+'%)[ ]*\\)','g'),(match,functions,field) => {
+							.replace(new RegExp('(AVG|MIN|MAX|SUM)\\([ ]*(%'+fieldInfo.code+'%)[ ]*\\)','g'),(match,functions,field) => {
 								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'")');
 								return 'calculate_'+reserved.length.toString();
 							})
-							.replace(new RegExp('(MIN|MAX)\\([ ]*(%'+fieldInfo.code+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
+							.replace(new RegExp('(AVG|MIN|MAX|SUM)\\([ ]*(%'+fieldInfo.code+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
 								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'",'+bool+')');
 								return 'calculate_'+reserved.length.toString();
 							})
