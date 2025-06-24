@@ -5,37 +5,808 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
-'use strict';window.KintoneBoosterConfig=class{constructor(h){this.app=location.href.match(/\/m\//g)?kintone.mobile.app.getId():kintone.app.getId();this.subdomain=location.host.split(".")[0];this.cache=null;this.config={size:b=>(new TextEncoder).encode(b).length,clear:()=>new Promise((b,a)=>{fetch("https://api.kintone-booster.com/config?id="+h+"&subdomain="+this.subdomain+"&app="+this.app,{method:"DELETE",headers:{"X-Requested-With":"XMLHttpRequest"}}).then(d=>{d.json().then(c=>{switch(d.status){case 200:b();
-break;default:kb.alert(kb.error.parse(c)),a()}})}).catch(d=>{console.log("Failed to connect to the server.");a()})}),get:()=>new Promise((b,a)=>{try{this.cache?b(this.cache):(d=>{if("true"==d.exceeded){var c=e=>{fetch("https://api.kintone-booster."+e+"/config?id="+h+"&subdomain="+this.subdomain+"&app="+this.app,{method:"GET",headers:{"X-Requested-With":"XMLHttpRequest"}}).then(g=>{g.json().then(f=>{switch(g.status){case 200:this.cache="result"in f?"string"===typeof f.result?{}:f.result:{};b(this.cache);
-break;default:"com"==e?c("net"):(kb.alert(kb.error.parse(f)),a())}})}).catch(g=>{"com"==e?c("net"):(console.log("Failed to connect to the server."),a())})};c("com")}else this.cache=d,b(this.cache)})(kintone.plugin.app.getConfig(h))}catch(d){kb.alert(kb.error.parse(d)),a()}}),set:b=>{try{262144<this.config.size(JSON.stringify(b))||65535<this.config.size(b.flat)||65535<this.config.size(b.tab)?(kb.loadStart(),fetch("https://api.kintone-booster.com/config",{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"},
-body:JSON.stringify({id:h,subdomain:this.subdomain,app:this.app,datas:b})}).then(a=>{a.json().then(d=>{switch(a.status){case 200:kb.loadEnd();kintone.plugin.app.setConfig({exceeded:"true"});break;default:kb.alert(kb.error.parse(d))}})}).catch(a=>{kb.loadEnd();console.log("Failed to connect to the server.")})):kintone.plugin.app.setConfig(b)}catch(a){kb.alert(kb.error.parse(a))}}};this.ui={fields:{conditions:{get:(b,a)=>{b={code:"condition",type:"CONDITION",label:"",required:!1,noLabel:!0,app:{id:kintone.app.getId(),
-fields:b.parallelize}};var d=[{index:0,label:"both"},{index:1,label:"pc"},{index:2,label:"mobile"}];a&&(d.push({index:3,label:"injector"}),d.push({index:4,label:"all"}));return{condition:b,device:{code:"device",type:"RADIO_BUTTON",label:"",required:!0,noLabel:!0,options:d}}},set:(b,a,d)=>{b.append(kb.create("h1").html(kb.constants.config.caption.conditions[kb.operator.language]));d||b.append(kb.create("section").append(kb.create("p").html(kb.constants.config.caption.conditions.condition[kb.operator.language])).append(kb.field.activate(kb.field.create(a.fields.condition).css({width:"100%"}),
-a)));b.append(kb.create("section").append(kb.field.activate((c=>{c.elms("[data-name="+a.fields.device.code+"]").each((e,g)=>{e.closest("label").elm("span").html(kb.constants.config.caption.conditions.device[e.val()][kb.operator.language])});return c})(kb.field.create(a.fields.device).css({width:"100%"})),a)));return b}},users:{get:b=>({user:{code:"user",type:"USER_SELECT",label:"",required:!1,noLabel:!0,guestuser:!0},organization:{code:"organization",type:"ORGANIZATION_SELECT",label:"",required:!1,
-noLabel:!0},group:{code:"group",type:"GROUP_SELECT",label:"",required:!1,noLabel:!0}}),set:(b,a)=>b.append(kb.create("h1").html(kb.constants.config.caption.users[kb.operator.language])).append(kb.create("section").append(kb.create("p").html(kb.constants.config.caption.users.user[kb.operator.language])).append(kb.field.activate(kb.field.create(a.fields.user).css({width:"100%"}),a))).append(kb.create("section").append(kb.create("p").html(kb.constants.config.caption.users.organization[kb.operator.language])).append(kb.field.activate(kb.field.create(a.fields.organization).css({width:"100%"}),
-a))).append(kb.create("section").append(kb.create("p").html(kb.constants.config.caption.users.group[kb.operator.language])).append(kb.field.activate(kb.field.create(a.fields.group).css({width:"100%"}),a)))}},options:{fields:(b,a,d,c)=>{var e=[{code:"",label:""}];a&&(e=e.concat(Object.values(b.placed).reduce(a,[])));d&&(e=e.concat(Object.values(b.tables).map(g=>({code:g.code,label:g.label}))));c&&(e=e.concat(Object.values(b.groups).map(g=>({code:g.code,label:g.label}))));return e}}}}build(h,b,a){try{(d=>
-{d&&(d.parentNode.css({width:"calc(100% - "+d.parentNode.siblings().reduce((c,e)=>c+e.outerWidth(),16)+"px)"}),d.append((c=>d.main=c)(kb.create("main").addClass("kb-config-main"))).append((c=>d.footer=c)(kb.create("footer").addClass("kb-config-footer"))),h.submit&&d.footer.append((c=>{switch(kb.operator.language){case "en":c.text("Save");break;case "ja":c.text("\u4fdd\u5b58\u3059\u308b");break;case "zh":c.text("\u4fdd\u5b58");break;case "zh-TW":c.text("\u5132\u5b58")}return c})(kb.create("button").addClass("kb-config-footer-button kb-config-footer-button-submit").on("click",
-()=>{(c=>{c&&kb.confirm(kb.constants.common.message.confirm.save[kb.operator.language],()=>{kb.event.call("kb.config.submit.call",{config:c}).then(e=>{e.error||this.config.set(c)}).catch(()=>{})})})(h.submit(d,{}))}))).append((c=>{switch(kb.operator.language){case "en":c.text("Cancel");break;case "ja":c.text("\u30ad\u30e3\u30f3\u30bb\u30eb");break;case "zh":c.text("\u53d6\u6d88");break;case "zh-TW":c.text("\u53d6\u6d88")}return c})(kb.create("button").addClass("kb-config-footer-button kb-config-footer-button-cancel").on("click",
-c=>history.back()))).append((c=>{switch(kb.operator.language){case "en":c.text("Export configuration file");break;case "ja":c.text("\u8a2d\u5b9a\u30d5\u30a1\u30a4\u30eb\u66f8\u304d\u51fa\u3057");break;case "zh":c.text("\u5bfc\u51fa\u914d\u7f6e\u6587\u4ef6");break;case "zh-TW":c.text("\u532f\u51fa\u8a2d\u5b9a\u6a94")}return c})(kb.create("button").addClass("kb-config-footer-button kb-config-footer-button-export").on("click",c=>{this.config.get().then(e=>kb.downloadText(JSON.stringify(e),"config.json")).catch(e=>
-{})}))).append((c=>{switch(kb.operator.language){case "en":c.text("Import configuration file");break;case "ja":c.text("\u8a2d\u5b9a\u30d5\u30a1\u30a4\u30eb\u8aad\u307f\u8fbc\u307f");break;case "zh":c.text("\u5bfc\u5165\u914d\u7f6e\u6587\u4ef6");break;case "zh-TW":c.text("\u532f\u5165\u8a2d\u5b9a\u6a94\u6848")}return c})(kb.create("button").addClass("kb-config-footer-button kb-config-footer-button-import").on("click",c=>{(e=>{kb.elm("body").append(e.on("change",g=>{if(g.currentTarget.files){var f=
-new FileReader;f.onload=k=>{var l={};try{l=JSON.parse(k.target.result)}catch(m){l={}}finally{this.build(h,b,l)}};f.readAsText(g.currentTarget.files.first())}else document.body.removeChild(e)}));e.click()})(kb.create("input").attr("type","file").attr("accept",".json").css({display:"none"}))}))),a?b(d,a):this.config.get().then(c=>b(d,c)).catch(c=>{}))})(kb.elm(".kb-config-container").empty())}catch(d){kb.alert(kb.error.parse(d))}}};
-window.KintoneBoosterConfigTabbed=class{constructor(h,b){this.tabs=[];this.callback=b;this.container=h;this.container.main.append(kb.create("div").addClass("kb-hidden kb-config-tabbed-tab-scroller")).append((a=>{this.container.tabs=a;return a.append(kb.create("div").addClass("kb-hidden kb-config-tabbed-tab-guide"))})(kb.create("div").addClass("kb-config-tabbed-tabs"))).append((a=>this.container.panels=a)(kb.create("div").addClass("kb-config-tabbed-panels")));((a,d)=>{(c=>{var e=null;e=null;var g=
-(f=0)=>{a.scrollWidth>a.clientWidth?(0<a.scrollLeft+f?c.prev.removeAttr("disabled"):c.prev.attr("disabled","disabled"),a.scrollLeft+f<a.scrollWidth-a.clientWidth?c.next.removeAttr("disabled"):c.next.attr("disabled","disabled"),d.removeClass("kb-hidden")):d.addClass("kb-hidden")};e=new MutationObserver(()=>g());e.disconnect();e.observe(a,{childList:!0});e=new ResizeObserver(()=>g());e.disconnect();e.observe(a);d.append(c.prev.on("click",f=>{f=Math.floor(a.clientWidth/-2);g(f);a.scrollBy({left:f})})).append(c.next.on("click",
-f=>{f=Math.ceil(a.clientWidth/2);g(f);a.scrollBy({left:f})}))})({prev:kb.create("button").addClass("kb-icon kb-icon-arrow kb-icon-arrow-left"),next:kb.create("button").addClass("kb-icon kb-icon-arrow kb-icon-arrow-right")})})(this.container.elm(".kb-config-tabbed-tabs"),this.container.elm(".kb-config-tabbed-tab-scroller"));kb.event.on("kb.drag.start",a=>{var d=a.element,c=this.container.tabs.elm(".kb-config-tabbed-tab-guide"),e={move:g=>{var f=document.elementFromPoint(g.pageX,g.pageY);if(f&&f!=c){var k=
-f.getBoundingClientRect();f.hasClass("kb-config-tabbed-tab")&&f.parentNode.insertBefore(c.removeClass("kb-hidden"),g.pageX<k.left+.5*k.width?f:f.nextElementSibling)}},end:g=>{c.visible()?c.parentNode.insertBefore(d.removeClass("kb-hidden"),c.addClass("kb-hidden").nextElementSibling):d.removeClass("kb-hidden");this.tabs=this.container.tabs.elms(".kb-config-tabbed-tab").map((f,k)=>{f.removeClass("kb-dragging").index=k;return f});window.off("mousemove,touchmove",e.move);window.off("mouseup,touchend",
-e.end);g.stopPropagation();g.preventDefault()}};(g=>{c.css({width:g.width.toString()+"px"});d.addClass("kb-hidden").parentNode.insertBefore(c.removeClass("kb-hidden"),d.nextElementSibling)})(d.getBoundingClientRect());this.tabs.each((g,f)=>{g.addClass("kb-dragging")});window.on("mousemove,touchmove",e.move);window.on("mouseup,touchend",e.end)})}activate(h){this.tabs.each((b,a)=>{a==h.index?(b.addClass("kb-activate"),b.panel.show()):(b.removeClass("kb-activate"),b.panel.hide())});return h}add(h){return(b=>
-{var a=d=>{d=d.changedTouches?Array.from(d.changedTouches).first():d;kb.event.call("kb.drag.start",{element:b,page:{x:d.pageX,y:d.pageY}});window.off("touchmove,mousemove",a)};this.container.panels.append(b.panel);kb.isNumeric(h)?(this.container.tabs.insertBefore(b,this.tabs[h].nextElementSibling),this.tabs.splice(h+1,0,b)):(this.container.tabs.append(b),this.tabs.push(b));this.tabs.each((d,c)=>{d.index=c});this.callback.add((()=>{b.label.html((()=>{var d="";switch(kb.operator.language){case "en":d=
-"Setting";break;case "ja":d="\u8a2d\u5b9a";break;case "zh":d="\u8bbe\u7f6e";break;case "zh-TW":d="\u8a2d\u5b9a"}return d+(this.tabs.filter(c=>c.label.html().match(new RegExp("^"+d+"[1-9]{1}[0-9]*$","g"))).length+1).toString()})());return b})());this.activate(b);b.on("touchstart,mousedown",d=>{window.on("touchmove,mousemove",a);d.stopPropagation();d.preventDefault()}).on("touchend,mouseup",d=>{window.off("touchmove,mousemove",a);this.activate(b);d.stopPropagation();d.preventDefault()});return b})((()=>
-{var b=kb.create("div").addClass("kb-config-tabbed-tab").append(kb.create("span").addClass("kb-config-tabbed-tab-label").on("dblclick",a=>{a.currentTarget.parentNode.elm(".kb-config-tabbed-tab-prompt").val(a.currentTarget.html()).show("inline-block").focus();a.currentTarget.hide();a.stopPropagation();a.preventDefault()})).append(kb.create("input").attr("type","text").addClass("kb-config-tabbed-tab-prompt").hide().on("touchstart,mousedown",a=>{a.stopPropagation()}).on("blur",a=>{a.currentTarget.parentNode.elm(".kb-config-tabbed-tab-label").html(a.currentTarget.val()).show("inline-block");
-a.currentTarget.hide();a.stopPropagation();a.preventDefault()})).append(kb.create("button").addClass("kb-icon kb-icon-add").on("touchstart,mousedown",a=>{a.stopPropagation()}).on("click",a=>{this.add(b.index);a.stopPropagation();a.preventDefault()})).append(kb.create("button").addClass("kb-icon kb-icon-copy").on("touchstart,mousedown",a=>{a.stopPropagation()}).on("click",a=>{this.add(b.index);switch(kb.operator.language){case "en":this.tabs[b.index+1].label.html(this.tabs[b.index].label.html()+" Copy");
-break;case "ja":this.tabs[b.index+1].label.html(this.tabs[b.index].label.html()+" \u30b3\u30d4\u30fc");break;case "zh":this.tabs[b.index+1].label.html(this.tabs[b.index].label.html()+" \u590d\u5236");break;case "zh-TW":this.tabs[b.index+1].label.html(this.tabs[b.index].label.html()+" \u8907\u88fd")}this.copy(b.index,b.index+1);a.stopPropagation();a.preventDefault()})).append(kb.create("button").addClass("kb-icon kb-icon-del").on("touchstart,mousedown",a=>{a.stopPropagation()}).on("click",a=>{kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],
-()=>{this.del(b.index)});a.stopPropagation();a.preventDefault()}));b.label=b.elm(".kb-config-tabbed-tab-label");b.panel=kb.create("div").addClass("kb-config-tabbed-panel");return b})())}copy(h,b){this.callback.copy(this.tabs[h],this.tabs[b])}del(h){(b=>{this.container.panels.removeChild(b.panel);this.container.tabs.removeChild(b);this.tabs.splice(h,1);this.tabs.each((a,d)=>{a.index=d});this.callback.del(h);0==this.tabs.length?this.add():this.activate(this.tabs[this.tabs.length>h?h:h-1])})(this.tabs[h])}};
-"undefined"===typeof kb.config&&(kb.config={});kb.config[kintone.$PLUGIN_ID]=new KintoneBoosterConfig(kintone.$PLUGIN_ID);
-kb.constants=kb.extend({config:{caption:{conditions:{en:"Conditions for operation",ja:"\u52d5\u4f5c\u6761\u4ef6",zh:"\u64cd\u4f5c\u7684\u6761\u4ef6","zh-TW":"\u64cd\u4f5c\u7684\u689d\u4ef6",condition:{en:"Please specify the conditions for the record to be executable with the set content.",ja:"\u8a2d\u5b9a\u3057\u305f\u5185\u5bb9\u3092\u5b9f\u884c\u51fa\u6765\u308b\u30ec\u30b3\u30fc\u30c9\u306e\u6761\u4ef6\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u8bf7\u6307\u5b9a\u5177\u6709\u6240\u8bbe\u7f6e\u5185\u5bb9\u7684\u8bb0\u5f55\u7684\u53ef\u6267\u884c\u6761\u4ef6\u3002",
-"zh-TW":"\u8acb\u6307\u5b9a\u5177\u6709\u6240\u8a2d\u7f6e\u5167\u5bb9\u7684\u8a18\u9304\u7684\u53ef\u57f7\u884c\u689d\u4ef6\u3002"},device:{all:{en:"Execute on both PC and mobile versions, or on injector",ja:"PC\u7248\u3068\u30e2\u30d0\u30a4\u30eb\u7248\u306e\u4e21\u65b9\u3001\u307e\u305f\u306f\u30a4\u30f3\u30b8\u30a7\u30af\u30bf\u30fc\u3067\u5b9f\u884c",zh:"\u5728PC\u7248\u548c\u624b\u673a\u7248\u7684\u4e24\u8005\uff0c\u6216\u4f7f\u7528Injector\u6267\u884c","zh-TW":"\u5728PC\u7248\u548c\u884c\u52d5\u7248\u7684\u5169\u8005\uff0c\u6216\u4f7f\u7528Injector\u57f7\u884c"},
-injector:{en:"Execute on injector only",ja:"\u30a4\u30f3\u30b8\u30a7\u30af\u30bf\u30fc\u306e\u307f\u3067\u5b9f\u884c",zh:"\u4ec5\u4f7f\u7528Injector\u6267\u884c","zh-TW":"\u50c5\u4f7f\u7528Injector\u57f7\u884c"},both:{en:"Execute on both PC and mobile versions",ja:"PC\u7248\u3068\u30e2\u30d0\u30a4\u30eb\u7248\u306e\u4e21\u65b9\u3067\u5b9f\u884c",zh:"\u5728PC\u548c\u79fb\u52a8\u7248\u672c\u4e0a\u90fd\u6267\u884c","zh-TW":"\u5728PC\u548c\u884c\u52d5\u7248\u4e0a\u90fd\u57f7\u884c"},mobile:{en:"Execute on mobile version only",
-ja:"\u30e2\u30d0\u30a4\u30eb\u7248\u306e\u307f\u3067\u5b9f\u884c",zh:"\u4ec5\u5728\u79fb\u52a8\u7248\u672c\u4e0a\u6267\u884c","zh-TW":"\u50c5\u5728\u884c\u52d5\u7248\u4e0a\u57f7\u884c"},pc:{en:"Execute on PC version only",ja:"PC\u7248\u306e\u307f\u3067\u5b9f\u884c",zh:"\u4ec5\u5728PC\u7248\u672c\u4e0a\u6267\u884c","zh-TW":"\u50c5\u5728PC\u7248\u672c\u4e0a\u57f7\u884c"}}},users:{en:"Authorized users",ja:"\u8a31\u53ef\u30e6\u30fc\u30b6\u30fc",zh:"\u83b7\u5f97\u6388\u6743\u7684\u7528\u6237","zh-TW":"\u7372\u5f97\u6388\u6b0a\u7684\u4f7f\u7528\u8005",
-group:{en:"In addition to the operational conditions, if you want to determine the execution permission based on the group the logged-in user belongs to, please specify the group to be permitted.",ja:"\u52d5\u4f5c\u6761\u4ef6\u306b\u52a0\u3048\u3001\u30ed\u30b0\u30a4\u30f3\u30e6\u30fc\u30b6\u30fc\u304c\u6240\u5c5e\u3059\u308b\u30b0\u30eb\u30fc\u30d7\u3092\u5b9f\u884c\u8a31\u53ef\u306e\u5224\u65ad\u3068\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u8a31\u53ef\u3059\u308b\u30b0\u30eb\u30fc\u30d7\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u9664\u4e86\u64cd\u4f5c\u6761\u4ef6\u5916\uff0c\u5982\u679c\u60a8\u60f3\u6839\u636e\u767b\u5f55\u7528\u6237\u6240\u5c5e\u7684\u7ec4\u6765\u51b3\u5b9a\u6267\u884c\u6743\u9650\uff0c\u8bf7\u6307\u5b9a\u5141\u8bb8\u7684\u7ec4\u3002","zh-TW":"\u9664\u4e86\u64cd\u4f5c\u689d\u4ef6\u5916\uff0c\u5982\u679c\u60a8\u60f3\u6839\u64da\u767b\u5165\u4f7f\u7528\u8005\u6240\u5c6c\u7684\u7fa4\u7d44\u4f86\u6c7a\u5b9a\u57f7\u884c\u6b0a\u9650\uff0c\u8acb\u6307\u5b9a\u5141\u8a31\u7684\u7fa4\u7d44\u3002"},organization:{en:"In addition to the operational conditions, if you want to determine the execution permission based on the organization the logged-in user belongs to, please specify the organization to be permitted.",
-ja:"\u52d5\u4f5c\u6761\u4ef6\u306b\u52a0\u3048\u3001\u30ed\u30b0\u30a4\u30f3\u30e6\u30fc\u30b6\u30fc\u304c\u6240\u5c5e\u3059\u308b\u7d44\u7e54\u3092\u5b9f\u884c\u8a31\u53ef\u306e\u5224\u65ad\u3068\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u8a31\u53ef\u3059\u308b\u7d44\u7e54\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",zh:"\u9664\u4e86\u64cd\u4f5c\u6761\u4ef6\u5916\uff0c\u5982\u679c\u60a8\u60f3\u6839\u636e\u767b\u5f55\u7528\u6237\u6240\u5c5e\u7684\u7ec4\u7ec7\u6765\u51b3\u5b9a\u6267\u884c\u6743\u9650\uff0c\u8bf7\u6307\u5b9a\u5141\u8bb8\u7684\u7ec4\u7ec7\u3002",
-"zh-TW":"\u9664\u4e86\u64cd\u4f5c\u689d\u4ef6\u5916\uff0c\u5982\u679c\u60a8\u60f3\u6839\u64da\u767b\u5165\u4f7f\u7528\u8005\u6240\u5c6c\u7684\u7d44\u7e54\u4f86\u6c7a\u5b9a\u57f7\u884c\u6b0a\u9650\uff0c\u8acb\u6307\u5b9a\u5141\u8a31\u7684\u7d44\u7e54\u3002"},user:{en:"In addition to the operational conditions, if you want to determine the execution permission based on the logged-in user, please specify the user to be permitted.",ja:"\u52d5\u4f5c\u6761\u4ef6\u306b\u52a0\u3048\u3001\u30ed\u30b0\u30a4\u30f3\u30e6\u30fc\u30b6\u30fc\u3092\u5b9f\u884c\u8a31\u53ef\u306e\u5224\u65ad\u3068\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u8a31\u53ef\u3059\u308b\u30e6\u30fc\u30b6\u30fc\u3092\u6307\u5b9a\u3057\u3066\u4e0b\u3055\u3044\u3002",
-zh:"\u9664\u4e86\u64cd\u4f5c\u6761\u4ef6\u5916\uff0c\u5982\u679c\u60a8\u60f3\u6839\u636e\u767b\u5f55\u7528\u6237\u6765\u51b3\u5b9a\u6267\u884c\u6743\u9650\uff0c\u8bf7\u6307\u5b9a\u5141\u8bb8\u7684\u7528\u6237\u3002","zh-TW":"\u9664\u4e86\u64cd\u4f5c\u689d\u4ef6\u5916\uff0c\u5982\u679c\u60a8\u60f3\u6839\u64da\u767b\u5165\u4f7f\u7528\u8005\u4f86\u6c7a\u5b9a\u57f7\u884c\u6b0a\u9650\uff0c\u8acb\u6307\u5b9a\u5141\u8a31\u7684\u4f7f\u7528\u8005\u3002"}}}}},kb.constants);
+"use strict";
+window.KintoneBoosterConfig=class{
+	/* constructor */
+	constructor(pluginId){
+		/* setup properties */
+		this.app=(location.href.match(/\/m\//g))?kintone.mobile.app.getId():kintone.app.getId();
+		this.subdomain=location.host.split('.')[0];
+		this.cache=null;
+		this.config={
+			size:(value) => {
+				return new TextEncoder().encode(value).length;
+			},
+			clear:() => {
+				return new Promise((resolve,reject) => {
+					fetch(
+						'https://api.kintone-booster.com/config?id='+pluginId+'&subdomain='+this.subdomain+'&app='+this.app,
+						{
+							method:'DELETE',
+							headers:{
+								'X-Requested-With':'XMLHttpRequest'
+							}
+						}
+					)
+					.then((response) => {
+						response.json().then((json) => {
+							switch (response.status)
+							{
+								case 200:
+									resolve();
+									break;
+								default:
+									kb.alert(kb.error.parse(json));
+									reject();
+									break;
+							}
+						});
+					})
+					.catch((error) => {
+						console.log('Failed to connect to the server.');
+						reject();
+					});
+				});
+			},
+			get:() => {
+				return new Promise((resolve,reject) => {
+					try
+					{
+						if (!this.cache)
+						{
+							((config) => {
+								if (config.exceeded=='true')
+								{
+									var fetchDual=(topLevel) => {
+										fetch(
+											'https://api.kintone-booster.'+topLevel+'/config?id='+pluginId+'&subdomain='+this.subdomain+'&app='+this.app,
+											{
+												method:'GET',
+												headers:{
+													'X-Requested-With':'XMLHttpRequest'
+												}
+											}
+										)
+										.then((response) => {
+											if (response.ok)
+											{
+												response.json().then((json) => {
+													switch (response.status)
+													{
+														case 200:
+															this.cache=(('result' in json)?((typeof json.result==='string')?{}:json.result):{});
+															resolve(this.cache);
+															break;
+														default:
+															if (topLevel=='com') fetchDual('net');
+															else
+															{
+																kb.alert(kb.error.parse(json));
+																reject();
+															}
+															break;
+													}
+												});
+											}
+											else
+											{
+												response.text().then((text) => {
+													if (topLevel=='com') fetchDual('net');
+													else
+													{
+														let json;
+														try
+														{
+															json=JSON.parse(text);
+														}
+														catch
+														{
+															json={message:'Failed to connect to the server.'};
+														}
+														kb.alert(kb.error.parse(json));
+														reject();
+													}
+												});
+											}
+										})
+										.catch((error) => {
+											if (topLevel=='com') fetchDual('net');
+											else
+											{
+												console.log('Failed to connect to the server.');
+												reject();
+											}
+										});
+									};
+									fetchDual('com');
+								}
+								else
+								{
+									this.cache=config;
+									resolve(this.cache);
+								}
+							})(kintone.plugin.app.getConfig(pluginId));
+						}
+						else resolve(this.cache);
+					}
+					catch(error)
+					{
+						kb.alert(kb.error.parse(error));
+						reject();
+					}
+				});
+			},
+			set:(config) => {
+				try
+				{
+					if (this.config.size(JSON.stringify(config))>262144 || this.config.size(config.flat)>65535 || this.config.size(config.tab)>65535)
+					{
+						kb.loadStart();
+						fetch(
+							'https://api.kintone-booster.com/config',
+							{
+								method:'PUT',
+								headers:{
+									'X-Requested-With':'XMLHttpRequest'
+								},
+								body:JSON.stringify({
+									id:pluginId,
+									subdomain:this.subdomain,
+									app:this.app,
+									datas:config
+								})
+							}
+						)
+						.then((response) => {
+							response.json().then((json) => {
+								switch (response.status)
+								{
+									case 200:
+										kb.loadEnd();
+										kintone.plugin.app.setConfig({exceeded:'true'});
+										break;
+									default:
+										kb.alert(kb.error.parse(json));
+										break;
+								}
+							});
+						})
+						.catch((error) => {
+							kb.loadEnd();
+							console.log('Failed to connect to the server.');
+						});
+					}
+					else kintone.plugin.app.setConfig(config);
+				}
+				catch(error){kb.alert(kb.error.parse(error))}
+			}
+		};
+		this.ui={
+			fields:{
+				conditions:{
+					get:(fieldInfos,useInjector) => {
+						return {
+							condition:{
+								code:'condition',
+								type:'CONDITION',
+								label:'',
+								required:false,
+								noLabel:true,
+								app:{
+									id:kintone.app.getId(),
+									fields:fieldInfos.parallelize
+								}
+							},
+							device:{
+								code:'device',
+								type:'RADIO_BUTTON',
+								label:'',
+								required:true,
+								noLabel:true,
+								options:(() => {
+									var res=[
+										{index:0,label:'both'},
+										{index:1,label:'pc'},
+										{index:2,label:'mobile'}
+									];
+									if (useInjector)
+									{
+										res.push({index:3,label:'injector'});
+										res.push({index:4,label:'all'});
+									}
+									return res;
+								})()
+							}
+						};
+					},
+					set:(container,app,deviceonly) => {
+						container.append(kb.create('h1').html(kb.constants.config.caption.conditions[kb.operator.language]));
+						if (!deviceonly)
+						{
+							container.append(
+								kb.create('section')
+								.append(kb.create('p').html(kb.constants.config.caption.conditions.condition[kb.operator.language]))
+								.append(kb.field.activate(kb.field.create(app.fields.condition).css({width:'100%'}),app))
+							);
+						}
+						container.append(
+							kb.create('section')
+							.append(kb.field.activate(((res) => {
+								res.elms('[data-name='+app.fields.device.code+']').each((element,index) => {
+									element.closest('label').elm('span').html(kb.constants.config.caption.conditions.device[element.val()][kb.operator.language]);
+								});
+								return res;
+							})(kb.field.create(app.fields.device).css({width:'100%'})),app))
+						);
+						return container;
+					}
+				},
+				users:{
+					get:(fieldInfos) => {
+						return {
+							user:{
+								code:'user',
+								type:'USER_SELECT',
+								label:'',
+								required:false,
+								noLabel:true,
+								guestuser:true
+							},
+							organization:{
+								code:'organization',
+								type:'ORGANIZATION_SELECT',
+								label:'',
+								required:false,
+								noLabel:true
+							},
+							group:{
+								code:'group',
+								type:'GROUP_SELECT',
+								label:'',
+								required:false,
+								noLabel:true
+							}
+						};
+					},
+					set:(container,app) => {
+						return container
+						.append(kb.create('h1').html(kb.constants.config.caption.users[kb.operator.language]))
+						.append(
+							kb.create('section')
+							.append(kb.create('p').html(kb.constants.config.caption.users.user[kb.operator.language]))
+							.append(kb.field.activate(kb.field.create(app.fields.user).css({width:'100%'}),app))
+						)
+						.append(
+							kb.create('section')
+							.append(kb.create('p').html(kb.constants.config.caption.users.organization[kb.operator.language]))
+							.append(kb.field.activate(kb.field.create(app.fields.organization).css({width:'100%'}),app))
+						)
+						.append(
+							kb.create('section')
+							.append(kb.create('p').html(kb.constants.config.caption.users.group[kb.operator.language]))
+							.append(kb.field.activate(kb.field.create(app.fields.group).css({width:'100%'}),app))
+						);
+					}
+				}
+			},
+			options:{
+				fields:(fieldInfos,filter,tables,groups) => {
+					var res=[{code:'',label:''}];
+					if (filter) res=res.concat(Object.values(fieldInfos.placed).reduce(filter,[]));
+					if (tables) res=res.concat(Object.values(fieldInfos.tables).map((item) => ({code:item.code,label:item.label})));
+					if (groups) res=res.concat(Object.values(fieldInfos.groups).map((item) => ({code:item.code,label:item.label})));
+					return res;
+				}
+			}
+		}
+	}
+	/* build */
+	build(options,callback,config){
+		try
+		{
+			((container) => {
+				if (container)
+				{
+					container.parentNode.css({width:'calc(100% - '+container.parentNode.siblings().reduce((result,current) => result+current.outerWidth(),16)+'px)'});
+					container
+					.append(((main) => {
+						container.main=main;
+						return main;
+					})(kb.create('main').addClass('kb-config-main')))
+					.append(((footer) => {
+						container.footer=footer;
+						return footer;
+					})(kb.create('footer').addClass('kb-config-footer')));
+					if (options.submit)
+					{
+						container.footer
+						.append(((button) => {
+							switch (kb.operator.language)
+							{
+								case 'en':
+									button.text('Save');
+									break;
+								case 'ja':
+									button.text('保存する');
+									break;
+								case 'zh':
+									button.text('保存');
+									break;
+								case 'zh-TW':
+									button.text('儲存');
+									break;
+							}
+							return button;
+						})(kb.create('button').addClass('kb-config-footer-button kb-config-footer-button-submit').on('click',() => {
+							((config) => {
+								if (config)
+									kb.confirm(kb.constants.common.message.confirm.save[kb.operator.language],() => {
+										kb.event.call('kb.config.submit.call',{config:config})
+										.then((param) => {
+											if (!param.error) this.config.set(config);
+										})
+										.catch(() => {});
+									});
+							})(options.submit(container,{}));
+						})))
+						.append(((button) => {
+							switch (kb.operator.language)
+							{
+								case 'en':
+									button.text('Cancel');
+									break;
+								case 'ja':
+									button.text('キャンセル');
+									break;
+								case 'zh':
+									button.text('取消');
+									break;
+								case 'zh-TW':
+									button.text('取消');
+									break;
+							}
+							return button;
+						})(kb.create('button').addClass('kb-config-footer-button kb-config-footer-button-cancel').on('click',(e) => history.back())))
+						.append(((button) => {
+							switch (kb.operator.language)
+							{
+								case 'en':
+									button.text('Export configuration file');
+									break;
+								case 'ja':
+									button.text('設定ファイル書き出し');
+									break;
+								case 'zh':
+									button.text('导出配置文件');
+									break;
+								case 'zh-TW':
+									button.text('匯出設定檔');
+									break;
+							}
+							return button;
+						})(kb.create('button').addClass('kb-config-footer-button kb-config-footer-button-export').on('click',(e) => {
+							this.config.get()
+							.then((config) => kb.downloadText(JSON.stringify(config),'config.json'))
+							.catch((error) => {});
+						})))
+						.append(((button) => {
+							switch (kb.operator.language)
+							{
+								case 'en':
+									button.text('Import configuration file');
+									break;
+								case 'ja':
+									button.text('設定ファイル読み込み');
+									break;
+								case 'zh':
+									button.text('导入配置文件');
+									break;
+								case 'zh-TW':
+									button.text('匯入設定檔案');
+									break;
+							}
+							return button;
+						})(kb.create('button').addClass('kb-config-footer-button kb-config-footer-button-import').on('click',(e) => {
+							((file) => {
+								kb.elm('body').append(file.on('change',(e) => {
+									if (e.currentTarget.files)
+									{
+										var reader=new FileReader();
+										reader.onload=((readData) => {
+											var config={};
+											try
+											{
+												config=JSON.parse(readData.target.result);
+											}
+											catch(error)
+											{
+												config={};
+											}
+											finally
+											{
+												this.build(options,callback,config)
+											}
+										});
+										reader.readAsText(e.currentTarget.files.first());
+									}
+									else document.body.removeChild(file);
+								}));
+								file.click();
+							})(kb.create('input').attr('type','file').attr('accept','.json').css({display:'none'}));
+						})))
+					}
+					if (!config) this.config.get().then((config) => callback(container,config)).catch((error) => {});
+					else callback(container,config)
+				}
+			})(kb.elm('.kb-config-container').empty());
+		}
+		catch(error){kb.alert(kb.error.parse(error))}
+	}
+};
+window.KintoneBoosterConfigTabbed=class{
+	/* constructor */
+	constructor(container,callback){
+		/* setup properties */
+		this.tabs=[];
+		this.callback=callback;
+		this.container=container;
+		this.container.main
+		.append(kb.create('div').addClass('kb-hidden kb-config-tabbed-tab-scroller'))
+		.append(
+			((tabs) => {
+				this.container.tabs=tabs;
+				return tabs.append(kb.create('div').addClass('kb-hidden kb-config-tabbed-tab-guide'));
+			})(kb.create('div').addClass('kb-config-tabbed-tabs'))
+		)
+		.append(
+			((panels) => {
+				this.container.panels=panels;
+				return panels;
+			})(kb.create('div').addClass('kb-config-tabbed-panels'))
+		);
+		/* tab scroller */
+		((container,scroller) => {
+			((buttons) => {
+				var observer={
+					mutation:null,
+					resize:null
+				};
+				var adjust=(coord=0) => {
+					if (container.scrollWidth>container.clientWidth)
+					{
+						if (container.scrollLeft+coord>0) buttons.prev.removeAttr('disabled');
+						else buttons.prev.attr('disabled','disabled');
+						if (container.scrollLeft+coord<container.scrollWidth-container.clientWidth) buttons.next.removeAttr('disabled');
+						else buttons.next.attr('disabled','disabled');
+						scroller.removeClass('kb-hidden');
+					}
+					else scroller.addClass('kb-hidden');
+				};
+				observer.mutation=new MutationObserver(() => adjust());
+				observer.mutation.disconnect();
+				observer.mutation.observe(container,{childList:true});
+				observer.resize=new ResizeObserver(() => adjust());
+				observer.resize.disconnect();
+				observer.resize.observe(container);
+				scroller
+				.append(buttons.prev.on('click',(e) => {
+					((coord) => {
+						adjust(coord);
+						container.scrollBy({left:coord});
+					})(Math.floor(container.clientWidth/-2));
+				}))
+				.append(buttons.next.on('click',(e) => {
+					((coord) => {
+						adjust(coord);
+						container.scrollBy({left:coord});
+					})(Math.ceil(container.clientWidth/2));
+				}));
+			})({
+				prev:kb.create('button').addClass('kb-icon kb-icon-arrow kb-icon-arrow-left'),
+				next:kb.create('button').addClass('kb-icon kb-icon-arrow kb-icon-arrow-right')
+			});
+		})(this.container.elm('.kb-config-tabbed-tabs'),this.container.elm('.kb-config-tabbed-tab-scroller'));
+		/* drag event */
+		kb.event.on('kb.drag.start',(e) => {
+			var keep={
+				element:e.element,
+				guide:this.container.tabs.elm('.kb-config-tabbed-tab-guide')
+			};
+			var handler={
+				move:(e) => {
+					var element=document.elementFromPoint(e.pageX,e.pageY);
+					if (element)
+						if (element!=keep.guide)
+							((rect) => {
+								if (element.hasClass('kb-config-tabbed-tab'))
+									element.parentNode.insertBefore(keep.guide.removeClass('kb-hidden'),(e.pageX<rect.left+rect.width*0.5)?element:element.nextElementSibling);
+							})(element.getBoundingClientRect());
+				},
+				end:(e) => {
+					if (keep.guide.visible()) keep.guide.parentNode.insertBefore(keep.element.removeClass('kb-hidden'),keep.guide.addClass('kb-hidden').nextElementSibling);
+					else keep.element.removeClass('kb-hidden');
+					this.tabs=this.container.tabs.elms('.kb-config-tabbed-tab').map((item,index) => {
+						item.removeClass('kb-dragging').index=index;
+						return item;
+					});
+					window.off('mousemove,touchmove',handler.move);
+					window.off('mouseup,touchend',handler.end);
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			};
+			((rect) => {
+				keep.guide.css({width:rect.width.toString()+'px'});
+				keep.element.addClass('kb-hidden').parentNode.insertBefore(keep.guide.removeClass('kb-hidden'),keep.element.nextElementSibling);
+			})(keep.element.getBoundingClientRect());
+			this.tabs.each((tab,index) => {
+				tab.addClass('kb-dragging');
+			});
+			/* event */
+			window.on('mousemove,touchmove',handler.move);
+			window.on('mouseup,touchend',handler.end);
+		});
+	}
+	/* activate */
+	activate(target){
+		this.tabs.each((tab,index) => {
+			if (index==target.index)
+			{
+				tab.addClass('kb-activate');
+				tab.panel.show();
+			}
+			else
+			{
+				tab.removeClass('kb-activate');
+				tab.panel.hide();
+			}
+		});
+		return target;
+	}
+	/* add */
+	add(index){
+		return ((tab) => {
+			var handler=(e) => {
+				var pointer=(e.changedTouches)?Array.from(e.changedTouches).first():e;
+				kb.event.call(
+					'kb.drag.start',
+					{
+						element:tab,
+						page:{
+							x:pointer.pageX,
+							y:pointer.pageY
+						}
+					}
+				);
+				window.off('touchmove,mousemove',handler);
+			};
+			this.container.panels.append(tab.panel);
+			if (kb.isNumeric(index))
+			{
+				this.container.tabs.insertBefore(tab,this.tabs[index].nextElementSibling);
+				this.tabs.splice(index+1,0,tab);
+			}
+			else
+			{
+				this.container.tabs.append(tab);
+				this.tabs.push(tab);
+			}
+			this.tabs.each((tab,index) => {
+				tab.index=index;
+			});
+			this.callback.add((() => {
+				tab.label.html((() => {
+					var res='';
+					switch (kb.operator.language)
+					{
+						case 'en':
+							res='Setting';
+							break;
+						case 'ja':
+							res='設定';
+							break;
+						case 'zh':
+							res='设置';
+							break;
+						case 'zh-TW':
+							res='設定';
+							break;
+					}
+					return res+(this.tabs.filter((item) => {
+						return item.label.html().match(new RegExp('^'+res+'[1-9]{1}[0-9]*$','g'));
+					}).length+1).toString();
+				})());
+				return tab;
+			})());
+			this.activate(tab);
+			/* event */
+			tab
+			.on('touchstart,mousedown',(e) => {
+				window.on('touchmove,mousemove',handler);
+				e.stopPropagation();
+				e.preventDefault();
+			})
+			.on('touchend,mouseup',(e) => {
+				window.off('touchmove,mousemove',handler);
+				this.activate(tab)
+				e.stopPropagation();
+				e.preventDefault();
+			});
+			return tab;
+		})((() => {
+			var res=kb.create('div').addClass('kb-config-tabbed-tab')
+			.append(
+				kb.create('span').addClass('kb-config-tabbed-tab-label')
+				.on('dblclick',(e) => {
+					e.currentTarget.parentNode.elm('.kb-config-tabbed-tab-prompt').val(e.currentTarget.html()).show('inline-block').focus();
+					e.currentTarget.hide();
+					e.stopPropagation();
+					e.preventDefault();
+				})
+			)
+			.append(
+				kb.create('input').attr('type','text').addClass('kb-config-tabbed-tab-prompt').hide()
+				.on('touchstart,mousedown',(e) => {
+					e.stopPropagation();
+				})
+				.on('blur',(e) => {
+					e.currentTarget.parentNode.elm('.kb-config-tabbed-tab-label').html(e.currentTarget.val()).show('inline-block');
+					e.currentTarget.hide();
+					e.stopPropagation();
+					e.preventDefault();
+				})
+			)
+			.append(
+				kb.create('button').addClass('kb-icon kb-icon-add')
+				.on('touchstart,mousedown',(e) => {
+					e.stopPropagation();
+				})
+				.on('click',(e) => {
+					this.add(res.index);
+					e.stopPropagation();
+					e.preventDefault();
+				})
+			)
+			.append(
+				kb.create('button').addClass('kb-icon kb-icon-copy')
+				.on('touchstart,mousedown',(e) => {
+					e.stopPropagation();
+				})
+				.on('click',(e) => {
+					this.add(res.index);
+					switch (kb.operator.language)
+					{
+						case 'en':
+							this.tabs[res.index+1].label.html(this.tabs[res.index].label.html()+' Copy');
+							break;
+						case 'ja':
+							this.tabs[res.index+1].label.html(this.tabs[res.index].label.html()+' コピー');
+							break;
+						case 'zh':
+							this.tabs[res.index+1].label.html(this.tabs[res.index].label.html()+' 复制');
+							break;
+						case 'zh-TW':
+							this.tabs[res.index+1].label.html(this.tabs[res.index].label.html()+' 複製');
+							break;
+					}
+					this.copy(res.index,res.index+1);
+					e.stopPropagation();
+					e.preventDefault();
+				})
+			)
+			.append(
+				kb.create('button').addClass('kb-icon kb-icon-del')
+				.on('touchstart,mousedown',(e) => {
+					e.stopPropagation();
+				})
+				.on('click',(e) => {
+					kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+						this.del(res.index);
+					});
+					e.stopPropagation();
+					e.preventDefault();
+				})
+			);
+			res.label=res.elm('.kb-config-tabbed-tab-label');
+			res.panel=kb.create('div').addClass('kb-config-tabbed-panel')
+			return res;
+		})());
+	}
+	/* copy */
+	copy(source,destination){
+		this.callback.copy(this.tabs[source],this.tabs[destination]);
+	}
+	/* del */
+	del(index){
+		((tab) => {
+			this.container.panels.removeChild(tab.panel);
+			this.container.tabs.removeChild(tab);
+			this.tabs.splice(index,1);
+			this.tabs.each((tab,index) => {
+				tab.index=index;
+			});
+			this.callback.del(index);
+			if (this.tabs.length==0) this.add();
+			else this.activate(this.tabs[(this.tabs.length>index)?index:index-1]);
+		})(this.tabs[index]);
+	}
+};
+if (typeof kb.config==='undefined') kb.config={};
+kb.config[kintone.$PLUGIN_ID]=new KintoneBoosterConfig(kintone.$PLUGIN_ID);
+/*
+Message definition by language
+*/
+kb.constants=kb.extend({
+	config:{
+		caption:{
+			conditions:{
+				'en':'Conditions for operation',
+				'ja':'動作条件',
+				'zh':'操作的条件',
+				'zh-TW':'操作的條件',
+				condition:{
+					'en':'Please specify the conditions for the record to be executable with the set content.',
+					'ja':'設定した内容を実行出来るレコードの条件を指定して下さい。',
+					'zh':'请指定具有所设置内容的记录的可执行条件。',
+					'zh-TW':'請指定具有所設置內容的記錄的可執行條件。'
+				},
+				device:{
+					all:{
+						'en':'Execute on both PC and mobile versions, or on injector',
+						'ja':'PC版とモバイル版の両方、またはインジェクターで実行',
+						'zh':'在PC版和手机版的两者，或使用Injector执行',
+						'zh-TW':'在PC版和行動版的兩者，或使用Injector執行'
+					},
+					injector:{
+						'en':'Execute on injector only',
+						'ja':'インジェクターのみで実行',
+						'zh':'仅使用Injector执行',
+						'zh-TW':'僅使用Injector執行'
+					},
+					both:{
+						'en':'Execute on both PC and mobile versions',
+						'ja':'PC版とモバイル版の両方で実行',
+						'zh':'在PC和移动版本上都执行',
+						'zh-TW':'在PC和行動版上都執行'
+					},
+					mobile:{
+						'en':'Execute on mobile version only',
+						'ja':'モバイル版のみで実行',
+						'zh':'仅在移动版本上执行',
+						'zh-TW':'僅在行動版上執行'
+					},
+					pc:{
+						'en':'Execute on PC version only',
+						'ja':'PC版のみで実行',
+						'zh':'仅在PC版本上执行',
+						'zh-TW':'僅在PC版本上執行'
+					}
+				}
+			},
+			users:{
+				'en':'Authorized users',
+				'ja':'許可ユーザー',
+				'zh':'获得授权的用户',
+				'zh-TW':'獲得授權的使用者',
+				group:{
+					'en':'In addition to the operational conditions, if you want to determine the execution permission based on the group the logged-in user belongs to, please specify the group to be permitted.',
+					'ja':'動作条件に加え、ログインユーザーが所属するグループを実行許可の判断としたい場合は、許可するグループを指定して下さい。',
+					'zh':'除了操作条件外，如果您想根据登录用户所属的组来决定执行权限，请指定允许的组。',
+					'zh-TW':'除了操作條件外，如果您想根據登入使用者所屬的群組來決定執行權限，請指定允許的群組。'
+				},
+				organization:{
+					'en':'In addition to the operational conditions, if you want to determine the execution permission based on the organization the logged-in user belongs to, please specify the organization to be permitted.',
+					'ja':'動作条件に加え、ログインユーザーが所属する組織を実行許可の判断としたい場合は、許可する組織を指定して下さい。',
+					'zh':'除了操作条件外，如果您想根据登录用户所属的组织来决定执行权限，请指定允许的组织。',
+					'zh-TW':'除了操作條件外，如果您想根據登入使用者所屬的組織來決定執行權限，請指定允許的組織。'
+				},
+				user:{
+					'en':'In addition to the operational conditions, if you want to determine the execution permission based on the logged-in user, please specify the user to be permitted.',
+					'ja':'動作条件に加え、ログインユーザーを実行許可の判断としたい場合は、許可するユーザーを指定して下さい。',
+					'zh':'除了操作条件外，如果您想根据登录用户来决定执行权限，请指定允许的用户。',
+					'zh-TW':'除了操作條件外，如果您想根據登入使用者來決定執行權限，請指定允許的使用者。'
+				}
+			}
+		}
+	}
+},kb.constants);
