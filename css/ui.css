@@ -10,6 +10,7 @@
 	--emphasis-color:rgba(52,152,219,1);
 	--bg-color:rgba(255,255,255,1);
 	--fr-color:rgba(38,50,56,1);
+	--color-highlight:rgba(244,67,54,1);
 	--placeholder-color:rgba(38,50,56,0.5);
 	--border-color:rgba(227,231,232,1);
 	--field-bg-color:rgba(247,250,252,0.75);
@@ -379,6 +380,12 @@
 }
 :is(.kb-hidden,.kb-unuse){
 	display:none !important;
+}
+.kb-highlight{
+	color:var(--color-highlight) !important;
+}
+.kb-highlight *{
+	color:var(--color-highlight) !important;
 }
 .kb-icon{
 	background-color:transparent;
