@@ -205,10 +205,24 @@
   pointer-events:inherit;
 }
 .kb-gantt-task .kb-gantt-task-handle{
+  align-items:center;
+  color:inherit;
   cursor:move;
+  display:flex;
   flex:0 0 auto;
   height:100%;
+  justify-content:center;
+  position:relative;
   width:15px;
+}
+.kb-gantt-task .kb-gantt-task-handle::before{
+  background-color:currentColor;
+  border-radius:50%;
+  box-shadow:0 -5px 0 currentColor,0 5px 0 currentColor;
+  content:'';
+  height:3px;
+  pointer-events:none;
+  width:3px;
 }
 .kb-gantt-task .kb-gantt-task-handle.kb-gantt-task-disabled{
   cursor:not-allowed;
