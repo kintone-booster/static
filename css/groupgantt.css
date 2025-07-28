@@ -11,6 +11,8 @@
   --gantt-fr-color:rgba(38,50,56,0.75);
   --gantt-border-color:rgba(221,221,221,1);
   --gantt-hover-color:rgba(185,212,229,1);
+  --gantt-saturday:rgba(66,165,245,0.15);
+  --gantt-sunday:rgba(250,130,115,0.15);
   --gantt-task-color:rgba(112,182,229,1);
 }
 #kb-gantt{
@@ -94,11 +96,21 @@
   color:inherit;
   position:relative;
 }
+.kb-gantt :is(td,th).kb-gantt-saturday{
+  background-color:var(--gantt-saturday);
+}
+.kb-gantt :is(td,th).kb-gantt-sunday{
+  background-color:var(--gantt-sunday);
+}
 .kb-gantt :is(td,th).kb-gantt-border-thick{
   border-right-width:3px;
 }
 .kb-gantt :is(td,th).kb-gantt-border-thin{
   border-right-width:2px;
+}
+.kb-gantt thead{
+  position:sticky;
+  top:48px;
 }
 .kb-gantt th{
   font-weight:normal;
@@ -111,7 +123,7 @@
   border-top:none;
 }
 .kb-gantt .kb-gantt-head-bottom th .kb-gantt-head-indicator{
-  background-color:inherit;
+  background-color:transparent;
   display:inline-block;
   font-size:11px;
   left:0;
@@ -121,9 +133,10 @@
 }
 .kb-gantt .kb-gantt-head-center th{
   border-top:none;
+  padding-top:0.25em;
 }
 .kb-gantt .kb-gantt-head-top th{
-  padding:0.25em 0.25em 0 0.25em;
+  padding:0.25em 0.25em 0.125em 0.25em;
   text-align:left;
 }
 .kb-gantt .kb-gantt-group{
