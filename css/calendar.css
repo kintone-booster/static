@@ -11,9 +11,9 @@
 	--active-fr-color:rgba(255,255,255,1);
 	--calendar-bg-color:rgba(255,255,255,1);
 	--calendar-fr-color:rgba(38,50,56,0.75);
-	--day-color-sat:rgba(66,165,245,0.15);
-	--day-color-sun:rgba(250,130,115,0.15);
-	--day-color-today:rgba(255,180,110,0.15);
+	--day-color-sat:rgba(227,242,254,1);
+	--day-color-sun:rgba(254,236,234,1);
+	--day-color-today:rgba(255,244,233,1);
 }
 .kb-calendar{
 	background-color:var(--calendar-bg-color);
@@ -72,6 +72,18 @@
 	background-color:var(--calendar-bg-color);
 	min-height:auto !important;
 	overflow:unset !important;
+}
+.fc .fc-header-toolbar{
+	background-color:var(--calendar-bg-color);
+	position:sticky;
+	z-index:10;
+}
+.fc .fc-header-toolbar.fc-header-toolbar-border{
+	border-bottom:1px solid var(--fc-border-color);
+}
+.fc :is(.fc-dayGridMonth-view,.fc-dayGridDay-view,.fc-dayGridWeek-view,.fc-timeGridDay-view,.fc-timeGridWeek-view) > table > thead{
+	position:sticky;
+	z-index:3;
 }
 .fc .fc-toolbar{
 	margin:0 !important;
