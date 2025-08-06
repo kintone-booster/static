@@ -1368,6 +1368,9 @@ window.KintoneBoosterFormula=class{
 					return res;
 				})(TO_STRING(code),(bool)?record:origin);
 			};
+			var COMMA=(value,scale) => {
+				return TO_NUMBER(value).comma(scale);
+			};
 			var DATE_CALC=(value,pattern) => {
 				var value=TO_STRING(value);
 				var type=value.match(/^[0-9]{1,2}:[0-9]{1,2}$/g)?'TIME':((value.replace(/[^0-9]+/g,'').length>8)?'DATETIME':'DATE');
