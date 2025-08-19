@@ -30,6 +30,28 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 							return result;
 						},[]).join(',')+')':'("")';
 						break;
+					case 'CREATED_TIME':
+					case 'DATE':
+					case 'DATETIME':
+					case 'UPDATED_TIME':
+						((value) => {
+							switch (rhs.type)
+							{
+								case 'CREATED_TIME':
+								case 'DATETIME':
+								case 'UPDATED_TIME':
+									if (operator.match(/</) && !value) value='1900-01-01T00:00:00.000Z';
+									if (operator.match(/>/) && !value) value='9999-01-01T00:00:00.000Z';
+									break;
+								case 'DATE':
+									if (operator.match(/</) && !value) value='1900-01-01';
+									if (operator.match(/>/) && !value) value='9999-01-01';
+									break;
+							}
+							if (operator.match(/in/)) res='("'+((value)?escape(value):'')+'")';
+							else res='"'+((value)?escape(value):'')+'"';
+						})(rhs.value);
+						break;
 					case 'CREATOR':
 					case 'MODIFIER':
 						res=(rhs.value)?'("'+escape(rhs.value.code)+'")':'("")';
