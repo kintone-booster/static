@@ -1642,6 +1642,22 @@ window.KintoneBoosterFormula=class{
 				}
 				return res;
 			};
+			var PREVROW=(code,bool=false) => {
+				return ((code,record) => {
+					var res=null;
+					if (code in fieldInfos)
+						((fieldInfo) => {
+							if (fieldInfo.tableCode)
+							{
+								((current) => {
+									var index=record[fieldInfo.tableCode].value.findIndex((row) => row.value===current);
+									if (index>0) res=record[fieldInfo.tableCode].value[index-1].value[code].value;
+								})(row);
+							}
+						})(fieldInfos[code]);
+					return res;
+				})(TO_STRING(code),(bool)?record:origin);
+			};
 			var REPLACE=(value,pattern,replacement) => {
 				return TO_STRING(value).replace(new RegExp(TO_STRING(pattern),'g'),TO_STRING(replacement));
 			};
@@ -1830,11 +1846,11 @@ window.KintoneBoosterFormula=class{
 							return formula;
 						})(
 							formula
-							.replace(new RegExp('(AVG|MIN|MAX|SUM)\\([ ]*(%'+fieldInfo.code+'%)[ ]*\\)','g'),(match,functions,field) => {
+							.replace(new RegExp('(AVG|MIN|MAX|SUM|PREVROW)\\([ ]*(%'+fieldInfo.code+'%)[ ]*\\)','g'),(match,functions,field) => {
 								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'")');
 								return 'calculate_'+reserved.length.toString();
 							})
-							.replace(new RegExp('(AVG|MIN|MAX|SUM)\\([ ]*(%'+fieldInfo.code+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
+							.replace(new RegExp('(AVG|MIN|MAX|SUM|PREVROW)\\([ ]*(%'+fieldInfo.code+'%)[ ]*,[ ]*(true|false)\\)','g'),(match,functions,field,bool) => {
 								reserved.push(functions+'("'+field.replace(/(^%|%$)/g,'')+'",'+bool+')');
 								return 'calculate_'+reserved.length.toString();
 							})
