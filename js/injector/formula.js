@@ -1332,7 +1332,6 @@ window.KintoneBoosterFormula=class{
 				};
 				return TO_STRING(value)
 				.replace(/[\uFF01-\uFF5E]/g,(s) => String.fromCharCode(s.charCodeAt(0)-0xFEE0))
-				.replace(/[\u3041-\u3096]/g,(s) => String.fromCharCode(s.charCodeAt(0)+0x60))
 				.replace(new RegExp('('+Object.keys(map).join('|')+')','g'),(s) => map[s]);
 			};
 			var AVG=(code,bool=false) => {
