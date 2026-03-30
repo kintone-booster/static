@@ -6,6 +6,12 @@
 * Distributed under the terms of the GNU Lesser General Public License.
 * https://opensource.org/licenses/LGPL-2.1
 */
+.bst-cascade-disabled{
+	display:none !important;
+}
+/*
+Temporarily retained until cached data is cleared.
+*/
 .kb-cascade-disabled{
 	display:none !important;
 }

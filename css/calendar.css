@@ -15,7 +15,7 @@
 	--day-color-sun:rgba(254,236,234,1);
 	--day-color-today:rgba(255,244,233,1);
 }
-.kb-calendar{
+.bst-calendar{
 	background-color:var(--calendar-bg-color);
 }
 .fc *{
@@ -98,4 +98,10 @@
 	font-size:1em;
 	line-height:1.5em;
 	padding:0 0.5em;
+}
+/*
+Temporarily retained until cached data is cleared.
+*/
+.kb-calendar{
+	background-color:var(--calendar-bg-color);
 }
