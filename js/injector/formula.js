@@ -6,7 +6,7 @@
 * https://opensource.org/licenses/LGPL-2.1
 */
 "use strict";
-window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
+window.BooooooostFilter=class extends BooooooostDialog{
 	/* constructor */
 	constructor(){
 		super(999996,false,false);
@@ -72,8 +72,8 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						break;
 					case 'NUMBER':
 					case 'RECORD_NUMBER':
-						if (operator.match(/in/)) res='('+((kb.isNumeric(rhs.value))?rhs.value:'""')+')';
-						else res=((kb.isNumeric(rhs.value))?rhs.value:'""');
+						if (operator.match(/in/)) res='('+((bst.isNumeric(rhs.value))?rhs.value:'""')+')';
+						else res=((bst.isNumeric(rhs.value))?rhs.value:'""');
 						break;
 					default:
 						if (operator.match(/in/)) res='("'+((rhs.value)?escape(rhs.value):'')+'")';
@@ -97,18 +97,18 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						case 'UPDATED_TIME':
 							if (fieldInfo.tableCode)
 							{
-								res.push({code:'in',label:kb.constants.filter.operator.equal[kb.operator.language]});
-								res.push({code:'not in',label:kb.constants.filter.operator.notequal[kb.operator.language]});
+								res.push({code:'in',label:bst.constants.filter.operator.equal[bst.operator.language]});
+								res.push({code:'not in',label:bst.constants.filter.operator.notequal[bst.operator.language]});
 							}
 							else
 							{
-								res.push({code:'=',label:kb.constants.filter.operator.equal[kb.operator.language]});
-								res.push({code:'!=',label:kb.constants.filter.operator.notequal[kb.operator.language]});
+								res.push({code:'=',label:bst.constants.filter.operator.equal[bst.operator.language]});
+								res.push({code:'!=',label:bst.constants.filter.operator.notequal[bst.operator.language]});
 							}
-							res.push({code:'<=',label:kb.constants.filter.operator.less.equal[kb.operator.language]});
-							res.push({code:'<',label:kb.constants.filter.operator.less[kb.operator.language]});
-							res.push({code:'>=',label:kb.constants.filter.operator.greater.equal[kb.operator.language]});
-							res.push({code:'>',label:kb.constants.filter.operator.greater[kb.operator.language]});
+							res.push({code:'<=',label:bst.constants.filter.operator.less.equal[bst.operator.language]});
+							res.push({code:'<',label:bst.constants.filter.operator.less[bst.operator.language]});
+							res.push({code:'>=',label:bst.constants.filter.operator.greater.equal[bst.operator.language]});
+							res.push({code:'>',label:bst.constants.filter.operator.greater[bst.operator.language]});
 							break;
 						case 'CHECK_BOX':
 						case 'CREATOR':
@@ -121,29 +121,29 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						case 'STATUS':
 						case 'STATUS_ASSIGNEE':
 						case 'USER_SELECT':
-							res.push({code:'in',label:kb.constants.filter.operator.in[kb.operator.language]});
-							res.push({code:'not in',label:kb.constants.filter.operator.notin[kb.operator.language]});
+							res.push({code:'in',label:bst.constants.filter.operator.in[bst.operator.language]});
+							res.push({code:'not in',label:bst.constants.filter.operator.notin[bst.operator.language]});
 							break;
 						case 'FILE':
 						case 'MULTI_LINE_TEXT':
 						case 'RICH_TEXT':
-							res.push({code:'like',label:kb.constants.filter.operator.like[kb.operator.language]});
-							res.push({code:'not like',label:kb.constants.filter.operator.notlike[kb.operator.language]});
+							res.push({code:'like',label:bst.constants.filter.operator.like[bst.operator.language]});
+							res.push({code:'not like',label:bst.constants.filter.operator.notlike[bst.operator.language]});
 							break;
 						case 'LINK':
 						case 'SINGLE_LINE_TEXT':
 							if (fieldInfo.tableCode)
 							{
-								res.push({code:'in',label:kb.constants.filter.operator.equal[kb.operator.language]});
-								res.push({code:'not in',label:kb.constants.filter.operator.notequal[kb.operator.language]});
+								res.push({code:'in',label:bst.constants.filter.operator.equal[bst.operator.language]});
+								res.push({code:'not in',label:bst.constants.filter.operator.notequal[bst.operator.language]});
 							}
 							else
 							{
-								res.push({code:'=',label:kb.constants.filter.operator.equal[kb.operator.language]});
-								res.push({code:'!=',label:kb.constants.filter.operator.notequal[kb.operator.language]});
+								res.push({code:'=',label:bst.constants.filter.operator.equal[bst.operator.language]});
+								res.push({code:'!=',label:bst.constants.filter.operator.notequal[bst.operator.language]});
 							}
-							res.push({code:'like',label:kb.constants.filter.operator.like[kb.operator.language]});
-							res.push({code:'not like',label:kb.constants.filter.operator.notlike[kb.operator.language]});
+							res.push({code:'like',label:bst.constants.filter.operator.like[bst.operator.language]});
+							res.push({code:'not like',label:bst.constants.filter.operator.notlike[bst.operator.language]});
 							break;
 					}
 				return res;
@@ -320,7 +320,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						})(fieldInfos[current.field]);
 					return result;
 				},[]);
-			})((parallelize)?kb.field.parallelize(app.fields):kb.extend({},app.fields));
+			})((parallelize)?bst.field.parallelize(app.fields):bst.extend({},app.fields));
 			return this.query.parse(queries.join(' and '));
 		};
 		/* modify elements */
@@ -339,13 +339,13 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				var res=false;
 				if (!res)
 					if (user.length!=0)
-						res=(user.map((item) => item.code).includes(kb.operator.code));
+						res=(user.map((item) => item.code).includes(bst.operator.code));
 				if (!res)
 					if (organization.length!=0)
-						res=kb.operator.organizations.some((item) => organization.map((item) => item.code).includes(item));
+						res=bst.operator.organizations.some((item) => organization.map((item) => item.code).includes(item));
 				if (!res)
 					if (group.length!=0)
-						res=kb.operator.groups.some((item) => group.map((item) => item.code).includes(item));
+						res=bst.operator.groups.some((item) => group.map((item) => item.code).includes(item));
 				return res;
 			}
 			if (user.length+organization.length+group.length!=0) resolve(verify());
@@ -386,7 +386,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 		};
 		var setup=() => {
 			/* create table */
-			this.table=kb.table.create({
+			this.table=bst.table.create({
 				code:'queries',
 				type:'SUBTABLE',
 				label:'',
@@ -423,7 +423,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 					this.table.insertRow(row);
 				});
 				row.elm('.kb-table-row-del').on('click',(e) => {
-					kb.confirm(kb.constants.common.message.confirm.delete[kb.operator.language],() => {
+					bst.confirm(bst.constants.common.message.confirm.delete[bst.operator.language],() => {
 						this.table.delRow(row);
 					});
 				});
@@ -437,7 +437,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 								if (cells.fields.val())
 								{
 									((fieldInfo) => {
-										cells.operators.assignOption(kb.filter.query.operator(fieldInfo),'label','code');
+										cells.operators.assignOption(bst.filter.query.operator(fieldInfo),'label','code');
 										((field) => {
 											cells.values.value={
 												get:(operator) => {
@@ -609,7 +609,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																			if (user.length!=0) result.push(((user) => {
 																				return {code:user.code.value,name:user.name.value};
 																			})(user.first()));
-																		})(([{code:{value:'LOGINUSER()'},name:{value:'Login user'}}].concat(kb.roleSet.user)).filter((item) => item.code.value==code));
+																		})(([{code:{value:'LOGINUSER()'},name:{value:'Login user'}}].concat(bst.roleSet.user)).filter((item) => item.code.value==code));
 																	})(current.replace(/(^["']{1}|["']{1}$)/g,''));
 																return result;
 															},[]);
@@ -625,7 +625,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																			if (group.length!=0) result.push(((group) => {
 																				return {code:group.code.value,name:group.code.value};
 																			})(group.first()));
-																		})(kb.roleSet.group.filter((item) => item.code.value==code));
+																		})(bst.roleSet.group.filter((item) => item.code.value==code));
 																	})(current.replace(/(^["']{1}|["']{1}$)/g,''));
 																return result;
 															},[]);
@@ -641,7 +641,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																			if (organization.length!=0) result.push(((organization) => {
 																				return {code:organization.code.value,name:organization.code.value};
 																			})(organization.first()));
-																		})(kb.roleSet.organization.filter((item) => item.code.value==code));
+																		})(bst.roleSet.organization.filter((item) => item.code.value==code));
 																	})(current.replace(/(^["']{1}|["']{1}$)/g,''));
 																return result;
 															},[]);
@@ -680,7 +680,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 											{
 												case 'CALC':
 												case 'RECORD_NUMBER':
-													res=kb.field.create({
+													res=bst.field.create({
 														code:'value',
 														type:'NUMBER',
 														label:'',
@@ -695,26 +695,26 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 													((fieldInfo) => {
 														fieldInfo.type='USER_SELECT';
 														fieldInfo.loginuser=true;
-														res=kb.field.activate(kb.field.create(fieldInfo),((app) => {
+														res=bst.field.activate(bst.field.create(fieldInfo),((app) => {
 															app.fields[fieldInfo.code]=fieldInfo;
 															return app;
 														})({id:'filterbuilder',fields:{}}));
-													})(kb.extend({},fieldInfo));
+													})(bst.extend({},fieldInfo));
 													break;
 												case 'CREATED_TIME':
 												case 'DATE':
 												case 'DATETIME':
 												case 'UPDATED_TIME':
-													res=kb.create('div')
+													res=bst.create('div')
 													.append(
 														((field) => {
 															field.addClass('kb-filterbuilder-date').elm('select').assignOption([
-																{code:'today',label:kb.constants.filter.pattern.today[kb.operator.language]},
-																{code:'from today',label:kb.constants.filter.pattern.from.today[kb.operator.language]},
-																{code:'from thisweek',label:kb.constants.filter.pattern.from.thisweek[kb.operator.language]},
-																{code:'from thismonth',label:kb.constants.filter.pattern.from.thismonth[kb.operator.language]},
-																{code:'from thisyear',label:kb.constants.filter.pattern.from.thisyear[kb.operator.language]},
-																{code:'manually',label:kb.constants.filter.pattern.manually[kb.operator.language]}
+																{code:'today',label:bst.constants.filter.pattern.today[bst.operator.language]},
+																{code:'from today',label:bst.constants.filter.pattern.from.today[bst.operator.language]},
+																{code:'from thisweek',label:bst.constants.filter.pattern.from.thisweek[bst.operator.language]},
+																{code:'from thismonth',label:bst.constants.filter.pattern.from.thismonth[bst.operator.language]},
+																{code:'from thisyear',label:bst.constants.filter.pattern.from.thisyear[bst.operator.language]},
+																{code:'manually',label:bst.constants.filter.pattern.manually[bst.operator.language]}
 															],'label','code').on('change',(e) => {
 																switch (e.currentTarget.val())
 																{
@@ -736,7 +736,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																}
 															});
 															return field;
-														})(kb.field.create({
+														})(bst.field.create({
 															code:'pattern',
 															type:'DROP_DOWN',
 															label:'',
@@ -748,14 +748,14 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 													.append(
 														((fieldInfo) => {
 															if (['CREATED_TIME','UPDATED_TIME'].includes(fieldInfo.type)) fieldInfo.type='DATETIME';
-															return kb.field.activate(kb.field.create(fieldInfo),((app) => {
+															return bst.field.activate(bst.field.create(fieldInfo),((app) => {
 																app.fields[fieldInfo.code]=fieldInfo;
 																return app;
 															})({id:'filterbuilder',fields:{}})).addClass('kb-filterbuilder-date').hide()
-														})(kb.extend({},fieldInfo))
+														})(bst.extend({},fieldInfo))
 													)
 													.append(
-														kb.field.create({
+														bst.field.create({
 															code:'interval',
 															type:'NUMBER',
 															label:'',
@@ -765,7 +765,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 														}).addClass('kb-filterbuilder-date').css({width:'5em'}).hide()
 													)
 													.append(
-														kb.field.create({
+														bst.field.create({
 															code:'unit',
 															type:'DROP_DOWN',
 															label:'',
@@ -791,21 +791,21 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																	},Array(options.length).fill('')).each((option,index) => {
 																		field
 																		.append(
-																			kb.create('label')
-																			.append(kb.create('input').attr('type','checkbox').val(option.label))
-																			.append(kb.create('span').html((option.label)?option.label:'&#9251;'))
+																			bst.create('label')
+																			.append(bst.create('input').attr('type','checkbox').val(option.label))
+																			.append(bst.create('span').html((option.label)?option.label:'&#9251;'))
 																		);
 																	});
 																})(Object.values(fieldInfo.options));
 																return field;
-															})(kb.create('div').addClass('kb-field-value'))
+															})(bst.create('div').addClass('kb-field-value'))
 														);
-													})(kb.create('div').addClass('kb-field').attr('field-id','value'));
+													})(bst.create('div').addClass('kb-field').attr('field-id','value'));
 													break;
 												case 'FILE':
 												case 'MULTI_LINE_TEXT':
 												case 'RICH_TEXT':
-													res=kb.field.create({
+													res=bst.field.create({
 														code:'value',
 														type:'SINGLE_LINE_TEXT',
 														label:'',
@@ -817,18 +817,18 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 													res=((field) => {
 														return field.append(
 															((field) => {
-																Object.values(kb.status.states).each((state,index) => {
+																Object.values(bst.status.states).each((state,index) => {
 																	field
 																	.append(
-																		kb.create('label')
-																		.append(kb.create('input').attr('type','checkbox').attr('data-type',fieldInfo.type).val(state.name))
-																		.append(kb.create('span').html((state.name)?state.name:'&#9251;'))
+																		bst.create('label')
+																		.append(bst.create('input').attr('type','checkbox').attr('data-type',fieldInfo.type).val(state.name))
+																		.append(bst.create('span').html((state.name)?state.name:'&#9251;'))
 																	);
 																});
 																return field;
-															})(kb.create('div').addClass('kb-field-value'))
+															})(bst.create('div').addClass('kb-field-value'))
 														);
-													})(kb.create('div').addClass('kb-field').attr('field-id','value'));
+													})(bst.create('div').addClass('kb-field').attr('field-id','value'));
 													break;
 												default:
 													((fieldInfo) => {
@@ -841,15 +841,15 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 																fieldInfo.loginuser=true;
 																break;
 														}
-														res=kb.field.activate(kb.field.create(fieldInfo),((app) => {
+														res=bst.field.activate(bst.field.create(fieldInfo),((app) => {
 															app.fields[fieldInfo.code]=fieldInfo;
 															return app;
 														})({id:'filterbuilder',fields:{}}));
-													})(kb.extend({},fieldInfo));
+													})(bst.extend({},fieldInfo));
 													break;
 											}
 											return res;
-										})(kb.extend({},fieldInfo)));
+										})(bst.extend({},fieldInfo)));
 									})(fieldInfos[cells.fields.val()]);
 								}
 								resolve({});
@@ -865,12 +865,12 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				if (table.tr.length==0) table.addRow();
 			},false);
 			this.contents.empty()
-			.append(kb.create('span').addClass('kb-table-caption').html(kb.constants.filter.caption.filter[kb.operator.language]))
+			.append(bst.create('span').addClass('kb-table-caption').html(bst.constants.filter.caption.filter[bst.operator.language]))
 			.append(this.table);
 			if (query)
 			{
 				((fields) => {
-					kb.filter.query.parse(query).each((query,index) => {
+					bst.filter.query.parse(query).each((query,index) => {
 						if (fields.some((item) => item.code==query.field))
 							((row) => {
 								row.elm('[field-id=fields]').elm('select').val(query.field).rebuild().then(() => {
@@ -993,8 +993,8 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						case 'NUMBER':
 						case 'NUMBER_DIGIT':
 							formula=((rhs) => {
-								return '(kb.isNumeric(lhs.value.replace(/[,]+/,\'\'))?parseFloat(lhs.value.replace(/[,]+/,\'\')):null) '+((operator=='=')?'==':operator)+' '+((rhs!='0')?rhs.replace(/^0/g,''):rhs);
-							})((kb.isNumeric(rhs.replace(/(^["']{1}|["']{1}$)/g,'')))?rhs.replace(/(^["']{1}|["']{1}$)/g,''):'null');
+								return '(bst.isNumeric(lhs.value.replace(/[,]+/,\'\'))?parseFloat(lhs.value.replace(/[,]+/,\'\')):null) '+((operator=='=')?'==':operator)+' '+((rhs!='0')?rhs.replace(/^0/g,''):rhs);
+							})((bst.isNumeric(rhs.replace(/(^["']{1}|["']{1}$)/g,'')))?rhs.replace(/(^["']{1}|["']{1}$)/g,''):'null');
 							break;
 						default:
 							formula='((lhs.value)?lhs.value:\'\') '+((operator=='=')?'==':operator)+' '+rhs;
@@ -1015,7 +1015,7 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 				case 'ORGANIZATION_SELECT':
 				case 'STATUS_ASSIGNEE':
 				case 'USER_SELECT':
-					rhs=(rhs!='()')?rhs.split(',').map((item) => item.trim().replace(/LOGINUSER\(\)/g,kb.operator.code)).reduce((result,current) => {
+					rhs=(rhs!='()')?rhs.split(',').map((item) => item.trim().replace(/LOGINUSER\(\)/g,bst.operator.code)).reduce((result,current) => {
 						if (current) result.push(current.replace(/(^["']{1}|["']{1}$)/g,''));
 						return result;
 					},[]):[];
@@ -1136,8 +1136,8 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 							break;
 					}
 					formula=((rhs) => {
-						return '(kb.isNumeric(lhs.value)?parseFloat(lhs.value):null) '+((operator=='=')?'==':operator)+' '+((rhs!='0')?rhs.replace(/^0/g,''):rhs);
-					})((kb.isNumeric(rhs.replace(/(^["']{1}|["']{1}$)/g,'')))?rhs.replace(/(^["']{1}|["']{1}$)/g,''):'null');
+						return '(bst.isNumeric(lhs.value)?parseFloat(lhs.value):null) '+((operator=='=')?'==':operator)+' '+((rhs!='0')?rhs.replace(/^0/g,''):rhs);
+					})((bst.isNumeric(rhs.replace(/(^["']{1}|["']{1}$)/g,'')))?rhs.replace(/(^["']{1}|["']{1}$)/g,''):'null');
 					break;
 				default:
 					switch (operator)
@@ -1192,11 +1192,11 @@ window.KintoneBoosterFilter=class extends KintoneBoosterDialog{
 						}
 					})(fieldInfos[query.field]);
 			});
-		})((parallelize)?kb.field.parallelize(app.fields):kb.extend({},app.fields));
+		})((parallelize)?bst.field.parallelize(app.fields):bst.extend({},app.fields));
 		return (queries.length==matches)?this.result:false;
 	}
 };
-window.KintoneBoosterFormula=class{
+window.BooooooostFormula=class{
 	/* constructor */
 	constructor(){
 		this.field={
@@ -1207,8 +1207,8 @@ window.KintoneBoosterFormula=class{
 					case 'CHECK_BOX':
 					case 'MULTI_SELECT':
 						field.addClass('kb-assist').append(
-							kb.create('button').addClass('kb-icon kb-icon-lookup kb-search').on('click',(e) => {
-								kb.pickupMultiple(
+							bst.create('button').addClass('kb-icon kb-icon-lookup kb-search').on('click',(e) => {
+								bst.pickupMultiple(
 									Object.values(fieldInfo.options).reduce((result,current) => {
 										result[current.index]={label:{value:current.label}};
 										return result;
@@ -1224,14 +1224,14 @@ window.KintoneBoosterFormula=class{
 					case 'USER_SELECT':
 						((type) => {
 							field.addClass('kb-assist').append(
-								kb.create('button').addClass('kb-icon kb-icon-'+type+' kb-search').on('click',(e) => {
+								bst.create('button').addClass('kb-icon kb-icon-'+type+' kb-search').on('click',(e) => {
 									field.recordPicker.show(
 										{
 											picker:{
 												name:{
 													code:'name',
 													type:'SINGLE_LINE_TEXT',
-													label:kb.constants.picker.caption.name[kb.operator.language],
+													label:bst.constants.picker.caption.name[bst.operator.language],
 													required:false,
 													noLabel:true
 												}
@@ -1344,7 +1344,7 @@ window.KintoneBoosterFormula=class{
 								switch (fieldInfo.type)
 								{
 									case 'NUMBER':
-										var rows=record[fieldInfo.tableCode].value.filter((item) => kb.isNumeric(item.value[code].value));
+										var rows=record[fieldInfo.tableCode].value.filter((item) => bst.isNumeric(item.value[code].value));
 										if (rows.length!=0)
 										{
 											res=0;
@@ -1505,13 +1505,13 @@ window.KintoneBoosterFormula=class{
 				return TO_STRING(value).padEnd(len,pad);
 			};
 			var LOGINUSER=() => {
-				return kb.operator.code+':'+kb.operator.name;
+				return bst.operator.code+':'+bst.operator.name;
 			};
 			var LOGINUSER_CODE=() => {
-				return kb.operator.code;
+				return bst.operator.code;
 			};
 			var LOGINUSER_NAME=() => {
-				return kb.operator.name;
+				return bst.operator.name;
 			};
 			var LOOP=(code,formula,bool=false) => {
 				return ((code,record,scaned) => {
@@ -1542,7 +1542,7 @@ window.KintoneBoosterFormula=class{
 										}
 										break;
 									case 'NUMBER':
-										var rows=record[fieldInfo.tableCode].value.filter((item) => kb.isNumeric(item.value[code].value));
+										var rows=record[fieldInfo.tableCode].value.filter((item) => bst.isNumeric(item.value[code].value));
 										if (rows.length!=0)
 										{
 											res=0;
@@ -1597,7 +1597,7 @@ window.KintoneBoosterFormula=class{
 										}
 										break;
 									case 'NUMBER':
-										var rows=record[fieldInfo.tableCode].value.filter((item) => kb.isNumeric(item.value[code].value));
+										var rows=record[fieldInfo.tableCode].value.filter((item) => bst.isNumeric(item.value[code].value));
 										if (rows.length!=0)
 										{
 											res=Number.MAX_SAFE_INTEGER;
@@ -1677,7 +1677,7 @@ window.KintoneBoosterFormula=class{
 								switch (fieldInfo.type)
 								{
 									case 'NUMBER':
-										var rows=record[fieldInfo.tableCode].value.filter((item) => kb.isNumeric(item.value[code].value));
+										var rows=record[fieldInfo.tableCode].value.filter((item) => bst.isNumeric(item.value[code].value));
 										if (rows.length!=0)
 										{
 											res=0;
@@ -1699,7 +1699,7 @@ window.KintoneBoosterFormula=class{
 				{
 					case 'number':
 					case 'string':
-						res=(kb.isNumeric(value))?parseFloat(value):0;
+						res=(bst.isNumeric(value))?parseFloat(value):0;
 						break;
 				}
 				return res;
@@ -1739,7 +1739,7 @@ window.KintoneBoosterFormula=class{
 						if (answer)
 						{
 							res=((Array.isArray(answer))?answer:answer.toString().split(',').map((item) => item.trim())).reduce((result,current) => {
-								if (current=='LOGINUSER()') result.push({code:kb.operator.code,name:kb.operator.name});
+								if (current=='LOGINUSER()') result.push({code:bst.operator.code,name:bst.operator.name});
 								else result.push({code:current.split(':').first(),name:current.split(':').last()});
 								return result;
 							},[]);
@@ -1747,7 +1747,7 @@ window.KintoneBoosterFormula=class{
 						break;
 					case 'NUMBER':
 					case 'RECORD_NUMBER':
-						res=((kb.isNumeric(answer))?parseFloat(answer):null);
+						res=((bst.isNumeric(answer))?parseFloat(answer):null);
 						break;
 					default:
 						res=(Array.isArray(answer))?answer.join(','):TO_STRING(answer);
@@ -1887,7 +1887,7 @@ window.KintoneBoosterFormula=class{
 /*
 Message definition by language
 */
-kb.constants=kb.extend({
+bst.constants=bst.extend({
 	filter:{
 		caption:{
 			filter:{
@@ -2006,4 +2006,9 @@ kb.constants=kb.extend({
 			}
 		}
 	}
-},kb.constants);
+},bst.constants);
+/*
+Temporarily retained until cached data is cleared.
+*/
+window.KintoneBoosterFilter=window.BooooooostFilter;
+window.KintoneBoosterFormula=window.BooooooostFormula;
